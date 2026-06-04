@@ -1,0 +1,18 @@
+﻿Task,Priority,Status,Category,Due Date,Notes
+Confirm website platform,Critical,In progress,Strategy,"May 6, 2026",Confirm Webflow as the platform direction for the main site.
+Confirm ownership and access structure,Critical,In progress,Strategy,"May 6, 2026","Confirm domain, DNS, hosting, CMS, analytics, and account access expectations."
+Finalize top navigation,High,In progress,Content,"May 8, 2026","Current direction: Home, Contact, Managed IT, Business Systems, Cybersecurity, Industries, About."
+Finalize Phase 1 website scope,Critical,In progress,Strategy,"May 8, 2026",Keep June focused on the marketing and lead-generation site.
+Define service page architecture,Critical,In progress,Strategy,"May 8, 2026",Map the structure of each service page so Bannnanas can design and write in sequence.
+Finalize service catalog,High,Not started,Content,"May 10, 2026",Confirm which services deserve dedicated pages in the first launch set.
+Gather trust badges and partner assets,High,Not started,Assets,"May 12, 2026","Collect Microsoft status, certifications, partner logos, and supporting proof."
+Inventory current website URLs,High,Not started,SEO,"May 13, 2026","List current pages to migrate, refresh, sunset, or redirect."
+Gather 3-5 testimonials or case studies,High,Not started,Assets,"May 13, 2026",Needed for trust sections and the Why Stratum page.
+Finalize homepage copy,High,Not started,Content,"May 15, 2026",Turn the current draft into launch-ready homepage copy.
+Approve Managed IT page direction,High,Not started,Content,"May 16, 2026","Clarify ongoing support, maintenance, monitoring, and operational stability."
+Approve Cybersecurity page direction,High,Not started,Content,"May 17, 2026","Clarify layered protection, backup, access control, and risk reduction."
+Approve Business Systems page direction,High,Not started,Content,"May 18, 2026","Clarify ERP, CRM, automation, AI, and systems alignment scope."
+Define Why Stratum page inputs,Medium,Not started,Content,"May 20, 2026","Collect ROI framing, comparison points, trust blocks, and proof points."
+Review redirect map and SEO migration plan,High,Not started,SEO,"May 22, 2026","Confirm migrate, refresh, sunset, and redirect decisions before launch."
+Review launch-ready site with Bannnanas,Critical,Not started,Approvals,"June 6, 2026","Final review of pages, forms, CTA flow, analytics, and QA."
+Define http://shop.stratum.it architecture separately,Medium,Not started,Ecommerce,"August 1, 2026",Keep ecommerce architecture and portal considerations out of the June critical path.

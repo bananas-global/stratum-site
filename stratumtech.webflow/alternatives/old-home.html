@@ -1,0 +1,828 @@
+<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Thu Jun 04 2026 13:00:16 GMT+0000 (Coordinated Universal Time)  -->
+<html data-wf-page="6a07609735e8fb3e96b8ca14" data-wf-site="6a07609435e8fb3e96b8c9cc">
+<head>
+  <meta charset="utf-8">
+  <title>STRATUM</title>
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="Webflow" name="generator">
+  <link href="../css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="../css/webflow.css" rel="stylesheet" type="text/css">
+  <link href="../css/stratumtech.webflow.css" rel="stylesheet" type="text/css">
+  <style>html.w-mod-js:not(.w-mod-ix3) :is(.button-circle-text, [GSAP-fade="target"], [gsap-scrub="target"]) {visibility: hidden !important;}</style>
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+  <script type="text/javascript">WebFont.load({  google: {    families: ["Instrument Serif:300,400,500,600,700","Manrope:300,400,500,600,700","Parastoo:400,500,600,700"]  }});</script>
+  <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+  <link href="../images/favicon.png" rel="icon" type="image/png" sizes="32x32" media="(prefers-color-scheme: light)">
+  <link href="../images/favicon-dark.png" rel="icon" type="image/png" sizes="32x32" media="(prefers-color-scheme: dark)">
+  <link href="../images/favicon-48.png" rel="icon" type="image/png" sizes="48x48">
+  <link href="../images/webclip-180.png" rel="apple-touch-icon" sizes="180x180">
+  <link href="../images/webclip-192.png" rel="icon" type="image/png" sizes="192x192">
+  <link href="../images/webclip.png" rel="icon" type="image/png" sizes="512x512">
+  <style>
+  /* ==========================================
+     1. NAVBAR PRINCIPAL (Fundo falso)
+     ========================================== */
+  .nav_bar-floating {
+    /* Remove o blur nativo que prende os dropdowns */
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: transparent !important;
+  }
+  .nav_bar-floating::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* Fica atrás de tudo na navbar */
+    /* Ajuste o RGBA abaixo para a cor exata da sua Navbar */
+    background-color: rgba(20, 20, 20, 0.7) !important; 
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-radius: inherit; 
+    pointer-events: none; 
+  }
+  /* Garante que a logo e os links fiquem em cima do fundo falso */
+  .nav_row {
+    position: relative;
+    z-index: 1;
+  }
+  /* ==========================================
+     2. DROPDOWNS (Sempre com blur)
+     ========================================== */
+  .nav_dropdown-card {
+    /* Ajuste o RGBA abaixo para a cor do seu Dropdown */
+    background-color: rgba(20, 20, 20, 0.7) !important; 
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    /* Força GPU para não quebrar na animação */
+    transform: translateZ(0) !important; 
+    -webkit-transform: translateZ(0) !important;
+  }
+  /* ==========================================
+     3. MENU MOBILE (Blur só de Tablet pra baixo - máx 991px)
+     ========================================== */
+  @media screen and (max-width: 991px) {
+    .nav_menu {
+      /* Ajuste o RGBA abaixo para a cor do seu Menu Mobile */
+      background-color: rgba(20, 20, 20, 0.7) !important; 
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      transform: translateZ(0) !important; 
+      -webkit-transform: translateZ(0) !important;
+    }
+  }
+</style>
+</head>
+<body>
+  <div id="cycle-navigation-02" class="nav_section">
+    <div class="container-small">
+      <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="nav_bar-floating w-nav">
+        <div class="nav-bg"></div>
+        <div class="nav_row">
+          <div class="nav_left">
+            <a href="#" class="nav_logo-link w-inline-block"><img loading="lazy" src="../images/Group-296.svg" alt="" class="nav_logo"></a>
+          </div>
+          <nav role="navigation" class="nav_menu w-nav-menu">
+            <div class="nav_links">
+              <a href="#" class="nav_link w-inline-block">
+                <div>About</div>
+              </a>
+              <div data-delay="300" data-hover="false" class="nav_dropdown w-dropdown">
+                <div class="nav_link is-dropdown-toggle w-dropdown-toggle">
+                  <div>Services</div>
+                  <div class="nav_dropdown-arrow w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 24 24" fill="none">
+                      <path d="M11.9997 13.1714L16.9495 8.22168L18.3637 9.63589L11.9997 15.9999L5.63574 9.63589L7.04996 8.22168L11.9997 13.1714Z" fill="currentColor"></path>
+                    </svg></div>
+                </div>
+                <nav class="nav_dropdown-list is-small w-dropdown-list">
+                  <div class="nav_dropdown-card">
+                    <div class="nav_dropdown-links">
+                      <a href="#" class="nav_dropdown-link w-inline-block">
+                        <div class="dropdown_icon-wrapper">
+                          <div class="icon-medium w-embed"><svg width="27" height="24" viewbox="0 0 27 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M0 6L13.5 0L27 6L13.5 12L0 6ZM4.875 9.84375L13.5 13.6406L22.0781 9.84375L27 12L13.5 18L0 12L4.875 9.84375ZM13.5 19.6406L22.0781 15.8438L27 18L13.5 24L0 18L4.875 15.8438L13.5 19.6406Z" fill="white"></path>
+                            </svg></div>
+                        </div>
+                        <div>
+                          <div class="row-3x-small">
+                            <div class="text-size-small text-weight-medium">Managed I.T.</div>
+                            <div class="icon-xsmall text-color-brand w-embed"><svg width="16" height="16" viewbox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10.7811 7.33327L7.20509 3.75726L8.14789 2.81445L13.3334 7.99993L8.14789 13.1853L7.20509 12.2425L10.7811 8.6666H2.66669V7.33327H10.7811Z" fill="currentColor"></path>
+                              </svg></div>
+                          </div>
+                          <div class="text-size-small text-color-tertiary">Leave your daily I.T. needs to us</div>
+                        </div>
+                      </a>
+                      <a href="#" class="nav_dropdown-link w-inline-block">
+                        <div class="dropdown_icon-wrapper">
+                          <div class="icon-medium w-embed"><svg width="27" height="24" viewbox="0 0 27 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M0 0H10.5V7.5H18V9.79688L12 12.0938V13.875C12 17.4844 13.5938 21.6094 16.9688 24H0V0ZM18 6H12V0L18 6ZM24.7031 14.6719L20.25 12.9375V21.6094C22.875 20.3906 24.4688 17.5312 24.7031 14.6719ZM20.25 24C15.75 22.5 13.5 17.9062 13.5 13.875V13.125L20.25 10.5L27 13.125V13.875C27 17.9062 24.75 22.5 20.25 24Z" fill="white"></path>
+                            </svg></div>
+                        </div>
+                        <div>
+                          <div class="row-3x-small">
+                            <div class="text-size-small text-weight-medium">Cybersecurity</div>
+                            <div class="icon-xsmall text-color-brand w-embed"><svg width="16" height="16" viewbox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10.7811 7.33327L7.20509 3.75726L8.14789 2.81445L13.3334 7.99993L8.14789 13.1853L7.20509 12.2425L10.7811 8.6666H2.66669V7.33327H10.7811Z" fill="currentColor"></path>
+                              </svg></div>
+                          </div>
+                          <div class="text-size-small text-color-tertiary">Processes that keep your data safe</div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </nav>
+              </div>
+              <a href="#" class="nav_link w-inline-block">
+                <div>News</div>
+              </a>
+              <a href="#" class="nav_link w-inline-block">
+                <div>Client Centre</div>
+              </a>
+            </div>
+          </nav>
+          <div class="nav_right">
+            <div class="hide-mobile-landscape">
+              <a href="#" class="button is-secondary-2 w-inline-block">
+                <div>Talk to a human</div>
+              </a>
+            </div>
+            <div class="nav_menu-button w-nav-button">
+              <div class="nav_menu-icon-wrapper">
+                <div class="icon-medium w-embed"><svg width="100%" height="100%" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2.75 12H21.25M2.75 5.75H21.25M2.75 18.25H11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="menu-code w-embed w-script">
+      <style>
+  /* Aplica a regra apenas para Tablet e Mobile (991px ou menor) */
+  @media screen and (max-width: 991px) {
+    .nav_menu {
+      /* 1. Sobrescreve o display:none nativo que quebra animações. 
+            Se o seu menu mobile usar Flexbox, troque para "display: flex !important;" */
+      display: block !important; 
+      /* 2. Esconde o menu visualmente e bloqueia cliques enquanto fechado */
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(-12px);
+      pointer-events: none;
+      /* 3. Curva de animação fluida (easing) */
+      transition: 
+        opacity 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), 
+        transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), 
+        visibility 0.4s !important;
+    }
+    /* 4. Classe que será injetada pelo JavaScript */
+    .nav_menu.is-smooth-open {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+  }
+</style>
+      <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const menuBtn = document.querySelector('.nav_menu-button');
+    const navMenu = document.querySelector('.nav_menu');
+    if (menuBtn && navMenu) {
+      menuBtn.addEventListener('click', () => {
+        // Alterna a classe de animação suave ao clicar no botão hambúrguer
+        navMenu.classList.toggle('is-smooth-open');
+      });
+    }
+  });
+</script>
+    </div>
+  </div>
+  <section class="hero-section">
+    <div class="rays-code w-embed"><canvas id="c" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;display:block;"></canvas></div>
+    <div class="div-block">
+      <div class="div-block-2">
+        <div class="div-block-4">
+          <div class="code-embed w-embed"><svg width="24" height="27" viewbox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1.24688 12.8438L0 13.2562L5.75625 18.3187C6.19688 19.6031 5.60625 19.9875 5.23125 20.6625L11.475 19.875L11.325 26.1562L12.6281 26.1281L12.3375 19.8844L18.5906 20.6344C18.2063 19.8188 17.8594 19.3875 18.2156 18.0844L23.9625 13.3031L22.9594 12.9281C22.1344 12.2906 23.3156 9.87187 23.4844 8.34375C23.4844 8.34375 20.1375 9.49688 19.9219 8.8875L19.0594 7.24688L16.0031 10.6031C15.675 10.6875 15.5344 10.5563 15.45 10.275L16.8563 3.2625L14.625 4.51875C14.4375 4.60312 14.25 4.52812 14.1375 4.3125L11.9813 0L9.76875 4.48125C9.6 4.64063 9.43125 4.65938 9.3 4.54688L7.15313 3.35625L8.4375 10.3031C8.33438 10.5844 8.09063 10.6594 7.80938 10.5094L4.88438 7.2C4.50938 7.80938 4.24688 8.80313 3.74063 9.02813C3.23438 9.24375 1.5375 8.60625 0.403126 8.37188C0.796876 9.75938 1.99688 12.0844 1.24688 12.8438Z" fill="white"></path>
+            </svg></div>
+          <div>British Columbia, CA</div>
+        </div>
+        <h1 class="hero-title">I.T. Services for Businesses Across the Lower Mainland</h1>
+        <div class="h1-code w-embed w-script"><!--  =====================================================
+     DecryptedText — Wave smooth, com fix de quebra de linha
+     Cola no Footer Code do Webflow
+     =====================================================  -->
+          <style>
+  #p-hero, #b-hero { opacity: 0; }
+</style>
+          <script>
+(function () {
+  var CONFIG = {
+    selector:      ".hero-title",
+    animateOn:     "view",    // "view" | "hover" | "click"
+    clickMode:     "once",    // "once" | "toggle"
+    duration:      1400,      // ms total da animação
+    windowSize:    6,         // quantos chars estão "scramblando" ao mesmo tempo
+    characters:    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
+    tickMs:        30,        // ms entre cada re-render do scramble
+  };
+  function init() {
+    var el = document.querySelector(CONFIG.selector);
+    if (!el) return;
+    var text = el.textContent.trim();
+    el.setAttribute("aria-label", text);
+    el.textContent = "";
+    var chars = CONFIG.characters.split("");
+    var spans = [];
+    /* --- INÍCIO DA CORREÇÃO --- */
+    /* Divide o texto em palavras pelo espaço */
+    var words = text.split(" ");
+    words.forEach(function(word, wordIndex) {
+      /* Cria um container invisível para obrigar as letras a ficarem na mesma linha */
+      var wordContainer = document.createElement("span");
+      wordContainer.style.display = "inline-block";
+      wordContainer.style.whiteSpace = "nowrap";
+      /* Cria o span de cada letra e coloca DENTRO do wordContainer */
+      word.split("").forEach(function(c) {
+        var s = document.createElement("span");
+        s.style.display   = "inline-block";
+        s.style.whiteSpace = "pre";
+        s.textContent     = c;
+        wordContainer.appendChild(s);
+        spans.push(s);
+      });
+      /* Adiciona a palavra inteira ao elemento principal */
+      el.appendChild(wordContainer);
+      /* Adiciona o caractere de espaço de volta, se não for a última palavra */
+      if (wordIndex < words.length - 1) {
+        var spaceSpan = document.createElement("span");
+        spaceSpan.style.display = "inline-block";
+        spaceSpan.style.whiteSpace = "pre";
+        spaceSpan.textContent = " ";
+        el.appendChild(spaceSpan);
+        spans.push(spaceSpan);
+      }
+    });
+    /* --- FIM DA CORREÇÃO --- */
+    /* Trava largura após layout */
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        spans.forEach(function(s, i) {
+          if (text[i] !== " ") {
+            var w = s.getBoundingClientRect().width;
+            s.style.width     = w + "px";
+            s.style.textAlign = "center";
+          }
+        });
+        reset();
+        setupTriggers();
+      });
+    });
+    var rafId      = null;
+    var tickId     = null;
+    var isAnimating = false;
+    var isDecrypted = false;
+    var hasAnimated = false;
+    function rand() { return chars[Math.floor(Math.random() * chars.length)]; }
+    /* Estado visual de cada char:
+       "hidden"    → opacity 0, char original
+       "scramble"  → opacity 1, char aleatório
+       "revealed"  → opacity 1, char original        */
+    function reset() {
+      spans.forEach(function(s, i) {
+        s.style.opacity = "0";
+        s.textContent   = text[i];
+      });
+      isDecrypted = false;
+    }
+    function revealAll() {
+      stopAnim();
+      spans.forEach(function(s, i) {
+        s.style.opacity = "1";
+        s.textContent   = text[i];
+      });
+      isDecrypted = true;
+      isAnimating  = false;
+    }
+    function stopAnim() {
+      if (rafId)  { cancelAnimationFrame(rafId); rafId = null; }
+      if (tickId) { clearInterval(tickId); tickId = null; }
+    }
+    /* ── Animação principal: onda deslizante ── */
+    function triggerDecrypt() {
+      if (isAnimating) return;
+      isAnimating = true;
+      var len      = text.length;
+      /* Progresso: 0 → len+windowSize (frente da onda chega ao fim) */
+      var total    = len + CONFIG.windowSize;
+      var start    = performance.now();
+      tickId = setInterval(function() {
+        var elapsed  = performance.now() - start;
+        var progress = Math.min(elapsed / CONFIG.duration, 1);
+        /* frente da onda (índice do último char ainda scramblando) */
+        var front    = Math.round(progress * total);
+        spans.forEach(function(s, i) {
+          if (i < front - CONFIG.windowSize) {
+            /* já passou → revelado */
+            s.textContent   = text[i];
+            s.style.opacity = "1";
+          } else if (i < front) {
+            /* dentro da janela → scramble */
+            s.textContent   = text[i] === " " ? " " : rand();
+            s.style.opacity = "0.3";
+          } else {
+            /* ainda não chegou → invisível */
+            s.textContent   = text[i];
+            s.style.opacity = "0";
+          }
+        });
+        if (progress >= 1) {
+          stopAnim();
+          revealAll();
+          fadeInHeroElements();
+        }
+      }, CONFIG.tickMs);
+    }
+    function triggerReverse() {
+      if (isAnimating) return;
+      isAnimating = true;
+      var len   = text.length;
+      var total = len + CONFIG.windowSize;
+      var start = performance.now();
+      tickId = setInterval(function() {
+        var elapsed  = performance.now() - start;
+        var progress = Math.min(elapsed / CONFIG.duration, 1);
+        var front    = Math.round(progress * total);
+        spans.forEach(function(s, i) {
+          var ri = len - 1 - i; /* índice invertido */
+          if (ri < front - CONFIG.windowSize) {
+            s.textContent   = text[i];
+            s.style.opacity = "0";
+          } else if (ri < front) {
+            s.textContent   = text[i] === " " ? " " : rand();
+            s.style.opacity = "0.3";
+          } else {
+            s.textContent   = text[i];
+            s.style.opacity = "1";
+          }
+        });
+        if (progress >= 1) {
+          stopAnim();
+          reset();
+          isAnimating = false;
+        }
+      }, CONFIG.tickMs);
+    }
+    function fadeInHeroElements() {
+      ["#p-hero", "#b-hero"].forEach(function(sel, i) {
+        var el = document.querySelector(sel);
+        if (!el) return;
+        el.style.opacity    = "0";
+        el.style.transition = "opacity 600ms ease";
+        setTimeout(function() {
+          el.style.opacity = "1";
+        }, i * 150); /* #p-hero aparece primeiro, #b-hero 150ms depois */
+      });
+    }
+    /* ── Gatilhos ─────────────────────────────────── */
+    function setupTriggers() {
+      if (CONFIG.animateOn === "view") {
+        new IntersectionObserver(function(entries) {
+          entries.forEach(function(e) {
+            if (e.isIntersecting && !hasAnimated) {
+              hasAnimated = true;
+              triggerDecrypt();
+            }
+          });
+        }, { threshold: 0.1 }).observe(el);
+      }
+      if (CONFIG.animateOn === "hover") {
+        el.addEventListener("mouseenter", function() {
+          stopAnim(); isAnimating = false;
+          reset(); triggerDecrypt();
+        });
+        el.addEventListener("mouseleave", function() {
+          stopAnim(); isAnimating = false;
+          revealAll();
+        });
+      }
+      if (CONFIG.animateOn === "click") {
+        el.style.cursor = "pointer";
+        reset();
+        el.addEventListener("click", function() {
+          if (isAnimating) return;
+          if (CONFIG.clickMode === "toggle") {
+            isDecrypted ? triggerReverse() : triggerDecrypt();
+          } else {
+            if (!isDecrypted) triggerDecrypt();
+          }
+        });
+      }
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+        </div>
+        <div class="div-block-3">
+          <p id="p-hero" class="paragraph-hero">We are proud to serve customers in Abbotsford, Chilliwack, Langley, Surrey, Richmond, Mission, Maple Ridge, Coquitlam, Burnaby and beyond.</p>
+        </div>
+        <div class="div-block-5">
+          <a href="#" id="b-hero" class="hero-button w-inline-block">
+            <div>Talk to a human</div>
+            <div class="code-embed-2 w-embed"><svg width="11" height="11" viewbox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.3125 0H10.0625V0.75V8.25V9H8.5625V8.25V2.5625L1.59375 9.53125L1.0625 10.0625L0 9L0.53125 8.46875L7.5 1.5H1.8125H1.0625V0H1.8125H9.3125Z" fill="currentColor"></path>
+              </svg></div>
+            <div class="btn-code w-embed"><!--  =====================================================
+     Hover effect — .button#b-hero
+     Cola no Footer Code do Webflow, após os outros scripts
+     =====================================================  -->
+              <style>
+  /* Base: garante que a transição parte de um estado definido */
+  #b-hero,
+  .hero-button {
+    position: relative;
+    overflow: hidden;
+    transition:
+      color           320ms ease,
+      background-color 320ms ease,
+      border-color    320ms ease,
+      transform       320ms ease;
+    will-change: transform;
+  }
+  /* Linha inferior que desliza da esquerda para a direita no hover */
+  #b-hero::after,
+  .hero-button::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.35;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 380ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  #b-hero:hover::after,
+  .hero-button:hover::after {
+    transform: scaleX(1);
+  }
+  /* Leve elevação — coerente com o movimento dos raios */
+  #b-hero:hover,
+  .hero-button:hover {
+    transform: translateY(-2px);
+  }
+  /* Seta dentro do botão desliza levemente para a direita */
+  #b-hero:hover .code-embed-2,
+  .hero-button:hover .code-embed-2 {
+    transform: translate(3px, -3px);
+    transition: transform 320ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  #b-hero .code-embed-2,
+  .hero-button .code-embed-2 {
+    transition: transform 320ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  /* Estado ativo: volta levemente */
+  #b-hero:active,
+  .hero-button:active {
+    transform: translateY(0px);
+    transition-duration: 100ms;
+  }
+</style>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=6a07609435e8fb3e96b8c9cc" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="../js/webflow.js" type="text/javascript"></script>
+  <script src="https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js" type="text/javascript"></script>
+  <script src="https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js" type="text/javascript"></script>
+  <script src="https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js" type="text/javascript"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <script>
+  const lenis = new Lenis({
+    duration: 1.2, // Controla a duração (peso) da rolagem. Aumente para mais lento, diminua para mais rápido.
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Curva de aceleração
+    direction: 'vertical',
+    gestureDirection: 'vertical',
+    smooth: true,
+    mouseMultiplier: 1,
+    smoothTouch: false, // Recomendado manter falso para preservar a UX nativa de toque no mobile
+    touchMultiplier: 2,
+    infinite: false,
+  });
+  // Conecta o Lenis ao RequestAnimationFrame do navegador
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+</script>
+  <script>
+  const CONFIG = {
+    raysColor:      '#c8c8c8',
+    raysOrigin:     'top-center',
+    raysSpeed:      1.2,
+    lightSpread:    0.65,
+    rayLength:      1.4,
+    fadeDistance:   0.95,
+    saturation:     0.15,
+    followMouse:    true,
+    mouseInfluence: 0.12,
+    noiseAmount:    0.08,
+    distortion:     0.04,
+    pulsating:      false,
+    // pattern da marca como "verniz localizado": só aparece onde a luz toca
+    patternUrl:        'https://cdn.prod.website-files.com/6a07609435e8fb3e96b8c9cc/6a078a822340d53f3586debe_cd2622ed5d4ed248cc187b39ceda5a69_pattern.svg',
+    patternIntensity:  0.4,   // brilho do verniz (0 desliga o efeito)
+    patternThreshold:  0.06,  // limiar de luz abaixo do qual o pattern fica invisível
+    patternSoftness:   0.7,   // suavidade da transição do limiar (0..1)
+    patternGamma:      2.2,   // curva de resposta; >1 = highlights mais "puxados"
+    patternMaxTexSize: 2048,  // resolução máx. da rasterização do SVG (px no maior lado)
+    // "relevo" do verniz: borda do path reage diferente do preenchimento
+    reliefIntensity:   0.55,  // intensidade do brilho de borda (0 desliga)
+    reliefRadius:      3.5,   // raio de amostragem do gradiente em pixels (maior = mais soft/largo)
+    reliefGamma:       1.3,   // curva de resposta do relevo (>1 destaca picos)
+  };
+  const canvas = document.getElementById('c');
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  const hexToRgb = h => {
+    const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(h);
+    return m ? [parseInt(m[1],16)/255, parseInt(m[2],16)/255, parseInt(m[3],16)/255] : [1,1,1];
+  };
+  const getAnchorAndDir = (origin, w, h) => {
+    const o = 0.2;
+    const map = {
+      'top-center':    { anchor:[w*.5,-o*h],       dir:[0,1]  },
+      'top-left':      { anchor:[0,-o*h],           dir:[0,1]  },
+      'top-right':     { anchor:[w,-o*h],           dir:[0,1]  },
+      'left':          { anchor:[-o*w,h*.5],        dir:[1,0]  },
+      'right':         { anchor:[(1+o)*w,h*.5],     dir:[-1,0] },
+      'bottom-center': { anchor:[w*.5,(1+o)*h],     dir:[0,-1] },
+      'bottom-left':   { anchor:[0,(1+o)*h],        dir:[0,-1] },
+      'bottom-right':  { anchor:[w,(1+o)*h],        dir:[0,-1] },
+    };
+    return map[origin] || map['top-center'];
+  };
+  const vert = `
+  attribute vec2 position;
+  void main() { gl_Position = vec4(position, 0.0, 1.0); }
+  `;
+  const frag = `
+  precision highp float;
+  uniform float iTime;
+  uniform vec2  iResolution;
+  uniform vec2  rayPos;
+  uniform vec2  rayDir;
+  uniform vec3  raysColor;
+  uniform float raysSpeed;
+  uniform float lightSpread;
+  uniform float rayLength;
+  uniform float pulsating;
+  uniform float fadeDistance;
+  uniform float saturation;
+  uniform vec2  mousePos;
+  uniform float mouseInfluence;
+  uniform float noiseAmount;
+  uniform float distortion;
+  uniform sampler2D iPattern;
+  uniform vec2  iPatternSize;
+  uniform float iPatternReady;
+  uniform float patternIntensity;
+  uniform float patternThreshold;
+  uniform float patternSoftness;
+  uniform float patternGamma;
+  uniform float reliefIntensity;
+  uniform float reliefRadius;
+  uniform float reliefGamma;
+  float noise(vec2 st) {
+    return fract(sin(dot(st, vec2(12.9898, 78.233))) * 43758.5453);
+  }
+float rayStrength(vec2 src, vec2 refDir, vec2 coord, float sA, float sB, float spd) {
+  vec2 d  = coord - src;
+  vec2 dn = normalize(d);
+  float c  = dot(dn, refDir);
+  float dc = c + distortion * sin(iTime * 2.0 + length(d) * 0.01) * 0.2;
+  float sf = pow(max(dc, 0.0), 1.0 / max(lightSpread, 0.001));
+  float dist = length(d);
+  // referência adaptativa: usa o maior lado do canvas para a luz alcançar a altura
+  // inteira em portrait/mobile sem encurtar landscape/desktop
+  float refDim = max(iResolution.x, iResolution.y);
+  float maxD = refDim * rayLength;
+  float lf = clamp((maxD - dist) / maxD, 0.0, 1.0);
+  float fadeD = refDim * fadeDistance;
+  float ff = clamp((fadeD - dist) / fadeD, 0.5, 1.0);
+    float pulse = pulsating > 0.5 ? (0.8 + 0.2 * sin(iTime * spd * 3.0)) : 1.0;
+    float bs = clamp(
+      (0.45 + 0.15 * sin(dc * sA + iTime * spd)) +
+      (0.30 + 0.20 * cos(-dc * sB + iTime * spd)),
+      0.0, 1.0
+    );
+    return bs * lf * ff * sf * pulse;
+  }
+  void main() {
+    vec2 coord = vec2(gl_FragCoord.x, iResolution.y - gl_FragCoord.y);
+    vec2 frd = rayDir;
+    if (mouseInfluence > 0.0) {
+      vec2 ms = mousePos * iResolution.xy;
+      frd = normalize(mix(rayDir, normalize(ms - rayPos), mouseInfluence));
+    }
+    float s1 = rayStrength(rayPos, frd, coord, 36.2214, 21.11349, 1.5 * raysSpeed);
+    float s2 = rayStrength(rayPos, frd, coord, 22.3991, 18.02340, 1.1 * raysSpeed);
+    vec4 r1 = vec4(1.0) * s1;
+    vec4 r2 = vec4(1.0) * s2;
+    vec4 col = r1 * 0.5 + r2 * 0.4;
+    // intensidade bruta da luz (antes da coloração) usada como máscara do verniz
+    float lit = clamp(s1 * 0.5 + s2 * 0.4, 0.0, 1.0);
+    if (noiseAmount > 0.0) {
+      float n = noise(coord * 0.01 + iTime * 0.1);
+      col.rgb *= (1.0 - noiseAmount + noiseAmount * n);
+    }
+    float br = 1.0 - (coord.y / iResolution.y);
+    col.r *= 0.1 + br * 0.8;
+    col.g *= 0.3 + br * 0.6;
+    col.b *= 0.5 + br * 0.5;
+    if (saturation != 1.0) {
+      float gray = dot(col.rgb, vec3(0.299, 0.587, 0.114));
+      col.rgb = mix(vec3(gray), col.rgb, saturation);
+    }
+    col.rgb *= raysColor;
+    if (iPatternReady > 0.5 && (patternIntensity > 0.0 || reliefIntensity > 0.0)) {
+      vec2 uv = gl_FragCoord.xy / iResolution.xy;
+      float ca = iResolution.x / iResolution.y;
+      float ia = iPatternSize.x / iPatternSize.y;
+      vec2 cov = (ca > ia) ? vec2(1.0, ia / ca) : vec2(ca / ia, 1.0);
+      float mask = texture2D(iPattern, (uv - 0.5) * cov + 0.5).a;
+      float soft = max(patternSoftness, 0.001);
+      float t = smoothstep(patternThreshold, patternThreshold + soft, lit);
+      float shine = pow(t, patternGamma) * mask * patternIntensity;
+      if (reliefIntensity > 0.0) {
+        vec2 px = 1.0 / iResolution.xy;
+        vec2 ox = vec2(px.x * reliefRadius, 0.0);
+        vec2 oy = vec2(0.0, px.y * reliefRadius);
+        float aR = texture2D(iPattern, ((uv + ox) - 0.5) * cov + 0.5).a;
+        float aL = texture2D(iPattern, ((uv - ox) - 0.5) * cov + 0.5).a;
+        float aU = texture2D(iPattern, ((uv + oy) - 0.5) * cov + 0.5).a;
+        float aD = texture2D(iPattern, ((uv - oy) - 0.5) * cov + 0.5).a;
+        vec2 grad = vec2(aR - aL, aU - aD) * 0.5;
+        vec2 rayPosUv = vec2(rayPos.x, iResolution.y - rayPos.y) / iResolution.xy;
+        vec2 L = normalize(uv - rayPosUv);
+        float edge = length(grad);
+        float facing = clamp(dot(L, grad) / max(edge, 1e-5), 0.0, 1.0);
+        float relief = edge * facing;
+        shine += pow(t, reliefGamma) * relief * reliefIntensity;
+      }
+      col.rgb += vec3(shine);
+      col.a   += shine;
+    }
+    gl_FragColor = col;
+  }
+  `;
+  function compile(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+      console.error('Shader error:', gl.getShaderInfoLog(s));
+    }
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, compile(gl.VERTEX_SHADER, vert));
+  gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, frag));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+  const posLoc = gl.getAttribLocation(prog, 'position');
+  gl.enableVertexAttribArray(posLoc);
+  gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+  const U = {};
+  ['iTime','iResolution','rayPos','rayDir','raysColor','raysSpeed','lightSpread',
+   'rayLength','pulsating','fadeDistance','saturation','mousePos','mouseInfluence',
+   'noiseAmount','distortion',
+   'iPattern','iPatternSize','iPatternReady',
+   'patternIntensity','patternThreshold','patternSoftness','patternGamma',
+   'reliefIntensity','reliefRadius','reliefGamma'
+  ].forEach(n => U[n] = gl.getUniformLocation(prog, n));
+  const patternTex = gl.createTexture();
+  gl.activeTexture(gl.TEXTURE0);
+  gl.bindTexture(gl.TEXTURE_2D, patternTex);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0,0,0,0]));
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.uniform1i(U.iPattern, 0);
+  gl.uniform2f(U.iPatternSize, 1.0, 1.0);
+  gl.uniform1f(U.iPatternReady, 0.0);
+  if (CONFIG.patternUrl) {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      const natW = img.naturalWidth  || 1024;
+      const natH = img.naturalHeight || 576;
+      const aspect = (natW > 0 && natH > 0) ? (natW / natH) : (1024 / 576);
+      const maxSide = CONFIG.patternMaxTexSize || 2048;
+      const tw = aspect >= 1 ? maxSide : Math.max(1, Math.round(maxSide * aspect));
+      const th = aspect >= 1 ? Math.max(1, Math.round(maxSide / aspect)) : maxSide;
+      const c2d = document.createElement('canvas');
+      c2d.width = tw;
+      c2d.height = th;
+      const ctx = c2d.getContext('2d');
+      ctx.clearRect(0, 0, tw, th);
+      ctx.drawImage(img, 0, 0, tw, th);
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, patternTex);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+      gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, c2d);
+      gl.uniform2f(U.iPatternSize, tw, th);
+      gl.uniform1f(U.iPatternReady, 1.0);
+    };
+    img.onerror = () => console.warn('pattern não carregou:', CONFIG.patternUrl);
+    img.src = CONFIG.patternUrl;
+  }
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  function resize() {
+    const W = window.innerWidth;
+    const H = window.innerHeight;
+    canvas.width  = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width  = W + 'px';
+    canvas.style.height = H + 'px';
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.uniform2f(U.iResolution, canvas.width, canvas.height);
+    const { anchor, dir } = getAnchorAndDir(CONFIG.raysOrigin, canvas.width, canvas.height);
+    gl.uniform2fv(U.rayPos, anchor);
+    gl.uniform2fv(U.rayDir, dir);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+  gl.uniform3fv(U.raysColor,       hexToRgb(CONFIG.raysColor));
+  gl.uniform1f(U.raysSpeed,        CONFIG.raysSpeed);
+  gl.uniform1f(U.lightSpread,      CONFIG.lightSpread);
+  gl.uniform1f(U.rayLength,        CONFIG.rayLength);
+  gl.uniform1f(U.pulsating,        CONFIG.pulsating ? 1 : 0);
+  gl.uniform1f(U.fadeDistance,     CONFIG.fadeDistance);
+  gl.uniform1f(U.saturation,       CONFIG.saturation);
+  gl.uniform1f(U.mouseInfluence,   CONFIG.mouseInfluence);
+  gl.uniform1f(U.noiseAmount,      CONFIG.noiseAmount);
+  gl.uniform1f(U.distortion,       CONFIG.distortion);
+  gl.uniform1f(U.patternIntensity, CONFIG.patternIntensity);
+  gl.uniform1f(U.patternThreshold, CONFIG.patternThreshold);
+  gl.uniform1f(U.patternSoftness,  CONFIG.patternSoftness);
+  gl.uniform1f(U.patternGamma,     CONFIG.patternGamma);
+  gl.uniform1f(U.reliefIntensity,  CONFIG.reliefIntensity);
+  gl.uniform1f(U.reliefRadius,     CONFIG.reliefRadius);
+  gl.uniform1f(U.reliefGamma,      CONFIG.reliefGamma);
+  gl.uniform2f(U.mousePos, 0.5, 0.5);
+const mouse = { x: 0.5, y: 0.5 };
+const smooth = { x: 0.5, y: 0.5 };
+if (CONFIG.followMouse) {
+  const setPointer = (cx, cy) => {
+    mouse.x = cx / window.innerWidth;
+    mouse.y = cy / window.innerHeight;
+  };
+  window.addEventListener('mousemove', e => setPointer(e.clientX, e.clientY));
+  // suporte a toque no mobile sem bloquear o scroll (passive)
+  const onTouch = e => {
+    if (e.touches && e.touches.length > 0) setPointer(e.touches[0].clientX, e.touches[0].clientY);
+  };
+  window.addEventListener('touchstart', onTouch, { passive: true });
+  window.addEventListener('touchmove',  onTouch, { passive: true });
+}
+  gl.enable(gl.BLEND);
+  gl.blendFunc(gl.ONE, gl.ONE);
+  function loop(t) {
+    gl.uniform1f(U.iTime, t * 0.001);
+    if (CONFIG.followMouse) {
+      smooth.x = smooth.x * 0.92 + mouse.x * 0.08;
+      smooth.y = smooth.y * 0.92 + mouse.y * 0.08;
+      gl.uniform2f(U.mousePos, smooth.x, smooth.y);
+    }
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+  </script>
+</body>
+</html>

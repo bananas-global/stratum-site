@@ -1,0 +1,149 @@
+import type { ReactNode } from "react";
+import { BracketLabel, Button, SectionHeader } from "./ui";
+
+/* ── Page hero (inner pages) ──────────────────────────────── */
+export function Breadcrumb({ items }: { items: { label: string; href?: string }[] }) {
+  return (
+    <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm text-ink-faint">
+      {items.map((it, i) => (
+        <span key={it.label} className="flex items-center gap-2">
+          {it.href ? (
+            <a href={it.href} className="transition-colors hover:text-ink-bright">
+              {it.label}
+            </a>
+          ) : (
+            <span className="text-ink-dim">{it.label}</span>
+          )}
+          {i < items.length - 1 && <span className="opacity-50">›</span>}
+        </span>
+      ))}
+    </nav>
+  );
+}
+
+export function PageHero({
+  breadcrumb,
+  eyebrow,
+  title,
+  lede,
+  children,
+}: {
+  breadcrumb: { label: string; href?: string }[];
+  eyebrow: string;
+  title: ReactNode;
+  lede: ReactNode;
+  children?: ReactNode;
+}) {
+  return (
+    <section className="relative overflow-hidden pb-16 pt-40 md:pb-20 md:pt-48">
+      {/* ambient brand glow */}
+      <div className="pointer-events-none absolute -top-40 left-1/2 h-[40rem] w-[40rem] -translate-x-1/2 rounded-full bg-brand/10 blur-[120px]" />
+      <div className="container relative flex flex-col gap-6">
+        <div data-reveal>
+          <Breadcrumb items={breadcrumb} />
+        </div>
+        <div data-reveal data-reveal-delay="0.05" className="mt-2">
+          <BracketLabel>{eyebrow}</BracketLabel>
+        </div>
+        <h1 data-reveal data-reveal-delay="0.1" className="display-1 max-w-4xl text-ink-bright">
+          {title}
+        </h1>
+        <p data-reveal data-reveal-delay="0.16" className="max-w-2xl text-xl font-light leading-relaxed text-ink-dim">
+          {lede}
+        </p>
+        {children && (
+          <div data-reveal data-reveal-delay="0.22" className="mt-4">
+            {children}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+/* ── Scope grid (label + small subtext) ───────────────────── */
+export function ScopeGrid({ items, cols = 3 }: { items: { label: string; sub: string }[]; cols?: 2 | 3 | 4 }) {
+  const colCls = cols === 2 ? "md:grid-cols-2" : cols === 4 ? "md:grid-cols-2 lg:grid-cols-4" : "md:grid-cols-3";
+  return (
+    <div className={`grid gap-px overflow-hidden rounded-md border border-line-soft bg-line-soft ${colCls}`}>
+      {items.map((it) => (
+        <div key={it.label} className="flex flex-col gap-2 bg-surface p-6">
+          <span className="font-medium text-ink-bright">{it.label}</span>
+          <span className="text-sm leading-relaxed text-ink-dim">{it.sub}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ── Feature card grid (heading + body) ───────────────────── */
+export function FeatureGrid({
+  items,
+  cols = 3,
+}: {
+  items: { title: string; body: ReactNode }[];
+  cols?: 2 | 3 | 4;
+}) {
+  const colCls = cols === 2 ? "md:grid-cols-2" : cols === 4 ? "sm:grid-cols-2 lg:grid-cols-4" : "md:grid-cols-3";
+  return (
+    <div className={`grid gap-4 ${colCls}`}>
+      {items.map((it) => (
+        <div key={it.title} className="card flex flex-col gap-3">
+          <span className="mt-1 h-2 w-2 rounded-full bg-brand" />
+          <h3 className="font-display text-2xl text-ink-bright">{it.title}</h3>
+          <p className="text-sm leading-relaxed text-ink-dim">{it.body}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ── Numbered process steps ───────────────────────────────── */
+export function HowSteps({ steps }: { steps: { n: string; title: string; body: string }[] }) {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {steps.map((s) => (
+        <div key={s.n} className="flex flex-col gap-4 rounded-md border border-line-soft bg-surface p-6">
+          <span className="font-display text-3xl text-brand-light">{s.n}</span>
+          <h3 className="font-display text-2xl text-ink-bright">{s.title}</h3>
+          <p className="text-sm leading-relaxed text-ink-dim">{s.body}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ── Outcome / stat strip ─────────────────────────────────── */
+export function OutcomeStrip({ items }: { items: { value: string; label: string; sub?: string }[] }) {
+  return (
+    <div className="grid gap-px overflow-hidden rounded-md border border-line-soft bg-line-soft sm:grid-cols-3">
+      {items.map((it) => (
+        <div key={it.label} className="flex flex-col gap-1 bg-surface p-8">
+          <span className="font-display text-5xl text-ink-bright">{it.value}</span>
+          <span className="mt-2 font-medium text-ink">{it.label}</span>
+          {it.sub && <span className="text-sm text-ink-faint">{it.sub}</span>}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ── Generic band wrapper ─────────────────────────────────── */
+export function Band({
+  tone = "default",
+  children,
+  className = "",
+}: {
+  tone?: "default" | "surface" | "dark";
+  children: ReactNode;
+  className?: string;
+}) {
+  const bg = tone === "surface" ? "bg-surface" : tone === "dark" ? "bg-black" : "bg-bg";
+  return (
+    <section className={`section ${bg} ${className}`.trim()}>
+      <div className="container flex flex-col gap-12">{children}</div>
+    </section>
+  );
+}
+
+export { SectionHeader, Button };

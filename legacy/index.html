@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ─── Primary SEO ─── -->
+  <title>Stratum | Managed IT &amp; Cybersecurity for Growing Businesses</title>
+  <meta name="description" content="Stratum is a technology company for growing organizations — structured service across support, continuity, and the systems that move your business forward.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="author" content="Stratum Technology">
+  <meta name="theme-color" content="#2C2B28">
+  <meta name="geo.region" content="CA-BC">
+  <meta name="geo.placename" content="Canada">
+  <link rel="canonical" href="https://stratumtech.ca/">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- ─── Open Graph ─── -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Stratum">
+  <meta property="og:title" content="Stratum | Managed IT &amp; Cybersecurity for Growing Businesses">
+  <meta property="og:description" content="Technology built for what's next — structured service across support, continuity, and business systems.">
+  <meta property="og:url" content="https://stratumtech.ca/">
+  <meta property="og:locale" content="en_CA">
+  <meta property="og:image" content="https://stratumtech.ca/og-image.png">
+  <meta property="og:image:alt" content="Stratum — Managed IT &amp; Cybersecurity for Growing Businesses">
+
+  <!-- ─── Twitter Card ─── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Stratum | Managed IT &amp; Cybersecurity for Growing Businesses">
+  <meta name="twitter:description" content="Technology built for what's next — structured service for growing organizations.">
+  <meta name="twitter:image" content="https://stratumtech.ca/og-image.png">
+
+  <!-- ─── Fonts ─── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- ─── Structured Data: Organization + Local Business + WebSite ─── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://stratumtech.ca/#organization",
+        "name": "Stratum",
+        "legalName": "Stratum Technology",
+        "url": "https://stratumtech.ca/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://stratumtech.ca/favicon.svg",
+          "width": 544,
+          "height": 72
+        },
+        "description": "Technology company for growing organizations — structured service across support, continuity, and business systems.",
+        "telephone": "+1-855-200-0076",
+        "areaServed": { "@type": "Country", "name": "Canada" },
+        "contactPoint": [
+          {
+            "@type": "ContactPoint",
+            "telephone": "+1-855-200-0076",
+            "contactType": "customer service",
+            "areaServed": "CA",
+            "availableLanguage": ["English"]
+          }
+        ]
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://stratumtech.ca/#localbusiness",
+        "name": "Stratum",
+        "url": "https://stratumtech.ca/",
+        "telephone": "+1-855-200-0076",
+        "priceRange": "$$",
+        "image": "https://stratumtech.ca/og-image.png",
+        "description": "Structured technology services for growing organizations.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "CA"
+        },
+        "areaServed": { "@type": "Country", "name": "Canada" },
+        "knowsAbout": [
+          "Managed IT Services",
+          "Cybersecurity",
+          "Business Systems",
+          "ERP",
+          "CRM",
+          "Backup and Disaster Recovery",
+          "Microsoft 365",
+          "Network and Infrastructure",
+          "Proactive Maintenance"
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Stratum Services",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Managed IT",
+                "description": "Ongoing support, maintenance, monitoring, and oversight of the systems your business depends on every day."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Cybersecurity",
+                "description": "Layered protection, recovery readiness, and clearer control across users, endpoints, backups, and access."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Business Systems",
+                "description": "ERP, CRM, automation, and AI enablement aligned with how your business actually operates."
+              }
+            }
+          ]
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://stratumtech.ca/#website",
+        "url": "https://stratumtech.ca/",
+        "name": "Stratum",
+        "inLanguage": "en-CA",
+        "publisher": { "@id": "https://stratumtech.ca/#organization" }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ─── Design System ─── -->
+  <link rel="stylesheet" href="design-system.css">
+  <script src="stratum-base.js"></script>
+
+
+  <!-- ─── Page-specific styles: Homepage ─── -->
+  <style>
+    /* ══════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════ */
+    .hero {
+      padding: 100px 0 80px;
+    }
+
+    .hero-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 64px;
+      margin-bottom: 20px;
+      max-width: 22ch;
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      line-height: 1.65;
+      margin-bottom: 36px;
+      max-width: 54ch;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .hero-phone {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text);
+      text-decoration: none;
+      border-bottom: 1.5px solid var(--color-border);
+      padding-bottom: 2px;
+      transition: border-color .15s, color .15s;
+    }
+
+    .hero-phone:hover {
+      color: var(--color-accent);
+      border-color: var(--color-accent);
+    }
+
+    /* ══════════════════════════════════════════
+       TRUST BAR
+    ══════════════════════════════════════════ */
+    .trust-bar {
+      padding: 32px 0;
+      background: var(--color-white);
+    }
+
+    .trust-bar-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      text-align: center;
+    }
+
+    .trust-bar-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--color-wire);
+      white-space: nowrap;
+    }
+
+    .trust-logos {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .trust-logo-slot {
+      height: 28px;
+      width: 90px;
+      border-radius: 3px;
+    }
+
+    /* ══════════════════════════════════════════
+       5S BRAND PILLARS
+    ══════════════════════════════════════════ */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1px;
+      background: var(--color-border);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-top: 48px;
+    }
+
+    .pillar-card {
+      background: var(--color-white);
+      padding: 32px 24px;
+    }
+
+    .pillar-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--color-accent-lt);
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    .pillar-card h3 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .pillar-card p {
+      font-size: 13px;
+      max-width: 100%;
+    }
+
+
+    /* ══════════════════════════════════════════
+       INDUSTRIES
+    ══════════════════════════════════════════ */
+    .industries-section {
+      background: var(--color-white);
+    }
+
+    .industries-left h2 {
+      font-size: 36px;
+    }
+
+    .industries-layout {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .industries-list {
+      list-style: none;
+      margin-top: 32px;
+    }
+
+    .industries-list li {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--color-border);
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: color .12s;
+    }
+
+    .industries-list li:hover { color: var(--color-accent); }
+
+    .industry-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-border);
+      flex-shrink: 0;
+    }
+
+    .industries-list li.active .industry-dot {
+      background: var(--color-accent);
+    }
+
+    .industries-list li.active {
+      color: var(--color-text);
+      font-weight: 600;
+    }
+
+    .industry-arrow {
+      margin-left: auto;
+      color: var(--color-wire);
+      font-size: 13px;
+      transition: transform .15s, color .15s;
+    }
+
+    .industries-list li.active .industry-arrow,
+    .industries-list li:hover .industry-arrow {
+      color: var(--color-accent);
+      transform: translateX(3px);
+    }
+
+    .industries-detail {
+      padding-top: 32px;
+      position: relative;
+    }
+
+    .industry-panel {
+      display: none;
+      animation: panelIn .2s ease;
+    }
+
+    .industry-panel.active {
+      display: block;
+    }
+
+    @keyframes panelIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .industry-detail-visual {
+      height: 280px;
+      border-radius: var(--radius);
+      margin-bottom: 28px;
+    }
+
+    .industry-detail-title {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--color-text);
+    }
+
+    .industry-detail-desc {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--color-text-muted);
+      max-width: 54ch;
+      margin-bottom: 20px;
+    }
+
+    .industry-detail-points {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .industry-detail-points li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+
+    .industry-detail-points li::before {
+      content: "";
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    .industry-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    /* ══════════════════════════════════════════
+       POSITIONING / MISSING MIDDLE
+    ══════════════════════════════════════════ */
+    .positioning-section {
+      background: var(--color-text);
+      color: var(--color-white);
+    }
+
+    .positioning-section h4 {
+      color: rgba(255,255,255,.4);
+    }
+
+    .positioning-section h2 {
+      color: var(--color-white);
+      max-width: 24ch;
+      width: 451px;
+      margin: 16px auto 28px;
+    }
+
+    .positioning-section p {
+      color: rgba(255,255,255,.65);
+      font-size: 17px;
+      max-width: 55ch;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 40px;
+    }
+
+    .positioning-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 56px;
+    }
+
+    .metric-card {
+      background: rgba(0,0,0,.28);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+    }
+
+    .metric-card .number {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--color-white);
+      letter-spacing: -.02em;
+    }
+
+    .metric-card .metric-label {
+      font-size: 13px;
+      color: rgba(255,255,255,.5);
+      margin-top: 4px;
+    }
+
+    /* ══════════════════════════════════════════
+       HOW-SECTION overrides (homepage spacing)
+    ══════════════════════════════════════════ */
+    .how-section .section-header h2 {
+      width: 434px;
+    }
+
+    .how-section .section-header p {
+      width: 473px;
+    }
+
+    /* ══════════════════════════════════════════
+       TESTIMONIALS SECTION WRAPPER
+    ══════════════════════════════════════════ */
+    .testimonials-section {
+      background: var(--color-surface);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 48px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════
+       COMPONENT: NAVBAR
+  ══════════════════════════════════════════ -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+
+      <!-- Logo -->
+      <a href="/" class="navbar-logo" aria-label="Stratum — Home">
+        <svg width="544" height="72" viewBox="0 0 544 72" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="navLogoTitle">
+          <title id="navLogoTitle">Stratum</title>
+          <path d="M22.5 0C10.0736 0 0 10.0736 0 22.5C0 34.9264 10.0736 45 22.5 45H57.5C59.9852 45 62 47.0148 62 49.5C62 51.9852 59.9852 54 57.5 54H2.5V72H57.5C69.9264 72 80 61.9264 80 49.5C80 37.0736 69.9264 27 57.5 27H22.5C20.0148 27 18 24.9852 18 22.5C18 20.0148 20.0148 18 22.5 18H77.5V0H22.5Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M161.5 0V72H179.5V48H199.5L211.5 72H231.5L218.028 45.0554C225.461 40.977 230.5 33.077 230.5 24C230.5 10.7452 219.755 0 206.5 0H161.5ZM212.5 24C212.5 20.6863 209.814 18 206.5 18H179.5V30H206.5C209.814 30 212.5 27.3137 212.5 24Z" fill="black"/>
+          <path d="M83.5 0V18H122.5L110.5 28V72H128.5V18H155.5V0H83.5Z" fill="black"/>
+          <path d="M248.5 54L265.5 20L291.5 72H311.5L275.5 0H255.5L228.5 54L237.5 72H285.5L276.5 54H248.5Z" fill="black"/>
+          <path d="M335.5 18H362.5V0H290.5V18H329.5L317.5 28V72H335.5V18Z" fill="black"/>
+          <path d="M445.5 0V48C445.5 61.2548 434.755 72 421.5 72H392.5C379.245 72 368.5 61.2548 368.5 48V0H386.5V48C386.5 51.3137 389.186 54 392.5 54H421.5C424.814 54 427.5 51.3137 427.5 48V0H445.5Z" fill="black"/>
+          <path d="M469.5 36L487.5 72H507.5L525.5 36V72H543.5V0H523.5L497.5 52L471.5 0H451.5V72H469.5V36Z" fill="black"/>
+        </svg>
+      </a>
+
+      <!-- Primary nav -->
+      <ul class="navbar-nav">
+        <li><a href="/services">Services</a></li>
+        <li><a href="/industries">Industries</a></li>
+        <li><a href="/insights">Insights</a></li>
+        <li><a href="/about">About</a></li>
+      </ul>
+
+      <!-- Actions -->
+      <div class="navbar-actions">
+        <a href="tel:+18552000076" class="btn btn-primary" aria-label="Call Stratum at 1-855-200-0076">Talk to a Human</a>
+      </div>
+
+    </div>
+  </nav>
+
+
+  <!-- ══════════════════════════════════════════
+       SECTION 1: HERO
+  ══════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-inner">
+
+        <div class="hero-copy">
+          <div class="wf-label">Homepage — Hero</div>
+          <h1>Built for what&rsquo;s next.</h1>
+          <p class="hero-sub">Stratum brings structure, security, and long-term stewardship to the systems your business depends on every day.</p>
+          <div class="hero-actions">
+            <a href="/contact" class="btn btn-primary" aria-label="Book a free 30-minute consultation with Stratum">Book a Free 30-Minute Consultation</a>
+            <a href="tel:+18552000076" class="hero-phone" aria-label="Call Stratum at 1-855-200-0076">Talk to a Human: 1 (855) 200-0076</a>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       SECTION 2: TRUST BAR
+  ══════════════════════════════════════════ -->
+  <div class="trust-bar">
+    <div class="container">
+      <div class="trust-bar-inner">
+        <span class="trust-bar-label">Trusted by</span>
+        <div class="trust-logos">
+          <div class="wf-placeholder trust-logo-slot">Partner logo</div>
+          <div class="wf-placeholder trust-logo-slot">Partner logo</div>
+          <div class="wf-placeholder trust-logo-slot">Partner logo</div>
+          <div class="wf-placeholder trust-logo-slot">Partner logo</div>
+          <div class="wf-placeholder trust-logo-slot">Partner logo</div>
+        </div>
+      </div>
+      <div class="wf-note">
+        <strong>Assets needed:</strong> Microsoft Partner badge, SentinelOne, N-central/N-able, KnowBe4, Cove Data Protection, IT Glue. Task: "Gather trust badges and partner assets" — status: Not started.
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       SECTION 3: 5S BRAND PILLARS
+  ══════════════════════════════════════════ -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <div class="wf-label">Brand Pillars — 5S</div>
+        <h2>Five commitments behind everything we do.</h2>
+        <p>Every service, every engagement,<br>every decision is filtered through the same lens.</p>
+      </div>
+
+      <div class="pillars-grid">
+
+        <div class="pillar-card">
+          <div class="wf-placeholder pillar-icon"></div>
+          <h3>Structure</h3>
+          <p>We organize technology, process, support, and accountability so clients are not operating in chaos.</p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="wf-placeholder pillar-icon"></div>
+          <h3>Security</h3>
+          <p>We protect clients from cyber risk, operational disruption, data loss, and avoidable exposure.</p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="wf-placeholder pillar-icon"></div>
+          <h3>Stability</h3>
+          <p>We build and maintain dependable systems that reduce downtime, surprises, and reactive firefighting.</p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="wf-placeholder pillar-icon"></div>
+          <h3>Simplicity</h3>
+          <p>We make technology easier to understand, easier to use, and easier to make decisions around.</p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="wf-placeholder pillar-icon"></div>
+          <h3>Stewardship</h3>
+          <p>We act as a long-term technology partner responsible for protecting the client's best interests.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       SECTION 4: SERVICES (Primary nav anchor)
+  ══════════════════════════════════════════ -->
+  <section id="services" aria-labelledby="services-heading">
+    <div class="container">
+      <div class="section-header">
+        <div class="wf-label">Services — Overview</div>
+        <h4>What we do</h4>
+        <h2 id="services-heading">Structured technology<br>services for complex businesses.</h2>
+        <p>Stratum operates as an operational technology partner — not just another IT company. Each service area is built around business outcomes, not tool lists.</p>
+      </div>
+
+      <div class="services-grid">
+
+        <div class="service-card">
+          <div class="wf-placeholder service-icon"></div>
+          <h3>Managed IT</h3>
+          <p>Ongoing support, maintenance, monitoring, and oversight of the systems your business depends on every day.</p>
+          <div class="service-tags">
+            <span class="service-tag">Help desk &amp; support</span>
+            <span class="service-tag">Device management</span>
+            <span class="service-tag">Network &amp; infrastructure</span>
+            <span class="service-tag">Monitoring</span>
+            <span class="service-tag">Vendor coordination</span>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="wf-placeholder service-icon"></div>
+          <h3>Cybersecurity</h3>
+          <p>Layered protection, stronger recovery readiness, and clearer control across users, endpoints, backups, and access.</p>
+          <div class="service-tags">
+            <span class="service-tag">Endpoint protection</span>
+            <span class="service-tag">Identity &amp; access</span>
+            <span class="service-tag">Email security</span>
+            <span class="service-tag">Backup readiness</span>
+            <span class="service-tag">Compliance support</span>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="wf-placeholder service-icon"></div>
+          <h3>Business Systems</h3>
+          <p>ERP, CRM, automation, and AI enablement that aligns your systems with how the business actually operates.</p>
+          <div class="service-tags">
+            <span class="service-tag">ERP &amp; CRM</span>
+            <span class="service-tag">Microsoft 365</span>
+            <span class="service-tag">Automation</span>
+            <span class="service-tag">AI enablement</span>
+            <span class="service-tag">Projects</span>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="section-overview-link section-overview-link--spaced"><a href="/services">See all services →</a></p>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       SECTION 5: "MISSING MIDDLE" POSITIONING
+  ══════════════════════════════════════════ -->
+  <section class="positioning-section">
+    <div class="container" style="text-align: center;">
+      <h4>Who Stratum is for</h4>
+      <h2>Built for the structural missing middle.</h2>
+      <p>Most businesses are too complex for break-fix IT and too small to justify deep internal IT teams. Stratum is built for exactly that gap — organizations that need real managed technology without enterprise overhead.</p>
+      <a href="/why-stratum" class="btn" style="background: rgba(255,255,255,.1); color: #fff; border: 1px solid rgba(255,255,255,.2);" aria-label="Read why Stratum is built for the structural missing middle">Why Stratum →</a>
+
+      <div class="positioning-metrics">
+        <div class="metric-card">
+          <div class="wf-placeholder" style="height:60px; background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.1); color: rgba(255,255,255,.3);">Stat placeholder</div>
+          <div class="metric-label" style="margin-top:12px;">Clients served — to be confirmed</div>
+        </div>
+        <div class="metric-card">
+          <div class="wf-placeholder" style="height:60px; background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.1); color: rgba(255,255,255,.3);">Stat placeholder</div>
+          <div class="metric-label" style="margin-top:12px;">Years in operation — to be confirmed</div>
+        </div>
+        <div class="metric-card">
+          <div class="wf-placeholder" style="height:60px; background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.1); color: rgba(255,255,255,.3);">Stat placeholder</div>
+          <div class="metric-label" style="margin-top:12px;">Uptime / response SLA — to be confirmed</div>
+        </div>
+      </div>
+
+      <div class="wf-note" style="margin-top: 24px; background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.12); color: rgba(255,255,255,.5);">
+        ✎ <strong>Content gap:</strong> Proof metrics (client count, years, response stats) need to be confirmed internally before launch. Task: "Build Why Stratum inputs" — status: Not started.
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       SECTION 6: INDUSTRIES
+  ══════════════════════════════════════════ -->
+  <section class="industries-section" id="industries" aria-labelledby="industries-heading">
+    <div class="container">
+      <div class="industries-layout">
+
+        <div class="industries-left">
+          <h4>Who we work with</h4>
+          <h2 id="industries-heading">Technology built around how your industry operates.</h2>
+          <p>Managed IT and cybersecurity for the industries where operational complexity is highest and the cost of unreliable technology is real — automotive dealerships, medical and dental clinics, law firms, construction and AEC firms, and manufacturing operations.</p>
+
+          <ul class="industries-list" id="industries-list">
+            <li class="active" data-industry="automotive">
+              <span class="industry-dot"></span>
+              Automotive Dealerships
+              <span class="industry-arrow">→</span>
+            </li>
+            <li data-industry="medical">
+              <span class="industry-dot"></span>
+              Medical &amp; Dental Clinics
+              <span class="industry-arrow">→</span>
+            </li>
+            <li data-industry="legal">
+              <span class="industry-dot"></span>
+              Law Firms &amp; Legal Services
+              <span class="industry-arrow">→</span>
+            </li>
+            <li data-industry="construction">
+              <span class="industry-dot"></span>
+              Construction &amp; AEC
+              <span class="industry-arrow">→</span>
+            </li>
+            <li data-industry="manufacturing">
+              <span class="industry-dot"></span>
+              Manufacturing &amp; Industrial
+              <span class="industry-arrow">→</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="industries-detail">
+
+          <!-- Automotive Dealerships -->
+          <div class="industry-panel active" data-panel="automotive">
+            <div class="wf-placeholder industry-detail-visual">Photo placeholder — Automotive dealership environment</div>
+            <h3 class="industry-detail-title">IT Support for Automotive Dealerships</h3>
+            <p class="industry-detail-desc">Dealerships run on uptime. Sales floors, service bays, finance offices, and back-office systems all depend on reliable technology running together. We keep every part of the operation connected, supported, and secure.</p>
+            <ul class="industry-detail-points">
+              <li>Multi-department complexity — sales, service, parts, finance, and management all need reliable systems</li>
+              <li>Vendor and DMS coordination handled so your team can focus on customers</li>
+              <li>Network stability across showrooms, service lanes, and Wi-Fi for staff and guests</li>
+              <li>Proactive maintenance that prevents downtime during high-traffic hours</li>
+              <li>Security controls that protect customer data and financial records</li>
+            </ul>
+            <div class="industry-tags">
+              <span class="tag">Managed IT</span>
+              <span class="tag">Network &amp; Infrastructure</span>
+              <span class="tag">Cybersecurity</span>
+              <span class="tag">Vendor Coordination</span>
+              <span class="tag">Proactive Maintenance</span>
+            </div>
+          </div>
+
+          <!-- Medical & Dental -->
+          <div class="industry-panel" data-panel="medical">
+            <div class="wf-placeholder industry-detail-visual">Photo placeholder — Medical or dental clinic environment</div>
+            <h3 class="industry-detail-title">IT Support for Medical &amp; Dental Clinics</h3>
+            <p class="industry-detail-desc">Clinics cannot afford downtime or security gaps. Patient data, booking systems, and compliance requirements demand a technology partner who takes responsibility seriously and acts before problems happen.</p>
+            <ul class="industry-detail-points">
+              <li>Uptime reliability for booking, billing, and clinical systems patients depend on daily</li>
+              <li>Data security and access controls that protect sensitive patient records</li>
+              <li>Backup and recovery readiness so the clinic stays operational if something goes wrong</li>
+              <li>Plain-language guidance on compliance and cyber-insurance requirements</li>
+              <li>Dependable support with clear accountability — no runaround when something breaks</li>
+            </ul>
+            <div class="industry-tags">
+              <span class="tag">Managed IT</span>
+              <span class="tag">Cybersecurity</span>
+              <span class="tag">Backup &amp; Recovery</span>
+              <span class="tag">Compliance Readiness</span>
+              <span class="tag">Microsoft 365</span>
+            </div>
+          </div>
+
+          <!-- Law Firms -->
+          <div class="industry-panel" data-panel="legal">
+            <div class="wf-placeholder industry-detail-visual">Photo placeholder — Law firm or legal office environment</div>
+            <h3 class="industry-detail-title">IT Support for Law Firms &amp; Legal Services</h3>
+            <p class="industry-detail-desc">Law firms operate on trust, document access, and continuity. A single incident — lost files, a compromised account, or hours of downtime — can have serious professional consequences. We protect the environment that protects your clients.</p>
+            <ul class="industry-detail-points">
+              <li>Document access and file security built around how legal teams actually work</li>
+              <li>Strong email security and access controls to protect sensitive client communications</li>
+              <li>Backup readiness so matter files and records are never truly at risk</li>
+              <li>Clear accountability and direct communication — the same standards you hold yourself to</li>
+              <li>Technology stewardship aligned with the long-term needs of the firm</li>
+            </ul>
+            <div class="industry-tags">
+              <span class="tag">Managed IT</span>
+              <span class="tag">Cybersecurity</span>
+              <span class="tag">Email Security</span>
+              <span class="tag">Backup &amp; Recovery</span>
+              <span class="tag">Microsoft 365</span>
+            </div>
+          </div>
+
+          <!-- Construction & AEC -->
+          <div class="industry-panel" data-panel="construction">
+            <div class="wf-placeholder industry-detail-visual">Photo placeholder — Construction site or AEC office environment</div>
+            <h3 class="industry-detail-title">IT Support for Construction &amp; AEC Firms</h3>
+            <p class="industry-detail-desc">Construction businesses run across offices, job sites, and field crews simultaneously. Technology has to work everywhere — and it has to keep up as teams scale, projects shift, and subcontractors come and go.</p>
+            <ul class="industry-detail-points">
+              <li>Office and field support that covers mobile devices, site connectivity, and back-office systems</li>
+              <li>Fast, structured onboarding and offboarding for crews and subcontractors</li>
+              <li>Project data security and access managed cleanly across roles and locations</li>
+              <li>Vendor and software coordination for estimating, project management, and accounting tools</li>
+              <li>Site complexity managed proactively — not reactively when a deadline is at risk</li>
+            </ul>
+            <div class="industry-tags">
+              <span class="tag">Managed IT</span>
+              <span class="tag">Network &amp; Infrastructure</span>
+              <span class="tag">Business Systems</span>
+              <span class="tag">Mobile &amp; Field Support</span>
+              <span class="tag">Vendor Coordination</span>
+            </div>
+          </div>
+
+          <!-- Manufacturing -->
+          <div class="industry-panel" data-panel="manufacturing">
+            <div class="wf-placeholder industry-detail-visual">Photo placeholder — Manufacturing floor or industrial operations environment</div>
+            <h3 class="industry-detail-title">IT Support for Manufacturing &amp; Industrial Operations</h3>
+            <p class="industry-detail-desc">Manufacturing environments involve high device counts, multiple sites, operational systems, and uptime pressure across the floor and back office. Structure and stability are not optional — they are built into every engagement.</p>
+            <ul class="industry-detail-points">
+              <li>Structured support across workstations, servers, and operational systems at every site</li>
+              <li>Network segmentation and infrastructure stability that keeps production running</li>
+              <li>Security controls and monitoring that account for operational technology environments</li>
+              <li>Standards-based device lifecycle management and replacement planning</li>
+              <li>Long-term stewardship aligned with how the operation is growing and changing</li>
+            </ul>
+            <div class="industry-tags">
+              <span class="tag">Managed IT</span>
+              <span class="tag">Network &amp; Infrastructure</span>
+              <span class="tag">Cybersecurity</span>
+              <span class="tag">Multi-Site Support</span>
+              <span class="tag">Lifecycle Planning</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       SECTION 7: HOW WE WORK
+  ══════════════════════════════════════════ -->
+  <section class="how-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="wf-label">How We Work</div>
+        <h4>Our approach</h4>
+        <h2>Structured partnership from day one.</h2>
+        <p>We do not just react to issues.<br>We work to make the environment easier to support and easier to trust over time.</p>
+      </div>
+
+      <div class="how-steps">
+
+        <div class="step-card">
+          <div class="step-number">Step 01</div>
+          <h3>Analyze</h3>
+          <p>We start by reviewing your current systems, support history, documentation gaps, and operating complexity before recommending anything.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">Step 02</div>
+          <h3>Engage</h3>
+          <p>We size the engagement around actual usage, endpoints, servers, backups, and risk — not just user count. The package fits your environment, not the other way around.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">Step 03</div>
+          <h3>Support</h3>
+          <p>Client Support is one of our Service Department Teams tailored to servicing the ongoing needs and maintenance of your business.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">Step 04</div>
+          <h3>Success</h3>
+          <p>Client Success is our business continuity and projects team — keeping your business oriented to the future and solving your most complex technological needs.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       SECTION 8: TESTIMONIALS
+  ══════════════════════════════════════════ -->
+  <section class="testimonials-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="wf-label">Social Proof</div>
+        <h4>What clients say</h4>
+        <h2>Real outcomes from real businesses.</h2>
+      </div>
+
+      <div class="testimonials-grid">
+
+        <div class="testimonial-card">
+          <div class="wf-placeholder" style="height: 80px; margin-bottom: 8px;">[Testimonial quote — to be collected]</div>
+          <div class="testimonial-author">
+            <div class="wf-placeholder avatar"></div>
+            <div>
+              <div class="author-name">Client Name</div>
+              <div class="author-title">Title · Industry</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="wf-placeholder" style="height: 80px; margin-bottom: 8px;">[Testimonial quote — to be collected]</div>
+          <div class="testimonial-author">
+            <div class="wf-placeholder avatar"></div>
+            <div>
+              <div class="author-name">Client Name</div>
+              <div class="author-title">Title · Industry</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="wf-placeholder" style="height: 80px; margin-bottom: 8px;">[Testimonial quote — to be collected]</div>
+          <div class="testimonial-author">
+            <div class="wf-placeholder avatar"></div>
+            <div>
+              <div class="author-name">Client Name</div>
+              <div class="author-title">Title · Industry</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="wf-note">
+        <strong>Content gap:</strong> 3–5 client testimonials and short outcome-based case studies needed. Tasks: "Gather testimonials and case study inputs" + "Gather 3-5 testimonials or case studies" — both status: Not started. Confirm public naming with clients before using.
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       SECTION 9: CTA BAND
+  ══════════════════════════════════════════ -->
+  <div class="cta-band">
+    <div class="container">
+      <div class="cta-band-inner">
+        <div>
+          <h2>If your IT feels reactive, inconsistent, or difficult to trust — let's talk.</h2>
+          <p>No pressure, no jargon. A straightforward conversation about what a more structured environment could look like for your business.</p>
+        </div>
+        <a href="/contact" class="btn btn-primary" aria-label="Contact Stratum to start a conversation">Talk With Stratum →</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       COMPONENT: FOOTER
+  ══════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+
+        <div class="footer-brand">
+          <a href="/" class="footer-logo" aria-label="Stratum — Home">
+            <svg width="544" height="72" viewBox="0 0 544 72" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="footerLogoTitle">
+              <title id="footerLogoTitle">Stratum</title>
+              <path d="M22.5 0C10.0736 0 0 10.0736 0 22.5C0 34.9264 10.0736 45 22.5 45H57.5C59.9852 45 62 47.0148 62 49.5C62 51.9852 59.9852 54 57.5 54H2.5V72H57.5C69.9264 72 80 61.9264 80 49.5C80 37.0736 69.9264 27 57.5 27H22.5C20.0148 27 18 24.9852 18 22.5C18 20.0148 20.0148 18 22.5 18H77.5V0H22.5Z" fill="white"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M161.5 0V72H179.5V48H199.5L211.5 72H231.5L218.028 45.0554C225.461 40.977 230.5 33.077 230.5 24C230.5 10.7452 219.755 0 206.5 0H161.5ZM212.5 24C212.5 20.6863 209.814 18 206.5 18H179.5V30H206.5C209.814 30 212.5 27.3137 212.5 24Z" fill="white"/>
+              <path d="M83.5 0V18H122.5L110.5 28V72H128.5V18H155.5V0H83.5Z" fill="white"/>
+              <path d="M248.5 54L265.5 20L291.5 72H311.5L275.5 0H255.5L228.5 54L237.5 72H285.5L276.5 54H248.5Z" fill="white"/>
+              <path d="M335.5 18H362.5V0H290.5V18H329.5L317.5 28V72H335.5V18Z" fill="white"/>
+              <path d="M445.5 0V48C445.5 61.2548 434.755 72 421.5 72H392.5C379.245 72 368.5 61.2548 368.5 48V0H386.5V48C386.5 51.3137 389.186 54 392.5 54H421.5C424.814 54 427.5 51.3137 427.5 48V0H445.5Z" fill="white"/>
+              <path d="M469.5 36L487.5 72H507.5L525.5 36V72H543.5V0H523.5L497.5 52L471.5 0H451.5V72H469.5V36Z" fill="white"/>
+            </svg>
+          </a>
+          <p>Structure, security, stability, simplicity, and stewardship for growing organizations.</p>
+
+          <p>Serving Since 2016</p>
+          <address style="font-style: normal; margin-top: 16px; font-size: 13px; color: rgba(255,255,255,.55); line-height: 1.6;">
+            
+            <a href="tel:+18552000076" style="color: rgba(255,255,255,.85); text-decoration: none;" aria-label="Call Stratum at 1-855-200-0076">1 (855) 200-0076</a>
+          </address>
+          <div style="margin-top: 20px; display: flex; gap: 10px;">
+            <div class="wf-placeholder" style="height: 32px; width: 32px; border-radius: 6px;">in</div>
+            <div class="wf-placeholder" style="height: 32px; width: 32px; border-radius: 6px; border-color: rgba(255,255,255,.15);">tw</div>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="/services">View services →</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Industries</h4>
+          <ul>
+            <li><a href="/industries">View industries →</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/about">About</a></li>
+            <li><a href="/insights">Insights</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="https://stratumtech.ca/" rel="home">stratumtech.ca</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Stratum Technology. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Industries tab navigation ──
+    const industryItems  = document.querySelectorAll('#industries-list li');
+    const industryPanels = document.querySelectorAll('.industry-panel');
+
+    industryItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const target = item.dataset.industry;
+
+        industryItems.forEach(i => i.classList.remove('active'));
+        industryPanels.forEach(p => p.classList.remove('active'));
+
+        item.classList.add('active');
+        document.querySelector(`.industry-panel[data-panel="${target}"]`).classList.add('active');
+      });
+    });
+  </script>
+
+  <script>
+    let dropdownCloseTimer = null;
+    document.querySelectorAll('.has-dropdown').forEach(item => {
+      const trigger = item.querySelector('[aria-haspopup]');
+      const openItem = () => {
+        clearTimeout(dropdownCloseTimer);
+        document.querySelectorAll('.has-dropdown.open').forEach(o => {
+          if (o !== item) { o.classList.remove('open'); o.querySelector('[aria-haspopup]')?.setAttribute('aria-expanded', 'false'); }
+        });
+        item.classList.add('open');
+        trigger?.setAttribute('aria-expanded', 'true');
+      };
+      const scheduleClose = () => {
+        clearTimeout(dropdownCloseTimer);
+        dropdownCloseTimer = setTimeout(() => {
+          item.classList.remove('open');
+          trigger?.setAttribute('aria-expanded', 'false');
+        }, 200);
+      };
+      item.addEventListener('mouseenter', openItem);
+      item.addEventListener('mouseleave', scheduleClose);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') document.querySelectorAll('.has-dropdown.open').forEach(o => { o.classList.remove('open'); o.querySelector('[aria-haspopup]')?.setAttribute('aria-expanded', 'false'); });
+    });
+  </script>
+</body>
+</html>

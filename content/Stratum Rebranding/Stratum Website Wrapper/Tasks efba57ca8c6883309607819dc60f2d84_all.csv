@@ -1,0 +1,29 @@
+﻿Task,Category,Due Date,Notes,Priority,Source,Status
+Confirm hours-of-operation messaging,Content,"May 16, 2026",Decide business-hours only vs after-hours support and confirm the support expectation message.,Medium,Bruno Start Pack,Not started
+Gather testimonials and case study inputs,Assets,"May 13, 2026","Identify 3-5 clients, confirm public naming, and capture short outcome-based stories.",High,Bruno Start Pack,Not started
+Define Why Stratum page inputs,Content,"May 20, 2026","Collect ROI framing, comparison points, trust blocks, and proof points.",Medium,Website Build,Not started
+Confirm ownership and access structure,Strategy,"May 6, 2026","Confirm domain, DNS, hosting, CMS, analytics, and account access expectations.",Critical,Website Build,In progress
+Approve Managed IT page direction,Content,"May 16, 2026","Clarify ongoing support, maintenance, monitoring, and operational stability.",High,Website Build,Not started
+Review launch-ready site with Bannnanas,Approvals,"June 6, 2026","Final review of pages, forms, CTA flow, analytics, and QA.",Critical,Website Build,Not started
+Confirm website platform,Strategy,"May 6, 2026",Confirm Webflow as the platform direction for the main site.,Critical,Website Build,In progress
+Gather trust badges and proof assets,Assets,"May 9, 2026","Collect Microsoft Partner status, certifications, insurance or compliance affiliations, industry recognitions, and logos.",High,Bruno Start Pack,Not started
+Confirm point of contact and approval path,Approvals,"May 6, 2026","Confirm Nathan as main point of contact, final approvers, and review turnaround expectations.",Critical,Bruno Start Pack,In progress
+Gather trust badges and partner assets,Assets,"May 12, 2026","Collect Microsoft status, certifications, partner logos, and supporting proof.",High,Website Build,Not started
+Define service page architecture,Strategy,"May 8, 2026",Map the structure of each service page so Bannnanas can design and write in sequence.,Critical,Website Build,In progress
+Plan photoshoot sequence,Assets,"May 27, 2026","Plan shirts, office materials, shoot list, people, locations, and final image return to Bananas after branding is ready.",Low,Bruno Start Pack,Not started
+"Confirm platform, ownership, and scope",Technical,"May 6, 2026","Webflow direction, hosting and access expectations, point of contact, and approval path confirmed.",Critical,Bruno Start Pack,In progress
+Gather 3-5 testimonials or case studies,Assets,"May 13, 2026",Needed for trust sections and the Why Stratum page.,High,Website Build,Not started
+Confirm LLM and AI search direction,SEO,"May 20, 2026","Confirm LLM optimization from the start, FAQ-style content where needed, and schema and structure included in the build.",Medium,Bruno Start Pack,Not started
+Review redirect map and SEO migration plan,SEO,"May 22, 2026","Confirm migrate, refresh, sunset, and redirect decisions before launch.",High,Website Build,Not started
+Review migration and SEO preservation inputs,SEO,"May 9, 2026","URL audit, redirect logic, Search Console and analytics handover, and content migrate vs sunset decisions.",High,Bruno Start Pack,Not started
+Finalize Phase 1 website scope,Strategy,"May 8, 2026",Keep June focused on the marketing and lead-generation site.,Critical,Website Build,In progress
+Define http://shop.stratum.it architecture separately,Ecommerce,"August 1, 2026",Keep ecommerce architecture and portal considerations out of the June critical path.,Medium,Website Build,Not started
+Build Why Stratum inputs,Content,"May 9, 2026","Write strategic claim, key reasons to choose Stratum, proof points, competitor or internal IT comparison points, and outcome examples.",High,Bruno Start Pack,Not started
+Finalize homepage copy,Content,"May 15, 2026",Turn the current draft into launch-ready homepage copy.,High,Website Build,Not started
+Confirm content ownership after launch,Strategy,"May 20, 2026","Confirm LinkedIn and Instagram in-house, website copy ownership after launch, and whether Bananas supports anything beyond foundation work.",Medium,Bruno Start Pack,Not started
+Approve Business Systems page direction,Content,"May 18, 2026","Clarify ERP, CRM, automation, AI, and systems alignment scope.",High,Website Build,Not started
+Finalize top navigation,Content,"May 8, 2026","Current direction: Home, Contact, Managed IT, Business Systems, Cybersecurity, Industries, About.",High,Website Build,In progress
+Finalize service catalog,Content,"May 10, 2026",Confirm which services deserve dedicated pages in the first launch set.,High,Website Build,Not started
+Inventory current website URLs,SEO,"May 13, 2026","List current pages to migrate, refresh, sunset, or redirect.",High,Website Build,Not started
+Approve Cybersecurity page direction,Content,"May 17, 2026","Clarify layered protection, backup, access control, and risk reduction.",High,Website Build,Not started
+Define target market filter,Strategy,"May 6, 2026","Confirm target verticals, geographies, company sizes, and who the June website is meant to attract.",Critical,Bruno Start Pack,Not started

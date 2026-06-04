@@ -1,0 +1,351 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────
+   STRATUM DESIGN SYSTEM — dark, cinematic, gem-lit
+   Ported from the Webflow WIP visual language.
+   ───────────────────────────────────────────────────────────── */
+
+@theme {
+  /* Surfaces */
+  --color-bg: #000000;
+  --color-surface: #0f0f0f;
+  --color-surface-2: #1d1d1d;
+  --color-surface-glass: rgba(15, 15, 15, 0.3);
+
+  /* Text */
+  --color-ink: #e0e0e0;
+  --color-ink-dim: #adadad;
+  --color-ink-faint: rgba(255, 255, 255, 0.4);
+  --color-ink-bright: #ffffff;
+
+  /* Brand — amethyst */
+  --color-brand: #7d34ff;
+  --color-brand-light: #b985ff;
+  --color-brand-dark: #471ab7;
+
+  /* Lines */
+  --color-line: rgba(255, 255, 255, 0.1);
+  --color-line-soft: rgba(255, 255, 255, 0.06);
+  --color-line-strong: rgba(255, 255, 255, 0.16);
+
+  /* Typography */
+  --font-display: "Parastoo", var(--font-instrument), Georgia, "Times New Roman", serif;
+  --font-body: var(--font-manrope), ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* Radii */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+
+  /* Container widths */
+  --container-prose: 52rem;
+  --container-wide: 1280px;
+  --container-medium: 1140px;
+
+  /* Easing */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+/* ── Base ──────────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Smoothing is handled by Lenis (see SmoothScroll); native smooth-scroll
+     conflicts with it and with Next route transitions. */
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+::selection {
+  background: var(--color-brand);
+  color: #fff;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  margin: 0;
+  line-height: 1.05;
+}
+}
+/* end @layer base */
+
+@layer components {
+/* ── Display type scale ────────────────────────────────────── */
+.font-display {
+  font-family: var(--font-display);
+}
+
+.display-1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 7vw, 5rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+
+.display-2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 5vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.display-3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.5vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+/* ── Eyebrow bracket label ─────────────────────────────────── */
+.bracket-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-ink-faint);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.75;
+  white-space: nowrap;
+}
+.bracket-label .bracket {
+  opacity: 0.7;
+}
+
+/* ── Buttons ───────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  white-space: nowrap;
+  border-radius: var(--radius-sm);
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 320ms ease, background-color 320ms ease,
+    border-color 320ms ease, transform 320ms ease;
+  will-change: transform;
+}
+.btn:hover {
+  transform: translateY(-2px);
+}
+.btn:active {
+  transform: translateY(0);
+  transition-duration: 100ms;
+}
+
+.btn-primary {
+  background-color: rgba(255, 255, 255, 0.85);
+  color: var(--color-surface);
+}
+.btn-primary:hover {
+  background-color: var(--color-brand);
+  color: #fff;
+}
+
+.btn-secondary {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-radius: var(--radius-xs);
+  font-size: 13px;
+}
+.btn-secondary:hover {
+  background-color: var(--color-brand);
+  color: #fff;
+}
+
+.btn-ghost {
+  background-color: transparent;
+  border: 1px solid var(--color-line-strong);
+  color: var(--color-ink);
+}
+.btn-ghost:hover {
+  border-color: var(--color-brand);
+  color: #fff;
+}
+
+/* sliding underline arrow link */
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  color: var(--color-ink-bright);
+  position: relative;
+  width: fit-content;
+  padding-bottom: 2px;
+  transition: color 320ms ease, transform 320ms ease;
+}
+.link-arrow::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.35;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 380ms var(--ease-out-expo);
+}
+.link-arrow:hover {
+  color: var(--color-brand-light);
+}
+.link-arrow:hover::after {
+  transform: scaleX(1);
+}
+.link-arrow svg {
+  transition: transform 320ms var(--ease-out-expo);
+}
+.link-arrow:hover svg {
+  transform: translate(3px, -3px);
+}
+
+/* ── Layout helpers ────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  padding-inline: 5%;
+}
+.container-medium {
+  width: 100%;
+  max-width: var(--container-medium);
+  margin-inline: auto;
+  padding-inline: 5%;
+}
+.container-prose {
+  width: 100%;
+  max-width: var(--container-prose);
+  margin-inline: auto;
+  padding-inline: 5%;
+}
+
+.section {
+  padding-block: clamp(5rem, 10vw, 8rem);
+  position: relative;
+}
+.section-sm {
+  padding-block: clamp(3.5rem, 7vw, 5.5rem);
+}
+
+/* ── Hairline divider ──────────────────────────────────────── */
+.hairline {
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-line);
+}
+
+/* ── Card surface ──────────────────────────────────────────── */
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-line-soft);
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+  transition: border-color 0.4s ease, background-color 0.4s ease, transform 0.4s ease;
+}
+.card:hover {
+  border-color: var(--color-line-strong);
+}
+
+.glass {
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  background-color: var(--color-surface-glass);
+  border: 1px solid var(--color-line-soft);
+}
+
+/* feature tags / chips */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-ink-faint);
+}
+.chip-dot {
+  width: 4px;
+  height: 4px;
+  background-color: var(--color-brand);
+  flex: none;
+}
+}
+/* end @layer components */
+
+/* ── Scroll reveal ─────────────────────────────────────────────
+   The hidden state ONLY applies when JS is on (html.reveal-ready),
+   so content is always visible without JS / for crawlers. JS adds
+   .is-revealed to fade each element in; a failsafe guarantees it. */
+html.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+  will-change: opacity, transform;
+}
+/* JS reveals each element by setting inline opacity/transform (see SmoothScroll). */
+
+/* gem floating idle motion */
+@keyframes gemFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(1.5deg); }
+}
+
+/* marquee for trust bar */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ── Reduced motion ────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+}
