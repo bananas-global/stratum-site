@@ -179,9 +179,9 @@ export default function AboutPage() {
 
       <CTABand
         title="Want to know more before you reach out?"
-        body="Take a closer look at our positioning, our services, and the industries we serve."
-        ctaLabel="Why Stratum"
-        ctaHref="/why-stratum"
+        body="Take a closer look at our services and the industries we serve."
+        ctaLabel="Explore Services"
+        ctaHref="/services"
       />
     </>
   );

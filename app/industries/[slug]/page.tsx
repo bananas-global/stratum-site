@@ -6,12 +6,20 @@ import { ChipRow, Button } from "@/components/ui";
 import CTABand from "@/components/CTABand";
 import { SITE, jsonLd } from "@/lib/site";
 import { pageMeta, breadcrumb } from "@/lib/seo";
+import { PHASE_2_ROUTES_ENABLED } from "@/lib/phase";
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
+  if (!PHASE_2_ROUTES_ENABLED) return [];
   return INDUSTRIES.map((i) => ({ slug: i.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  if (!PHASE_2_ROUTES_ENABLED) {
+    return { robots: { index: false, follow: false } };
+  }
+
   const { slug } = await params;
   const ind = getIndustry(slug);
   if (!ind) return {};
@@ -28,6 +36,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 }
 
 export default async function IndustryPage({ params }: { params: Promise<{ slug: string }> }) {
+  if (!PHASE_2_ROUTES_ENABLED) notFound();
+
   const { slug } = await params;
   const ind = getIndustry(slug);
   if (!ind) notFound();

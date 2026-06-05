@@ -6,12 +6,20 @@ import { Button } from "@/components/ui";
 import CTABand from "@/components/CTABand";
 import { SITE, jsonLd } from "@/lib/site";
 import { pageMeta, breadcrumb } from "@/lib/seo";
+import { PHASE_2_ROUTES_ENABLED } from "@/lib/phase";
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
+  if (!PHASE_2_ROUTES_ENABLED) return [];
   return SERVICES.map((s) => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  if (!PHASE_2_ROUTES_ENABLED) {
+    return { robots: { index: false, follow: false } };
+  }
+
   const { slug } = await params;
   const svc = getService(slug);
   if (!svc) return {};
@@ -40,6 +48,8 @@ function TrustLogos({ items }: { items: string[] }) {
 }
 
 export default async function ServicePage({ params }: { params: Promise<{ slug: string }> }) {
+  if (!PHASE_2_ROUTES_ENABLED) notFound();
+
   const { slug } = await params;
   const svc = getService(slug);
   if (!svc) notFound();

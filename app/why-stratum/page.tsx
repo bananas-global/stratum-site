@@ -1,20 +1,25 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import { PageHero, ScopeGrid, FeatureGrid, OutcomeStrip, SectionHeader } from "@/components/sections";
 import { Button, BracketLabel } from "@/components/ui";
 import CTABand from "@/components/CTABand";
 import { jsonLd } from "@/lib/site";
 import { pageMeta, breadcrumb } from "@/lib/seo";
+import { PHASE_2_ROUTES_ENABLED } from "@/lib/phase";
 
-export const metadata: Metadata = pageMeta({
-  title: "Why Stratum — Built for the Structural Missing Middle",
-  description:
-    "Stratum is the structured, security-aware technology partner for businesses too complex for break-fix and too small to justify deep internal IT. See how the 5S lens shapes how we work.",
-  path: "/why-stratum",
-  ogTitle: "Why Stratum — Built for the Structural Missing Middle",
-  ogDescription:
-    "The structured, security-aware technology partner for businesses too complex for break-fix and too small to justify deep internal IT.",
-});
+export const metadata: Metadata = {
+  ...pageMeta({
+    title: "Why Stratum — Built for the Structural Missing Middle",
+    description:
+      "Stratum is the structured, security-aware technology partner for businesses too complex for break-fix and too small to justify deep internal IT. See how the 5S lens shapes how we work.",
+    path: "/why-stratum",
+    ogTitle: "Why Stratum — Built for the Structural Missing Middle",
+    ogDescription:
+      "The structured, security-aware technology partner for businesses too complex for break-fix and too small to justify deep internal IT.",
+  }),
+  robots: { index: false, follow: false },
+};
 
 const PILLARS = [
   { name: "Structure", body: "We organize technology, process, support, and accountability so clients are not operating in chaos.", gem: "/images/gem-structure.png" },
@@ -36,6 +41,8 @@ const TABLE = {
 };
 
 export default function WhyStratum() {
+  if (!PHASE_2_ROUTES_ENABLED) notFound();
+
   const ld = {
     "@type": "WebPage",
     "@id": "https://stratumtech.ca/why-stratum#webpage",

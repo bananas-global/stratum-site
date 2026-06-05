@@ -18,7 +18,6 @@ export const metadata: Metadata = pageMeta({
 const CARDS = [
   {
     name: "Managed IT",
-    href: "/services/managed-it",
     visual: {
       src: "/bananas/services-structure-bg.webp",
       alt: "Layered graphite infrastructure model with a restrained purple light accent.",
@@ -29,7 +28,6 @@ const CARDS = [
   },
   {
     name: "Cybersecurity",
-    href: "/services/cybersecurity",
     visual: {
       src: "/images/gem-security.png",
       alt: "Faceted translucent amethyst stone representing layered protection.",
@@ -41,7 +39,6 @@ const CARDS = [
   },
   {
     name: "Business Systems",
-    href: "/services/business-systems",
     visual: {
       src: "/bananas/industries-structure-bg.webp",
       alt: "Precision graphite platform with drafting marks and a purple light channel.",
@@ -53,11 +50,11 @@ const CARDS = [
 ];
 
 const INDUSTRY_STRIP = [
-  { label: "Automotive Dealerships", sub: "Multi-department, multi-vendor", href: "/industries/automotive-dealerships" },
-  { label: "Medical & Dental", sub: "Uptime, data, compliance", href: "/industries/medical-dental" },
-  { label: "Law Firms", sub: "Documents, continuity, trust", href: "/industries/law-firms" },
-  { label: "Construction & AEC", sub: "Office, site, and field", href: "/industries/construction-aec" },
-  { label: "Manufacturing", sub: "Multi-site, lifecycle, OT-aware", href: "/industries/manufacturing" },
+  { label: "Automotive Dealerships", sub: "Multi-department, multi-vendor" },
+  { label: "Medical & Dental", sub: "Uptime, data, compliance" },
+  { label: "Law Firms", sub: "Documents, continuity, trust" },
+  { label: "Construction & AEC", sub: "Office, site, and field" },
+  { label: "Manufacturing", sub: "Multi-site, lifecycle, OT-aware" },
 ];
 
 export default function ServicesIndex() {
@@ -73,9 +70,9 @@ export default function ServicesIndex() {
     mainEntity: {
       "@type": "ItemList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Managed IT", url: "https://stratumtech.ca/services/managed-it" },
-        { "@type": "ListItem", position: 2, name: "Cybersecurity", url: "https://stratumtech.ca/services/cybersecurity" },
-        { "@type": "ListItem", position: 3, name: "Business Systems", url: "https://stratumtech.ca/services/business-systems" },
+        { "@type": "ListItem", position: 1, name: "Managed IT" },
+        { "@type": "ListItem", position: 2, name: "Cybersecurity" },
+        { "@type": "ListItem", position: 3, name: "Business Systems" },
       ],
     },
   };
@@ -115,7 +112,6 @@ export default function ServicesIndex() {
                 <h2 className="font-display text-3xl text-ink-bright">{c.name}</h2>
                 <p className="text-sm leading-relaxed text-ink-dim">{c.body}</p>
                 <ChipRow items={c.tags} />
-                <ArrowLink href={c.href}>Explore {c.name}</ArrowLink>
               </div>
             </div>
           ))}

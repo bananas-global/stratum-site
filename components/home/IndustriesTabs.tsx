@@ -7,7 +7,6 @@ import { ArrowLink } from "../ui";
 const INDUSTRIES = [
   {
     tab: "Automotive Dealerships",
-    href: "/industries/automotive-dealerships",
     title: "IT Support for Automotive Dealerships",
     desc: "Dealerships run on uptime. Sales floors, service bays, finance offices, and back-office systems all depend on reliable technology running together. We keep every part of the operation connected, supported, and secure.",
     points: [
@@ -21,7 +20,6 @@ const INDUSTRIES = [
   },
   {
     tab: "Medical & Dental Clinics",
-    href: "/industries/medical-dental",
     title: "IT Support for Medical & Dental Clinics",
     desc: "Clinics cannot afford downtime or security gaps. Patient data, booking systems, and compliance requirements demand a technology partner who takes responsibility seriously and acts before problems happen.",
     points: [
@@ -35,7 +33,6 @@ const INDUSTRIES = [
   },
   {
     tab: "Law Firms & Legal Services",
-    href: "/industries/law-firms",
     title: "IT Support for Law Firms & Legal Services",
     desc: "Law firms operate on trust, document access, and continuity. A single incident — lost files, a compromised account, or hours of downtime — can have serious professional consequences. We protect the environment that protects your clients.",
     points: [
@@ -49,7 +46,6 @@ const INDUSTRIES = [
   },
   {
     tab: "Construction & AEC",
-    href: "/industries/construction-aec",
     title: "IT Support for Construction & AEC Firms",
     desc: "Construction businesses run across offices, job sites, and field crews simultaneously. Technology has to work everywhere — and it has to keep up as teams scale, projects shift, and subcontractors come and go.",
     points: [
@@ -63,7 +59,6 @@ const INDUSTRIES = [
   },
   {
     tab: "Manufacturing & Industrial",
-    href: "/industries/manufacturing",
     title: "IT Support for Manufacturing & Industrial Operations",
     desc: "Manufacturing environments involve high device counts, multiple sites, operational systems, and uptime pressure across the floor and back office. Structure and stability are not optional — they are built into every engagement.",
     points: [

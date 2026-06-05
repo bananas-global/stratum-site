@@ -90,7 +90,6 @@ export default function IndustriesIndex() {
         "@type": "ListItem",
         position: i + 1,
         name: NAMES[slug],
-        url: `https://stratumtech.ca/industries/${slug}`,
       })),
     },
   };
@@ -148,7 +147,6 @@ export default function IndustriesIndex() {
                         </span>
                       ))}
                     </div>
-                    <ArrowLink href={`/industries/${slug}`}>Explore {NAMES[slug]}</ArrowLink>
                   </div>
                 </div>
               );

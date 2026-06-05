@@ -85,7 +85,7 @@ export default function Home() {
               is built for exactly that gap — organizations that need real managed technology without enterprise
               overhead.
             </p>
-            <Button href="/why-stratum" variant="ghost">Why Stratum</Button>
+            <Button href="/about" variant="ghost">How Stratum Works</Button>
           </div>
           <div data-reveal className="mt-16">
             <OutcomeStrip

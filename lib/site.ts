@@ -33,7 +33,6 @@ export const FOOTER = {
   explore: [
     { label: "Services", href: "/services" },
     { label: "Industries", href: "/industries" },
-    { label: "Why Stratum", href: "/why-stratum" },
   ],
   company: [
     { label: "About", href: "/about" },
