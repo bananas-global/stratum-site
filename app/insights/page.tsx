@@ -41,6 +41,12 @@ export default function InsightsPage() {
         eyebrow="Insights & Resources"
         title="Insights for business leaders."
         lede="Practical, plain-language content on managed IT, cybersecurity, and business systems — written for the people running the business, not the IT team."
+        visual={{
+          src: "/bananas/services-structure-bg.webp",
+          alt: "Layered graphite infrastructure model with a restrained purple light accent.",
+          label: "Plain-language clarity",
+          caption: "Ideas and decisions translated from technical complexity into business language.",
+        }}
       />
 
       <section className="section bg-surface">

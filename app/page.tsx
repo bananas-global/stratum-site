@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import CinematicHero from "@/components/home/CinematicHero";
 import ServicesShowcase from "@/components/home/ServicesShowcase";
 import IndustriesTabs from "@/components/home/IndustriesTabs";
@@ -63,7 +64,18 @@ export default function Home() {
       <ServicesShowcase />
 
       {/* Missing middle positioning */}
-      <section className="section bg-bg">
+      <section className="section relative overflow-hidden bg-bg">
+        <div className="pointer-events-none absolute inset-0 opacity-65">
+          <Image
+            src="/bananas/missing-middle-bg.webp"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.18),rgba(0,0,0,0.88)_72%)]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-bg via-bg/50 to-bg" />
+        </div>
         <div className="container">
           <div data-reveal className="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
             <BracketLabel>Who Stratum is for</BracketLabel>

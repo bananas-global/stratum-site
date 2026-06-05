@@ -1,5 +1,76 @@
 import type { ReactNode } from "react";
+import Image from "next/image";
 import { BracketLabel, Button, SectionHeader } from "./ui";
+
+export type EditorialVisual = {
+  src: string;
+  alt: string;
+  label?: string;
+  caption?: string;
+  contain?: boolean;
+};
+
+export function EditorialPanel({
+  visual,
+  className = "",
+  priority,
+}: {
+  visual: EditorialVisual;
+  className?: string;
+  priority?: boolean;
+}) {
+  return (
+    <figure
+      data-reveal
+      className={`group relative overflow-hidden rounded-md border border-line-soft bg-surface ${className}`.trim()}
+    >
+      <div className="relative aspect-[16/10] min-h-[260px]">
+        <Image
+          src={visual.src}
+          alt={visual.alt}
+          fill
+          priority={priority}
+          sizes="(min-width: 1024px) 44vw, 90vw"
+          className={`transition-transform duration-700 group-hover:scale-[1.025] ${
+            visual.contain ? "object-contain p-10" : "object-cover"
+          }`}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/25 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/15" />
+      </div>
+      {(visual.label || visual.caption) && (
+        <figcaption className="absolute inset-x-0 bottom-0 flex flex-col gap-2 p-5">
+          {visual.label && (
+            <span className="w-fit rounded-sm border border-white/15 bg-black/35 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-ink-faint backdrop-blur">
+              {visual.label}
+            </span>
+          )}
+          {visual.caption && <span className="max-w-md text-sm leading-relaxed text-ink-dim">{visual.caption}</span>}
+        </figcaption>
+      )}
+    </figure>
+  );
+}
+
+export function CardMedia({ visual }: { visual: EditorialVisual }) {
+  return (
+    <div className="relative aspect-[16/10] overflow-hidden rounded-sm bg-black">
+      <Image
+        src={visual.src}
+        alt={visual.alt}
+        fill
+        sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
+        className={visual.contain ? "object-contain p-8" : "object-cover"}
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+      {visual.label && (
+        <span className="absolute bottom-4 left-4 rounded-sm border border-white/15 bg-black/35 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-faint backdrop-blur">
+          {visual.label}
+        </span>
+      )}
+    </div>
+  );
+}
 
 /* ── Page hero (inner pages) ──────────────────────────────── */
 export function Breadcrumb({ items }: { items: { label: string; href?: string }[] }) {
@@ -26,36 +97,45 @@ export function PageHero({
   eyebrow,
   title,
   lede,
+  visual,
   children,
 }: {
   breadcrumb: { label: string; href?: string }[];
   eyebrow: string;
   title: ReactNode;
   lede: ReactNode;
+  visual?: EditorialVisual;
   children?: ReactNode;
 }) {
   return (
     <section className="relative overflow-hidden pb-16 pt-40 md:pb-20 md:pt-48">
       {/* ambient brand glow */}
       <div className="pointer-events-none absolute -top-40 left-1/2 h-[40rem] w-[40rem] -translate-x-1/2 rounded-full bg-brand/10 blur-[120px]" />
-      <div className="container relative flex flex-col gap-6">
-        <div data-reveal>
-          <Breadcrumb items={breadcrumb} />
-        </div>
-        <div data-reveal data-reveal-delay="0.05" className="mt-2">
-          <BracketLabel>{eyebrow}</BracketLabel>
-        </div>
-        <h1 data-reveal data-reveal-delay="0.1" className="display-1 max-w-4xl text-ink-bright">
-          {title}
-        </h1>
-        <p data-reveal data-reveal-delay="0.16" className="max-w-2xl text-xl font-light leading-relaxed text-ink-dim">
-          {lede}
-        </p>
-        {children && (
-          <div data-reveal data-reveal-delay="0.22" className="mt-4">
-            {children}
+      <div
+        className={`container relative grid gap-12 ${
+          visual ? "items-end lg:grid-cols-[minmax(0,0.9fr)_minmax(360px,0.72fr)]" : ""
+        }`.trim()}
+      >
+        <div className="flex flex-col gap-6">
+          <div data-reveal>
+            <Breadcrumb items={breadcrumb} />
           </div>
-        )}
+          <div data-reveal data-reveal-delay="0.05" className="mt-2">
+            <BracketLabel>{eyebrow}</BracketLabel>
+          </div>
+          <h1 data-reveal data-reveal-delay="0.1" className="display-1 max-w-4xl text-ink-bright">
+            {title}
+          </h1>
+          <p data-reveal data-reveal-delay="0.16" className="max-w-2xl text-xl font-light leading-relaxed text-ink-dim">
+            {lede}
+          </p>
+          {children && (
+            <div data-reveal data-reveal-delay="0.22" className="mt-4">
+              {children}
+            </div>
+          )}
+        </div>
+        {visual && <EditorialPanel visual={visual} priority className="lg:mb-2" />}
       </div>
     </section>
   );

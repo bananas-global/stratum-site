@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageHero, FeatureGrid, SectionHeader } from "@/components/sections";
+import { PageHero, FeatureGrid, SectionHeader, CardMedia } from "@/components/sections";
 import { Button, ArrowLink } from "@/components/ui";
 import CTABand from "@/components/CTABand";
 import { jsonLd } from "@/lib/site";
@@ -46,6 +46,34 @@ const NAMES: Record<string, string> = {
   manufacturing: "Manufacturing & Industrial",
 };
 
+const INDUSTRY_VISUALS: Record<string, { src: string; alt: string; label: string }> = {
+  "automotive-dealerships": {
+    src: "/images/industries/automotive-dealerships.png",
+    alt: "Dark automotive dealership showroom and service bay with managed network infrastructure.",
+    label: "Dealership uptime",
+  },
+  "medical-dental": {
+    src: "/images/industries/medical-dental.png",
+    alt: "Dark modern dental clinic with secure workstation, imaging display, and network cabinet.",
+    label: "Patient trust",
+  },
+  "law-firms": {
+    src: "/images/industries/law-firms.png",
+    alt: "Refined law office workspace with secure document storage and server room beyond glass.",
+    label: "Continuity",
+  },
+  "construction-aec": {
+    src: "/images/industries/construction-aec.png",
+    alt: "Construction and AEC operations desk with plans, rugged tablet, laptop, and site view.",
+    label: "Office, site, field",
+  },
+  manufacturing: {
+    src: "/images/industries/manufacturing.png",
+    alt: "Modern manufacturing control room overlooking a production floor and network cabinet.",
+    label: "Operational stability",
+  },
+};
+
 export default function IndustriesIndex() {
   const ld = {
     "@type": "CollectionPage",
@@ -82,6 +110,12 @@ export default function IndustriesIndex() {
         eyebrow="Industries"
         title="Industries where Stratum leads."
         lede="We focus on industries where operational complexity is highest and the cost of unreliable IT is real. The services are the same — Managed IT, Cybersecurity, and Business Systems — but the way they apply changes by vertical."
+        visual={{
+          src: "/bananas/industries-structure-bg.webp",
+          alt: "Precision graphite platform with drafting marks and a purple light channel.",
+          label: "Industry structure",
+          caption: "The same service model changes shape around each operating environment.",
+        }}
       >
         <div className="flex flex-wrap items-center gap-4">
           <Button href="/contact">Talk With Stratum</Button>
@@ -100,16 +134,21 @@ export default function IndustriesIndex() {
           <div className="grid gap-4 md:grid-cols-2">
             {ORDER.map((slug) => {
               const c = CARD_COPY[slug];
+              const visual = INDUSTRY_VISUALS[slug];
               return (
-                <div key={slug} data-reveal className="card flex flex-col gap-4">
-                  <h2 className="font-display text-3xl text-ink-bright">{NAMES[slug]}</h2>
-                  <p className="text-sm leading-relaxed text-ink-dim">{c.blurb}</p>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {c.tags.map((t) => (
-                      <span key={t} className="rounded-full border border-line bg-black/40 px-3 py-1 text-xs text-ink-dim">
-                        {t}
-                      </span>
-                    ))}
+                <div key={slug} data-reveal className="card flex flex-col gap-5">
+                  {visual && <CardMedia visual={visual} />}
+                  <div className="flex flex-col gap-4">
+                    <h2 className="font-display text-3xl text-ink-bright">{NAMES[slug]}</h2>
+                    <p className="text-sm leading-relaxed text-ink-dim">{c.blurb}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {c.tags.map((t) => (
+                        <span key={t} className="rounded-full border border-line bg-black/40 px-3 py-1 text-xs text-ink-dim">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                    <ArrowLink href={`/industries/${slug}`}>Explore {NAMES[slug]}</ArrowLink>
                   </div>
                 </div>
               );

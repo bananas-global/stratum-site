@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { BracketLabel, ArrowLink } from "../ui";
@@ -49,33 +50,18 @@ export default function ServicesShowcase() {
           </div>
 
           {/* Interactive block */}
-          <div data-reveal className="relative rounded-md bg-surface p-6 md:p-10">
+          <div data-reveal className="relative overflow-hidden rounded-md bg-surface p-6 md:p-10">
+            <div className="pointer-events-none absolute inset-0 opacity-35">
+              <Image
+                src="/bananas/services-structure-bg.webp"
+                alt=""
+                fill
+                sizes="(min-width: 768px) 60vw, 100vw"
+                className="object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/80 to-black/20" />
+            </div>
             <div className="relative">
-              {/* hovering card */}
-              <div className="pointer-events-none absolute left-0 top-1/2 z-10 hidden w-[20rem] -translate-y-1/2 md:block">
-                {SERVICES.map((s, i) => (
-                  <div
-                    key={s.name}
-                    className={`absolute left-0 top-1/2 w-[20rem] -translate-y-1/2 rounded-sm bg-white p-6 text-black shadow-2xl transition-all duration-500 ${
-                      active === i ? "opacity-100" : "pointer-events-none opacity-0"
-                    }`}
-                    style={{
-                      transform: `translateY(-50%) rotate(${active === i ? 0 : -4}deg) scale(${active === i ? 1 : 0.96})`,
-                    }}
-                  >
-                    <p className="text-sm leading-relaxed text-black/80">{s.body}</p>
-                    <div className="mt-5 flex flex-wrap items-center gap-2">
-                      {s.features.map((f, fi) => (
-                        <span key={f} className="flex items-center gap-2">
-                          <span className="text-[10px] font-semibold uppercase tracking-wide text-black/40">{f}</span>
-                          {fi < s.features.length - 1 && <span className="h-1 w-1 bg-brand" />}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
               {/* links */}
               <div className="flex flex-col">
                 {SERVICES.map((s, i) => (
@@ -84,12 +70,30 @@ export default function ServicesShowcase() {
                     href={s.href}
                     onMouseEnter={() => setActive(i)}
                     onFocus={() => setActive(i)}
-                    className="group flex items-end justify-between gap-4 border-b border-white/15 py-6 text-right transition-colors hover:text-brand-light"
+                    className="group border-b border-white/15 py-6 text-right transition-colors hover:text-brand-light"
                   >
-                    <span className="text-base text-ink-dim transition-colors group-hover:text-brand-light">{s.n}</span>
-                    <span className="font-display text-3xl text-ink-bright transition-colors group-hover:text-brand-light md:text-5xl">
-                      {s.name}
-                    </span>
+                    <div className="flex items-end justify-between gap-4">
+                      <span className="text-base text-ink-dim transition-colors group-hover:text-brand-light">{s.n}</span>
+                      <span className="font-display text-3xl text-ink-bright transition-colors group-hover:text-brand-light md:text-5xl">
+                        {s.name}
+                      </span>
+                    </div>
+                    <div
+                      className={`ml-auto grid max-w-2xl overflow-hidden text-left transition-all duration-500 ${
+                        active === i ? "mt-4 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                      }`}
+                    >
+                      <div className="min-h-0">
+                        <p className="text-sm leading-relaxed text-ink-dim md:text-base">{s.body}</p>
+                        <div className="mt-4 flex flex-wrap justify-end gap-2">
+                          {s.features.map((f) => (
+                            <span key={f} className="rounded-full border border-white/10 bg-black/25 px-3 py-1 text-[10px] uppercase tracking-wide text-ink-faint backdrop-blur">
+                              {f}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
                   </Link>
                 ))}
               </div>

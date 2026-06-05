@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { ArrowLink } from "../ui";
 
@@ -101,10 +102,20 @@ export default function IndustriesTabs() {
 
       {/* Detail panel */}
       <div className="rounded-lg border border-line-soft bg-surface p-6 md:p-8">
-        {/* visual placeholder */}
-        <div className="relative mb-6 flex aspect-[16/7] items-center justify-center overflow-hidden rounded-md border border-line-soft bg-gradient-to-br from-surface-2 to-black">
-          <div className="pointer-events-none absolute inset-0 bg-brand/5" />
-          <span className="text-xs uppercase tracking-wider text-ink-faint">{cur.tab} — photography</span>
+        <div className="relative mb-6 aspect-[16/7] overflow-hidden rounded-md border border-line-soft bg-gradient-to-br from-surface-2 to-black">
+          <Image
+            src="/bananas/industries-structure-bg.webp"
+            alt=""
+            fill
+            sizes="(min-width: 768px) 56vw, 100vw"
+            className="object-cover object-center opacity-80"
+            priority={false}
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/65 via-black/25 to-brand/10" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-surface to-transparent" />
+          <div className="absolute left-4 top-4 rounded-full border border-white/10 bg-black/35 px-3 py-1 text-[10px] uppercase tracking-[0.22em] text-ink-dim backdrop-blur">
+            {cur.tab}
+          </div>
         </div>
         <h3 className="font-display text-3xl text-ink-bright">{cur.title}</h3>
         <p className="mt-3 text-ink-dim">{cur.desc}</p>
