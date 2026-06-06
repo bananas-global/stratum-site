@@ -60,7 +60,7 @@ export function CardMedia({ visual }: { visual: EditorialVisual }) {
         alt={visual.alt}
         fill
         sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
-        className={visual.contain ? "object-contain p-8" : "object-cover"}
+        className={visual.contain ? "object-contain p-8" : "object-contain"}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
       {visual.label && (
@@ -97,6 +97,7 @@ export function PageHero({
   eyebrow,
   title,
   lede,
+  backgroundVisual,
   visual,
   children,
 }: {
@@ -104,11 +105,24 @@ export function PageHero({
   eyebrow: string;
   title: ReactNode;
   lede: ReactNode;
+  backgroundVisual?: Pick<EditorialVisual, "src" | "alt">;
   visual?: EditorialVisual;
   children?: ReactNode;
 }) {
   return (
     <section className="relative overflow-hidden pb-16 pt-40 md:pb-20 md:pt-48">
+      {backgroundVisual && (
+        <div className="pointer-events-none absolute inset-0">
+          <Image
+            src={backgroundVisual.src}
+            alt={backgroundVisual.alt}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-[66%_42%]"
+          />
+        </div>
+      )}
       {/* ambient brand glow */}
       <div className="pointer-events-none absolute -top-40 left-1/2 h-[40rem] w-[40rem] -translate-x-1/2 rounded-full bg-brand/10 blur-[120px]" />
       <div

@@ -309,8 +309,15 @@ h1, h2, h3, h4, h5, h6 {
 .chip-dot {
   width: 4px;
   height: 4px;
-  background-color: var(--color-brand);
+  background-color: var(--color-line-strong);
   flex: none;
+}
+.service-filter-chip {
+  color: var(--color-brand-light);
+}
+.service-filter-chip:hover,
+.service-filter-chip:focus-visible {
+  color: var(--color-ink-bright);
 }
 }
 /* end @layer components */

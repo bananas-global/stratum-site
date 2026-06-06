@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { PageHero, FeatureGrid, SectionHeader, CardMedia } from "@/components/sections";
-import { Button, ChipRow, ArrowLink } from "@/components/ui";
+import { Button, ArrowLink } from "@/components/ui";
 import ServiceCatalog from "@/components/ServiceCatalog";
+import ServiceFilterChips from "@/components/ServiceFilterChips";
 import CTABand from "@/components/CTABand";
 import { jsonLd } from "@/lib/site";
 import { pageMeta, breadcrumb } from "@/lib/seo";
@@ -19,9 +20,8 @@ const CARDS = [
   {
     name: "Managed IT",
     visual: {
-      src: "/bananas/services-structure-bg.webp",
-      alt: "Layered graphite infrastructure model with a restrained purple light accent.",
-      label: "Structure",
+      src: "/images/managed-it.png",
+      alt: "Abstract managed IT service visual with structured dark geometry and purple accent lighting.",
     },
     body: "Ongoing support, maintenance, monitoring, and oversight of the systems your business depends on every day.",
     tags: ["Help desk & support", "Device management", "Network & infrastructure", "Monitoring", "Vendor coordination"],
@@ -29,10 +29,8 @@ const CARDS = [
   {
     name: "Cybersecurity",
     visual: {
-      src: "/images/gem-security.png",
-      alt: "Faceted translucent amethyst stone representing layered protection.",
-      label: "Security",
-      contain: true,
+      src: "/images/cybersecurity.png",
+      alt: "Abstract cybersecurity service visual with layered dark geometry and purple accent lighting.",
     },
     body: "Layered protection, stronger recovery readiness, and clearer control across users, endpoints, backups, and access.",
     tags: ["Endpoint protection", "Identity & access", "Email security", "Backup readiness", "Compliance support"],
@@ -40,9 +38,8 @@ const CARDS = [
   {
     name: "Business Systems",
     visual: {
-      src: "/bananas/industries-structure-bg.webp",
-      alt: "Precision graphite platform with drafting marks and a purple light channel.",
-      label: "Systems",
+      src: "/images/business-systems.png",
+      alt: "Abstract business systems service visual with structured dark geometry and purple accent lighting.",
     },
     body: "ERP, CRM, automation, and AI enablement aligned with how your business actually operates.",
     tags: ["ERP & CRM", "Microsoft 365", "Automation", "AI enablement", "Projects"],
@@ -57,7 +54,15 @@ const INDUSTRY_STRIP = [
   { label: "Manufacturing", sub: "Multi-site, lifecycle, OT-aware" },
 ];
 
-export default function ServicesIndex() {
+type ServicesIndexProps = {
+  searchParams?: Promise<{ serviceFilter?: string | string[] }>;
+};
+
+export default async function ServicesIndex({ searchParams }: ServicesIndexProps) {
+  const params = await searchParams;
+  const serviceFilterParam = params?.serviceFilter;
+  const serviceFilter = Array.isArray(serviceFilterParam) ? serviceFilterParam[0] : serviceFilterParam;
+
   const ld = {
     "@type": "CollectionPage",
     "@id": "https://stratumtech.ca/services#webpage",
@@ -92,11 +97,9 @@ export default function ServicesIndex() {
         eyebrow="Services overview"
         title="Three service categories. One structured partner."
         lede="Stratum operates as a single technology partner across the entire environment. Each service category is built around business outcomes — not tool lists — and works in coordination with the others."
-        visual={{
-          src: "/bananas/services-structure-bg.webp",
-          alt: "Layered graphite infrastructure model with a restrained purple light accent.",
-          label: "Service architecture",
-          caption: "Support, security, and systems work best when they are designed as one environment.",
+        backgroundVisual={{
+          src: "/images/bg-hero-services.jpg",
+          alt: "",
         }}
       >
         <Button href="/contact">Talk With Stratum</Button>
@@ -106,12 +109,12 @@ export default function ServicesIndex() {
       <section className="section bg-surface">
         <div className="container grid gap-4 md:grid-cols-3">
           {CARDS.map((c) => (
-            <div key={c.name} data-reveal className="card flex flex-col gap-5">
+            <div key={c.name} data-reveal className="card flex flex-col gap-5 bg-bg">
               <CardMedia visual={c.visual} />
               <div className="flex flex-col gap-4">
                 <h2 className="font-display text-3xl text-ink-bright">{c.name}</h2>
                 <p className="text-sm leading-relaxed text-ink-dim">{c.body}</p>
-                <ChipRow items={c.tags} />
+                <ServiceFilterChips items={c.tags} />
               </div>
             </div>
           ))}
@@ -148,7 +151,7 @@ export default function ServicesIndex() {
             title="Every capability Stratum covers, in one place."
             lede="Filter by category or search below. Each item explains what it delivers for your business — outcomes and accountability, not a list of tools."
           />
-          <ServiceCatalog />
+          <ServiceCatalog initialQuery={serviceFilter} />
         </div>
       </section>
 
