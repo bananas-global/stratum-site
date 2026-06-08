@@ -160,7 +160,6 @@ export default function IndustriesIndex() {
         <div className="container flex flex-col gap-12">
           <SectionHeader
             eyebrow="Cross-industry value"
-            kicker="Common ground"
             title="What every industry we serve has in common."
             lede="Different verticals, same shape of problem: operational complexity, uptime pressure, risk exposure, and limited internal IT depth. Stratum is built for exactly that pattern."
           />
@@ -183,7 +182,6 @@ export default function IndustriesIndex() {
         <div className="container flex flex-col gap-12">
           <SectionHeader
             eyebrow="Next-wave industries"
-            kicker="Where we extend naturally"
             title="Other verticals we already serve well."
             lede="Industries where Stratum's structure and stewardship apply — and where dedicated pages will follow."
           />

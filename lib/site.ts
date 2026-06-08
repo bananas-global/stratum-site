@@ -6,7 +6,7 @@ export const SITE = {
   phoneDisplay: "1 (855) 200-0076",
   phoneHref: "tel:+18552000076",
   email: "hello@stratumtech.ca",
-  servingSince: "2016",
+  servingSince: "2007",
   tagline:
     "Structure, security, stability, simplicity, and stewardship for growing organizations.",
   themeColor: "#0f0f0f",

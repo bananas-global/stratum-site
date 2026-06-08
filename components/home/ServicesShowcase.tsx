@@ -33,20 +33,23 @@ export default function ServicesShowcase() {
   const [active, setActive] = useState(0);
 
   return (
-    <section className="section bg-black">
-      <div className="container-medium">
+    <section className="section">
+      <div className="container">
         <div className="grid gap-10 md:grid-cols-[0.55fr_1fr]">
           {/* Header */}
           <div data-reveal className="flex flex-col justify-between gap-6 py-6 md:pr-4">
             <div className="flex flex-col gap-5">
               <BracketLabel>What we do</BracketLabel>
-              <h2 className="display-2 text-ink-bright">
+              <h2 className="font-display text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.05] tracking-[-0.04em] text-ink-bright">
                 Structured technology services for complex businesses.
               </h2>
             </div>
-            <p className="text-lg font-light text-ink-dim">
-              Stratum operates as an operational technology partner — not just another IT company.
-            </p>
+            <div className="flex flex-col gap-5">
+              <p className="text-lg font-light text-ink-dim">
+                Stratum operates as an operational technology partner — not just another IT company.
+              </p>
+              <ArrowLink href="/services">See all services</ArrowLink>
+            </div>
           </div>
 
           {/* Interactive block */}
@@ -79,16 +82,17 @@ export default function ServicesShowcase() {
                       </span>
                     </div>
                     <div
-                      className={`ml-auto grid max-w-2xl overflow-hidden text-left transition-all duration-500 ${
+                      className={`ml-auto grid max-w-lg overflow-hidden text-left transition-all duration-500 ${
                         active === i ? "mt-4 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                       }`}
                     >
                       <div className="min-h-0">
-                        <p className="text-sm leading-relaxed text-ink-dim md:text-base">{s.body}</p>
-                        <div className="mt-4 flex flex-wrap justify-end gap-2">
-                          {s.features.map((f) => (
-                            <span key={f} className="rounded-full border border-white/10 bg-black/25 px-3 py-1 text-[10px] uppercase tracking-wide text-ink-faint backdrop-blur">
-                              {f}
+                        <p className="text-sm leading-relaxed text-ink-dim text-right md:text-base">{s.body}</p>
+                        <div className="mt-4 flex flex-wrap justify-end gap-x-0 gap-y-2">
+                          {s.features.map((f, fi) => (
+                            <span key={f} className="flex items-center gap-0">
+                              <span className="chip">{f}</span>
+                              {fi < s.features.length - 1 && <span className="chip-dot mx-2" />}
                             </span>
                           ))}
                         </div>
@@ -107,18 +111,6 @@ export default function ServicesShowcase() {
                 ))}
               </div>
             </div>
-          </div>
-        </div>
-
-        <div className="hairline my-10" />
-
-        <div data-reveal className="grid gap-6 md:grid-cols-[0.5fr_1fr] md:items-center">
-          <div />
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <p className="text-ink-dim md:max-w-sm">
-              Each service area is built around business outcomes, not tool lists.
-            </p>
-            <ArrowLink href="/services">See all services</ArrowLink>
           </div>
         </div>
       </div>

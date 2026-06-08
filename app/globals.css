@@ -276,6 +276,20 @@ h1, h2, h3, h4, h5, h6 {
   background-color: var(--color-line);
 }
 
+/* ── Logo marquee ──────────────────────────────────────────── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+}
+
 /* ── Card surface ──────────────────────────────────────────── */
 .card {
   background-color: var(--color-surface);

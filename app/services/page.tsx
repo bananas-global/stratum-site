@@ -46,6 +46,17 @@ const CARDS = [
   },
 ];
 
+const SIZING_FACTORS = [
+  "Support demand",
+  "Devices & endpoints",
+  "Servers & infrastructure",
+  "Backups & recovery",
+  "Network & site complexity",
+  "Licenses",
+  "Risk exposure",
+  "Account management",
+];
+
 const INDUSTRY_STRIP = [
   { label: "Automotive Dealerships", sub: "Multi-department, multi-vendor" },
   { label: "Medical & Dental", sub: "Uptime, data, compliance" },
@@ -121,12 +132,41 @@ export default async function ServicesIndex({ searchParams }: ServicesIndexProps
         </div>
       </section>
 
+      {/* Sizing principle — strategic differentiator, placed high for prominence */}
+      <section className="section bg-bg">
+        <div className="container flex flex-col gap-12">
+          <div className="grid gap-8 md:grid-cols-[0.85fr_1fr] md:items-end md:gap-16">
+            <SectionHeader
+              eyebrow="How we size engagements"
+              title="Sized around your environment — not your user count."
+            />
+            <p data-reveal className="text-lg font-light leading-relaxed text-ink-dim md:pb-2">
+              We don&apos;t price by seats. We size around what actually drives the work — so the shape of the
+              engagement comes from your operation, not a headcount.
+            </p>
+          </div>
+
+          <div
+            data-reveal
+            className="grid grid-cols-2 gap-px overflow-hidden rounded-md border border-line-soft bg-line-soft sm:grid-cols-3 lg:grid-cols-4"
+          >
+            {SIZING_FACTORS.map((factor, i) => (
+              <div key={factor} className="flex flex-col gap-3 bg-bg p-6">
+                <span className="font-mono text-[11px] font-semibold tracking-wider text-brand-light/70">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="font-medium text-ink-bright">{factor}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* How they work together */}
       <section className="section bg-bg">
         <div className="container flex flex-col gap-12">
           <SectionHeader
             eyebrow="How they work together"
-            kicker="One partner, one environment"
             title="Coordinated services, not stacked vendors."
             lede="Each category solves something different — but they share the same operating model, the same accountability, and the same point of contact. That is what makes Stratum easier to work with than the typical mix of MSPs, security vendors, and implementation shops."
           />
@@ -147,7 +187,6 @@ export default async function ServicesIndex({ searchParams }: ServicesIndexProps
         <div className="container flex flex-col gap-12">
           <SectionHeader
             eyebrow="Service catalog"
-            kicker="Browse by category"
             title="Every capability Stratum covers, in one place."
             lede="Filter by category or search below. Each item explains what it delivers for your business — outcomes and accountability, not a list of tools."
           />
@@ -155,22 +194,10 @@ export default async function ServicesIndex({ searchParams }: ServicesIndexProps
         </div>
       </section>
 
-      {/* Sizing principle */}
-      <section className="section bg-bg">
-        <div className="container grid gap-8 md:grid-cols-[0.5fr_1fr] md:gap-16">
-          <SectionHeader eyebrow="How we size engagements" kicker="Sizing principle" title="Sized around your environment — not your user count." />
-          <p data-reveal className="self-center text-lg font-light leading-relaxed text-ink-dim">
-            We don&apos;t price by seats. We size around what actually drives the work: support demand, devices, servers,
-            backups, network and site complexity, licenses, risk exposure, and account-management needs. The shape of the
-            engagement comes from your operation.
-          </p>
-        </div>
-      </section>
-
       {/* Industries strip */}
       <section className="section bg-surface">
         <div className="container flex flex-col gap-10">
-          <SectionHeader eyebrow="Who we serve" kicker="Industries" title="Where our services apply." lede="We lead with industries where operational complexity is highest and the cost of unreliable technology is real." />
+          <SectionHeader eyebrow="Who we serve" title="Where our services apply." lede="We lead with industries where operational complexity is highest and the cost of unreliable technology is real." />
           <div data-reveal className="grid gap-px overflow-hidden rounded-md border border-line-soft bg-line-soft sm:grid-cols-2 lg:grid-cols-5">
             {INDUSTRY_STRIP.map((it) => (
               <div key={it.label} className="flex flex-col gap-1 bg-surface p-6">

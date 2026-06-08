@@ -101,7 +101,6 @@ export default function WhyStratum() {
         <div className="container flex flex-col gap-14">
           <SectionHeader
             eyebrow="The lens"
-            kicker="How we operate"
             title="Every decision filtered through the same five commitments."
             lede="Structure, Security, Stability, Simplicity, and Stewardship is not a marketing tagline. It is the filter for our service model, proposals, sales conversations, and internal decisions."
           />
@@ -129,7 +128,6 @@ export default function WhyStratum() {
         <div className="container flex flex-col gap-12">
           <SectionHeader
             eyebrow="How Stratum compares"
-            kicker="The structural choice"
             title="Stratum is not a break-fix shop — and not an internal IT team."
           />
           <div data-reveal className="overflow-x-auto">
@@ -170,7 +168,6 @@ export default function WhyStratum() {
         <div className="container flex flex-col gap-12">
           <SectionHeader
             eyebrow="How we engage as a partner"
-            kicker="The operating relationship"
             title="Account management and advisory are part of the engagement — not a separate add-on."
             lede="Stratum is built to be a long-term technology partner. That means someone is paying attention to your environment between tickets — looking ahead at lifecycle, risk, budget, and roadmap — and bringing it back to leadership in plain language."
           />
@@ -193,7 +190,6 @@ export default function WhyStratum() {
         <div className="container flex flex-col gap-12">
           <SectionHeader
             eyebrow="How engagements are sized"
-            kicker="Sizing principle"
             title="We size around the environment — not the user count."
             lede="Pricing by seats is convenient for vendors and inaccurate for clients. Two businesses with the same headcount can have very different operating realities. Stratum sizes around what actually drives the work:"
           />
@@ -227,7 +223,7 @@ export default function WhyStratum() {
       {/* The numbers */}
       <section className="section bg-bg">
         <div className="container flex flex-col gap-10">
-          <SectionHeader eyebrow="The numbers" kicker="Proof signals" title="Built on a real client base, not a brand new shingle." />
+          <SectionHeader eyebrow="The numbers" title="Built on a real client base, not a brand new shingle." />
           <div data-reveal>
             <OutcomeStrip
               items={[

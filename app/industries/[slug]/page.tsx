@@ -118,7 +118,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
       {/* How we work */}
       <section className="section bg-bg">
         <div className="container flex flex-col gap-12">
-          <SectionHeader eyebrow="How we work" kicker="Operating model" title="Structured partnership from day one." />
+          <SectionHeader eyebrow="How we work" title="Structured partnership from day one." />
           <div data-reveal>
             <HowSteps steps={ind.steps} />
           </div>
@@ -128,7 +128,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
       {/* Outcomes */}
       <section className="section bg-black">
         <div className="container flex flex-col gap-12">
-          <SectionHeader kicker="Outcomes" title={ind.outcomes.h2} />
+          <SectionHeader eyebrow="Outcomes" title={ind.outcomes.h2} />
           <div data-reveal>
             <FeatureGrid items={ind.outcomes.items} cols={2} />
           </div>
@@ -138,7 +138,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
       {/* Proof */}
       <section className="section-sm bg-surface">
         <div className="container">
-          <SectionHeader eyebrow="Proof" kicker="Credibility signals" title={ind.proofH2} />
+          <SectionHeader eyebrow="Proof" title={ind.proofH2} />
           <p data-reveal className="mt-6 rounded-md border border-dashed border-line bg-black/30 p-6 text-sm text-ink-faint">
             Content gap: add 1–2 short outcome statements from current clients in this segment before launch.
           </p>

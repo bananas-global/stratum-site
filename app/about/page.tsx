@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageHero, FeatureGrid, HowSteps, SectionHeader, EditorialPanel } from "@/components/sections";
 import { Button } from "@/components/ui";
 import CTABand from "@/components/CTABand";
+import StratumPillars from "@/components/StratumPillars";
 import { jsonLd } from "@/lib/site";
 import { pageMeta, breadcrumb } from "@/lib/seo";
 
@@ -97,6 +98,8 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <StratumPillars />
 
       {/* Operating style */}
       <section className="section bg-surface">

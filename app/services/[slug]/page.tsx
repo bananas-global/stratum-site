@@ -153,7 +153,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
       {/* How we work */}
       <section className={`section ${svc.backup ? "bg-surface" : "bg-bg"}`}>
         <div className="container flex flex-col gap-12">
-          <SectionHeader eyebrow="How we work" kicker="Operating model" title={svc.howWeWork.h2} lede={svc.howWeWork.lede} />
+          <SectionHeader eyebrow="How we work" title={svc.howWeWork.h2} lede={svc.howWeWork.lede} />
           <div data-reveal>
             <HowSteps steps={svc.howWeWork.steps} />
           </div>
@@ -163,7 +163,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
       {/* What you get */}
       <section className="section bg-black">
         <div className="container flex flex-col gap-12">
-          <SectionHeader kicker="What you get" title={svc.whatYouGet.h2} lede={svc.whatYouGet.lede} />
+          <SectionHeader eyebrow="What you get" title={svc.whatYouGet.h2} lede={svc.whatYouGet.lede} />
           <div data-reveal>
             <FeatureGrid items={svc.whatYouGet.items} cols={2} />
           </div>
@@ -173,7 +173,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
       {/* Proof */}
       <section className="section-sm bg-surface">
         <div className="container flex flex-col gap-10">
-          <SectionHeader eyebrow="Proof" kicker="Credibility signals" title={svc.proof.h2} />
+          <SectionHeader eyebrow="Proof" title={svc.proof.h2} />
           {svc.proof.outcomes && (
             <div data-reveal>
               <OutcomeStrip items={svc.proof.outcomes} />
