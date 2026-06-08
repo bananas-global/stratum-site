@@ -118,7 +118,7 @@ export default function Home() {
             {/* Left — identity card */}
             <div data-reveal className="relative min-h-[26rem] overflow-hidden rounded-lg border border-line-soft lg:min-h-full">
               <Image
-                src="/bananas/missing-middle-bg.webp"
+                src="/images/stratum-geometric-05.webp"
                 alt="Dark structural surface representing Stratum's technology foundation."
                 fill
                 sizes="(min-width: 1024px) 45vw, 100vw"
@@ -126,7 +126,7 @@ export default function Home() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/10" />
               <div className="relative flex h-full flex-col justify-between gap-10 p-8 md:p-10">
-                <div className="max-w-[9ch] text-balance font-display text-[clamp(2.25rem,4vw,3.5rem)] leading-[1.0] tracking-[-0.03em] text-ink-bright">
+                <div className="max-w-[9ch] text-balance font-display text-[clamp(2.75rem,5vw,4.5rem)] leading-[0.98] tracking-[-0.03em] text-ink-bright">
                   Built for the missing middle
                 </div>
                 <div className="flex flex-col gap-3">

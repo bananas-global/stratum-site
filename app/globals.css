@@ -129,6 +129,23 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.03em;
 }
 
+/* ── Heading gradient ──────────────────────────────────────────
+   Subtle white → light-grey vertical sheen on display headings.
+   Baked into the display scale (covers SectionHeader / PageHero
+   everywhere) and exposed as .heading-gradient for inline headings.
+   Avoid on interactive titles whose colour changes on hover —
+   background-clip:text would mask the colour transition. */
+.heading-gradient,
+.display-1,
+.display-2,
+.display-3 {
+  background-image: linear-gradient(180deg, #ffffff 0%, #c2c2c9 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
 /* ── Eyebrow bracket label ─────────────────────────────────── */
 .bracket-label {
   display: inline-flex;
