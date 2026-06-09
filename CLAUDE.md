@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-A **Next.js 15 (App Router) marketing site** for Stratum (stratumtech.ca), an MSP serving the Lower Mainland, BC. It is deployed on **Vercel**. The visual language is dark and cinematic — near-black surfaces (`#000` / `#0f0f0f`), an amethyst brand accent (`#7d34ff`), Instrument Serif / Parastoo display headings, Manrope body, `[ bracket ]` eyebrow labels, and gem/crystal imagery. The homepage features a scroll-scrubbed 3D "stone A" hero video, a five-pillar gem timeline, and a hover-card services showcase.
+A **Next.js 15 (App Router) marketing site** for Stratum (stratumtech.ca), an MSP serving the Lower Mainland, BC. It is deployed on **Vercel**. The visual language is dark and cinematic — near-black surfaces (`#000` / `#0f0f0f`), an amethyst brand accent (`#7d34ff`), Instrument Serif / Parastoo display headings, Manrope body, `[ bracket ]` eyebrow labels, and gem/crystal imagery. The homepage features a scroll-scrubbed 3D "stone A" hero video, a five-pillar gem timeline, and a hover-card services showcase..
 
 > History: this started as a hand-authored static HTML wireframe (now in `legacy/`) and a Webflow WIP design reference (`stratumtech.webflow/`). The current site was rebuilt in Next.js, porting the wireframe's copy + SEO into the Webflow visual language. The `legacy/` and `stratumtech.webflow/` folders are kept for reference only and are NOT part of the build.
 
