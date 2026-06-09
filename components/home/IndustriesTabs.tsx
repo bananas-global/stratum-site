@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { BracketLabel, ArrowLink } from "../ui";
+import { BracketLabel, Button } from "../ui";
 
 const INDUSTRIES = [
   {
@@ -201,24 +201,23 @@ export default function IndustriesTabs() {
   useEffect(() => () => cancelAnimationFrame(rafRef.current), []);
 
   return (
-    <section className="section bg-surface">
+    <section className="section section-light">
       <div className="container">
         <div className="flex flex-col gap-10 md:grid md:grid-cols-[280px_1fr] md:items-stretch md:gap-16">
 
           {/* Sidebar */}
           <div className="flex h-full flex-col justify-between gap-8" data-reveal>
-            <div className="flex flex-col gap-8">
-              <BracketLabel>Who we work with</BracketLabel>
-
+            <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-4">
-                <h2 className="font-display text-[clamp(1.75rem,2.8vw,2.5rem)] leading-[1.05] tracking-[-0.03em] text-ink-bright">
+                <BracketLabel>Who we work with</BracketLabel>
+                <h2 className="font-display text-[clamp(1.75rem,2.8vw,2.5rem)] leading-[1.05] tracking-[-0.03em]">
                   Technology built around how your industry operates.
                 </h2>
                 <p className="text-sm leading-relaxed text-ink-dim">
                   Managed IT and cybersecurity for industries where complexity is highest and downtime carries real cost.
                 </p>
-                <ArrowLink href="/industries">See all industries</ArrowLink>
               </div>
+              <Button href="/industries" className="w-fit">See all industries</Button>
             </div>
 
             <div className="flex gap-2">
@@ -247,11 +246,11 @@ export default function IndustriesTabs() {
           <div ref={viewportRef} className="relative overflow-hidden" style={{ minHeight: VIEWPORT_MIN_H }} data-reveal>
             {/* Edge fades */}
             <div
-              className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-surface to-transparent transition-opacity duration-500"
+              className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-bg to-transparent transition-opacity duration-500"
               style={{ opacity: showLeftFade ? 1 : 0 }}
             />
             <div
-              className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-surface to-transparent transition-opacity duration-500"
+              className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-bg to-transparent transition-opacity duration-500"
               style={{ opacity: showRightFade ? 1 : 0 }}
             />
 
@@ -274,10 +273,10 @@ export default function IndustriesTabs() {
                       cursor: isActive ? "default" : "pointer",
                     }}
                     className={[
-                      "group relative flex flex-shrink-0 flex-col overflow-hidden rounded-md border border-line-soft/40 p-6",
+                      "panel-card group relative flex flex-shrink-0 flex-col overflow-hidden rounded-md border p-6 transition-all duration-500",
                       isActive
-                        ? "bg-surface-2"
-                        : "bg-bg/60 opacity-60 hover:opacity-100 hover:bg-surface-2/70",
+                        ? "is-active bg-surface"
+                        : "bg-surface/55 opacity-70 hover:opacity-100 hover:bg-surface/90",
                     ].join(" ")}
                   >
                     {/* App-icon slot — glossy amethyst gem when active, subtle chip when collapsed */}
@@ -288,9 +287,9 @@ export default function IndustriesTabs() {
                         height: isActive ? "4rem" : "2.5rem",
                         marginBottom: isActive ? "1.25rem" : "0.75rem",
                         borderRadius: isActive ? "1.15rem" : "0.5rem",
-                        background: isActive ? "#08080c" : "rgba(255,255,255,0.04)",
-                        border: "1px solid rgba(255,255,255,0.08)",
-                        boxShadow: isActive ? "0 16px 30px -12px rgba(125,52,255,0.55)" : "none",
+                        background: isActive ? "#f7f4fc" : "rgba(125, 52, 255, 0.06)",
+                        border: isActive ? "1px solid rgba(125, 52, 255, 0.2)" : "1px solid rgba(125, 52, 255, 0.12)",
+                        boxShadow: isActive ? "0 10px 28px -10px rgba(125, 52, 255, 0.28)" : "none",
                       }}
                       aria-hidden="true"
                     >
@@ -301,7 +300,7 @@ export default function IndustriesTabs() {
                           style={{
                             inset: "1px",
                             borderRadius: "calc(1.15rem - 1px)",
-                            background: "linear-gradient(to bottom, #08080c 0%, #160f28 40%, #5a2fd6 84%, #8b5cff 100%)",
+                            background: "linear-gradient(165deg, #ffffff 0%, #ede5ff 48%, #c9a8ff 100%)",
                           }}
                         />
                       )}
@@ -309,14 +308,14 @@ export default function IndustriesTabs() {
                       {isActive && (
                         <div
                           className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2"
-                          style={{ background: "radial-gradient(ellipse at bottom, rgba(180,140,255,0.5), transparent 70%)" }}
+                          style={{ background: "radial-gradient(ellipse at bottom, rgba(125, 52, 255, 0.18), transparent 72%)" }}
                         />
                       )}
                       {/* top gloss highlight — soft, contained */}
                       {isActive && (
                         <div
                           className="pointer-events-none absolute inset-x-0 top-0 h-1/2"
-                          style={{ background: "linear-gradient(to bottom, rgba(255,255,255,0.18), transparent)" }}
+                          style={{ background: "linear-gradient(to bottom, rgba(255,255,255,0.9), transparent)" }}
                         />
                       )}
                       <Icon
@@ -324,8 +323,8 @@ export default function IndustriesTabs() {
                         style={{
                           width: isActive ? "1.85rem" : "1.25rem",
                           height: isActive ? "1.85rem" : "1.25rem",
-                          color: isActive ? "#ffffff" : "var(--color-ink-faint)",
-                          filter: isActive ? "drop-shadow(0 2px 4px rgba(0,0,0,0.35))" : "none",
+                          color: isActive ? "var(--color-brand)" : "var(--color-ink-faint)",
+                          filter: isActive ? "drop-shadow(0 1px 2px rgba(125, 52, 255, 0.2))" : "none",
                         }}
                       />
                     </div>
@@ -351,13 +350,13 @@ export default function IndustriesTabs() {
                         }}
                       >
                         <p className="mt-3 text-sm leading-relaxed text-ink">{ind.desc}</p>
-                        <ul className="mt-5 flex flex-col">
+                        <ul className="mt-5 flex flex-col border-t border-line-soft/40 divide-y divide-line-soft/40">
                           {ind.points.map((pt, pi) => (
                             <li
                               key={pi}
-                              className="flex items-center gap-3 border-t border-line-soft/25 py-2.5 first:border-t-0 first:pt-0"
+                              className="flex items-center gap-3 py-2.5 first:pt-3"
                             >
-                              <span className="shrink-0 font-mono text-[11px] font-medium tabular-nums text-brand-light/70">
+                              <span className="shrink-0 font-body text-[11px] font-medium tabular-nums text-brand-light/70">
                                 {String(pi + 1).padStart(2, "0")}
                               </span>
                               <span className="text-sm leading-snug text-ink-dim">{pt}</span>

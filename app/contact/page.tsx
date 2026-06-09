@@ -100,7 +100,7 @@ export default function ContactPage() {
           <aside data-reveal className="flex flex-col gap-4">
             {ASIDE.map((a) => (
               <div key={a.title} className="rounded-md border border-line-soft bg-surface p-6">
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-ink-faint">{a.title}</h3>
+                <h3 className="heading-plain text-xs font-semibold uppercase tracking-wider text-ink-faint">{a.title}</h3>
                 <p className="mt-2 text-sm text-ink-dim">{a.body}</p>
                 {a.link && (
                   <a href={a.link.href} className="mt-1 block font-display text-2xl text-ink-bright transition-colors hover:text-brand-light">

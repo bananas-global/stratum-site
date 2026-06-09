@@ -137,7 +137,7 @@ export default function AboutPage() {
                   <span className="text-xs uppercase tracking-wider text-ink-faint">Portrait</span>
                 </div>
                 <div>
-                  <div className="font-display text-xl text-ink-bright">Leadership Name</div>
+                  <div className="heading-gradient font-display text-xl">Leadership Name</div>
                   <div className="text-sm text-ink-faint">Role / Title</div>
                 </div>
               </div>

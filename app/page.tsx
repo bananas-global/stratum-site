@@ -2,10 +2,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import CinematicHero from "@/components/home/CinematicHero";
 import IndustriesTabs from "@/components/home/IndustriesTabs";
+import TextMarquee from "@/components/home/TextMarquee";
 import CTABand from "@/components/CTABand";
 import CountUp from "@/components/CountUp";
-import { SectionHeader, HowSteps } from "@/components/sections";
-import { Button, BracketLabel, ArrowLink } from "@/components/ui";
+import ApproachTimeline from "@/components/home/ApproachTimeline";
+import TestimonialsShowcase from "@/components/home/TestimonialsShowcase";
+import { SectionHeader } from "@/components/sections";
+import { Button, BracketLabel } from "@/components/ui";
 import { jsonLd, orgGraph, websiteGraph } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -126,14 +129,14 @@ export default function Home() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/10" />
               <div className="relative flex h-full flex-col justify-between gap-10 p-8 md:p-10">
-                <div className="max-w-[9ch] text-balance font-display text-[clamp(2.75rem,5vw,4.5rem)] leading-[0.98] tracking-[-0.03em] text-ink-bright">
+                <div className="heading-gradient max-w-[9ch] text-balance font-display text-[clamp(2.75rem,5vw,4.5rem)] leading-[0.98] tracking-[-0.03em]">
                   Built for the missing middle
                 </div>
                 <div className="flex flex-col gap-3">
                   <div className="text-lg tracking-[0.35em] text-brand-light" aria-label="Five out of five">
                     ★★★★★
                   </div>
-                  <div className="font-display text-2xl text-ink-bright">In operation since 2007</div>
+                  <div className="heading-gradient font-display text-2xl">In operation since 2007</div>
                   <p className="max-w-xs text-sm leading-relaxed text-ink-dim">
                     Managed IT and cybersecurity for the Lower Mainland, BC — built on structure, not break-fix.
                   </p>
@@ -145,7 +148,7 @@ export default function Home() {
             <div className="flex flex-col gap-10">
               <h2
                 data-reveal
-                className="font-display text-[clamp(1.6rem,2.6vw,2.4rem)] leading-[1.2] tracking-[-0.02em] text-ink-bright"
+                className="heading-plain font-display text-[clamp(1.6rem,2.6vw,2.4rem)] leading-[1.2] tracking-[-0.02em] text-white/80"
               >
                 A structured, security-aware technology partner — built for the businesses too complex for break-fix IT
                 and too small for a full internal team.
@@ -163,10 +166,10 @@ export default function Home() {
                   >
                     <CountUp
                       value={stat.value}
-                      className="min-w-[5.5rem] font-display text-[clamp(2rem,3vw,2.75rem)] leading-none text-ink-bright"
+                      className="min-w-[5.5rem] font-display text-[clamp(2rem,3vw,2.75rem)] leading-none text-brand-light"
                     />
                     <div className="flex flex-col gap-2 pt-1">
-                      <div className="font-body text-[1rem] font-bold uppercase leading-tight tracking-[0.02em] text-ink-bright/40">
+                      <div className="font-body text-[1rem] font-bold leading-tight tracking-[0.02em] text-ink-bright">
                         {stat.label}
                       </div>
                       <p className="text-sm leading-relaxed text-ink-dim">{stat.sub}</p>
@@ -176,17 +179,19 @@ export default function Home() {
               </div>
 
               <div data-reveal>
-                <ArrowLink href="/about">How Stratum Works</ArrowLink>
+                <Button href="/about" className="w-fit">How Stratum Works</Button>
               </div>
             </div>
           </div>
         </div>
       </section>
 
+      <TextMarquee />
+
       <IndustriesTabs />
 
       {/* How we work */}
-      <section className="section bg-bg">
+      <section className="section section-light">
         <div className="container flex flex-col gap-12">
           <SectionHeader
             eyebrow="Our approach"
@@ -194,7 +199,7 @@ export default function Home() {
             lede="We do not just react to issues. We work to make the environment easier to support and easier to trust over time."
           />
           <div data-reveal>
-            <HowSteps
+            <ApproachTimeline
               steps={[
                 { n: "01", title: "Analyze", body: "We start by reviewing your current systems, support history, documentation gaps, and operating complexity before recommending anything." },
                 { n: "02", title: "Engage", body: "We size the engagement around actual usage, endpoints, servers, backups, and risk — not just user count. The package fits your environment, not the other way around." },
@@ -206,23 +211,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="section bg-surface">
+      {/* Testimonials — Cycle Testimonial 03 grid */}
+      <section className="section section-light">
         <div className="container flex flex-col gap-12">
-          <SectionHeader eyebrow="What clients say" title="Real outcomes from real businesses." />
-          <div data-reveal className="grid gap-4 md:grid-cols-3">
-            {[0, 1, 2].map((i) => (
-              <figure key={i} className="card flex flex-col justify-between gap-8">
-                <blockquote className="font-display text-2xl leading-snug text-ink">
-                  “A structured, security-aware partner that takes responsibility for the whole environment.”
-                </blockquote>
-                <figcaption className="flex flex-col">
-                  <span className="font-medium text-ink-bright">Client Name</span>
-                  <span className="text-sm text-ink-faint">Title · Industry</span>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
+          <SectionHeader
+            eyebrow="What clients say"
+            title="Real outcomes from real businesses."
+            center
+          />
+          <TestimonialsShowcase />
         </div>
       </section>
 

@@ -68,7 +68,13 @@ export default function RootLayout({
         />
         <script
           dangerouslySetInnerHTML={{
-            __html: "document.documentElement.classList.add('reveal-ready')",
+            __html: `document.documentElement.classList.add('reveal-ready');
+setTimeout(function () {
+  document.querySelectorAll('[data-reveal]').forEach(function (el) {
+    el.style.opacity = '1';
+    el.style.transform = 'none';
+  });
+}, 3000);`,
           }}
         />
         <script
