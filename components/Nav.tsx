@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { NAV, SITE } from "@/lib/site";
 import { ArrowE } from "./ui";
 
@@ -20,17 +20,36 @@ function ChevronDown() {
 
 export default function Nav() {
   const pathname = usePathname();
+  const barRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false); // mobile menu
   const [scrolled, setScrolled] = useState(false);
+  const [lightNav, setLightNav] = useState(false);
 
   useEffect(() => setOpen(false), [pathname]);
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+  const updateNav = useCallback(() => {
+    setScrolled(window.scrollY > 24);
+
+    const bar = barRef.current;
+    if (!bar) return;
+
+    const probeY = bar.getBoundingClientRect().top + bar.getBoundingClientRect().height / 2;
+    const overLight = Array.from(document.querySelectorAll(".section-light")).some((section) => {
+      const rect = section.getBoundingClientRect();
+      return probeY >= rect.top && probeY <= rect.bottom;
+    });
+    setLightNav(overLight);
   }, []);
+
+  useEffect(() => {
+    updateNav();
+    window.addEventListener("scroll", updateNav, { passive: true });
+    window.addEventListener("resize", updateNav, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", updateNav);
+      window.removeEventListener("resize", updateNav);
+    };
+  }, [pathname, updateNav]);
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -39,20 +58,25 @@ export default function Nav() {
     <header className="fixed inset-x-0 top-0 z-[999] px-[3%] py-5">
       <div className="mx-auto max-w-[64rem]">
         <div
-          className={`relative flex items-center justify-between rounded-sm border border-line-soft py-1 pl-4 pr-1 transition-colors duration-300 ${
-            scrolled || open ? "bg-surface/70 backdrop-blur-lg" : "bg-surface/30 backdrop-blur-lg"
-          }`}
+          ref={barRef}
+          className={[
+            "nav-shell relative flex items-center justify-between rounded-sm py-1 pl-4 pr-1",
+            scrolled || open ? "is-scrolled" : "",
+            lightNav ? "nav-light" : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
         >
           {/* Logo */}
           <div className="flex flex-1 items-center">
             <Link href="/" aria-label="Stratum — Home" className="block py-1.5">
               <Image
-                src="/images/logo.svg"
+                src={lightNav ? "/images/logo-on-light.svg" : "/images/logo.svg"}
                 alt="Stratum"
                 width={144}
                 height={28}
                 priority
-                className="h-6 w-auto"
+                className="nav-logo h-6 w-auto transition-opacity duration-300"
               />
             </Link>
           </div>
@@ -141,9 +165,13 @@ export default function Nav() {
 
         {/* Mobile menu */}
         <div
-          className={`mt-2 origin-top overflow-hidden rounded-sm border border-line-soft bg-surface/80 backdrop-blur-lg transition-all duration-300 lg:hidden ${
-            open ? "max-h-[80vh] opacity-100" : "pointer-events-none max-h-0 opacity-0"
-          }`}
+          className={[
+            "nav-mobile-panel mt-2 origin-top overflow-hidden rounded-sm transition-all duration-300 lg:hidden",
+            lightNav ? "nav-light" : "",
+            open ? "max-h-[80vh] opacity-100" : "pointer-events-none max-h-0 opacity-0",
+          ]
+            .filter(Boolean)
+            .join(" ")}
         >
           <div className="flex flex-col gap-1 p-4">
             {NAV.map((item) => (

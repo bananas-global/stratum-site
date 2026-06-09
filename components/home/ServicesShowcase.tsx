@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { BracketLabel, ArrowLink } from "../ui";
+import { BracketLabel, Button } from "../ui";
 
 const SERVICES = [
   {
@@ -40,7 +40,7 @@ export default function ServicesShowcase() {
           <div data-reveal className="flex flex-col justify-between gap-6 py-6 md:pr-4">
             <div className="flex flex-col gap-5">
               <BracketLabel>What we do</BracketLabel>
-              <h2 className="font-display text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.05] tracking-[-0.04em] text-ink-bright">
+              <h2 className="font-display text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.05] tracking-[-0.04em]">
                 Structured technology services for complex businesses.
               </h2>
             </div>
@@ -48,7 +48,7 @@ export default function ServicesShowcase() {
               <p className="text-lg font-light text-ink-dim">
                 Stratum operates as an operational technology partner — not just another IT company.
               </p>
-              <ArrowLink href="/services">See all services</ArrowLink>
+              <Button href="/services" className="w-fit">See all services</Button>
             </div>
           </div>
 

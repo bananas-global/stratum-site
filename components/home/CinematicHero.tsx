@@ -90,7 +90,7 @@ export default function CinematicHero() {
               <div data-reveal>
                 <BracketLabel>IT Services for the Lower Mainland</BracketLabel>
               </div>
-              <h1 data-reveal data-reveal-delay="0.05" className="font-display text-[clamp(2.5rem,5vw,4.25rem)] leading-[0.97] tracking-[-0.04em] text-ink-bright">
+              <h1 data-reveal data-reveal-delay="0.05" className="font-display text-[clamp(2.5rem,5vw,4.25rem)] leading-[0.97] tracking-[-0.04em]">
                 The structure behind dependable technology
               </h1>
               <p data-reveal data-reveal-delay="0.12" className="max-w-sm text-lg font-light leading-relaxed text-ink-dim">

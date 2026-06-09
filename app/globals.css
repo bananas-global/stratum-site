@@ -45,6 +45,9 @@
 
   /* Easing */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Heading sheen — white → light grey (used by h1–h6, display scale, .heading-gradient) */
+  --heading-gradient: linear-gradient(168deg, #ffffff 0%, #d2d2da 42%, #9a9aa8 100%);
 }
 
 @layer base {
@@ -127,23 +130,6 @@ h1, h2, h3, h4, h5, h6 {
   font-size: clamp(1.75rem, 3.5vw, 3rem);
   line-height: 1.05;
   letter-spacing: -0.03em;
-}
-
-/* ── Heading gradient ──────────────────────────────────────────
-   Subtle white → light-grey vertical sheen on display headings.
-   Baked into the display scale (covers SectionHeader / PageHero
-   everywhere) and exposed as .heading-gradient for inline headings.
-   Avoid on interactive titles whose colour changes on hover —
-   background-clip:text would mask the colour transition. */
-.heading-gradient,
-.display-1,
-.display-2,
-.display-3 {
-  background-image: linear-gradient(180deg, #ffffff 0%, #c2c2c9 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
 }
 
 /* ── Eyebrow bracket label ─────────────────────────────────── */
@@ -319,6 +305,12 @@ h1, h2, h3, h4, h5, h6 {
   border-color: var(--color-line-strong);
 }
 
+.panel-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-line-soft);
+  transition: border-color 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease;
+}
+
 .glass {
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
@@ -353,6 +345,332 @@ h1, h2, h3, h4, h5, h6 {
 }
 /* end @layer components */
 
+/* ── Heading gradient (outside @layer — must beat Tailwind text-ink-bright) */
+.heading-gradient,
+.display-1,
+.display-2,
+.display-3,
+:where(h1, h2, h3, h4, h5, h6):not(.heading-plain) {
+  background-image: var(--heading-gradient);
+  background-size: 100% 100%;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.heading-plain {
+  background-image: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-text-fill-color: currentColor;
+  color: inherit;
+}
+
+/* ── Light section band (homepage contrast break) ───────────── */
+.section-light {
+  --color-bg: #f0eef4;
+  --color-surface: #ffffff;
+  --color-surface-2: #ffffff;
+  --color-surface-glass: rgba(255, 255, 255, 0.72);
+  --color-ink: #2e2e36;
+  --color-ink-dim: #5c5c68;
+  --color-ink-faint: rgba(26, 26, 34, 0.48);
+  --color-ink-bright: #14141a;
+  --color-line: rgba(20, 20, 28, 0.1);
+  --color-line-soft: rgba(20, 20, 28, 0.06);
+  --color-line-strong: rgba(20, 20, 28, 0.14);
+  --heading-gradient: linear-gradient(168deg, #14141a 0%, #3a3a44 45%, #6e6e78 100%);
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+}
+
+.section-light .card {
+  background-color: var(--color-surface);
+  border-color: var(--color-line-soft);
+  box-shadow:
+    0 1px 2px rgba(18, 18, 28, 0.04),
+    0 8px 28px rgba(18, 18, 28, 0.05);
+}
+
+.section-light .card:hover {
+  border-color: rgba(125, 52, 255, 0.22);
+  box-shadow:
+    0 4px 16px rgba(125, 52, 255, 0.08),
+    0 12px 32px rgba(18, 18, 28, 0.06);
+}
+
+.section-light .btn-primary {
+  background-color: var(--color-brand);
+  color: #fff;
+}
+
+.section-light .btn-primary:hover {
+  background-color: var(--color-brand-dark);
+  color: #fff;
+}
+
+.section-light .btn-ghost:hover {
+  color: var(--color-ink-bright);
+}
+
+.section-light .panel-card {
+  background-color: var(--color-surface);
+  border-color: var(--color-line-soft);
+  box-shadow: 0 1px 3px rgba(18, 18, 28, 0.04);
+}
+
+.section-light .panel-card:hover {
+  border-color: var(--color-line);
+}
+
+.section-light .panel-card.is-active {
+  border-color: rgba(125, 52, 255, 0.18);
+  box-shadow: none;
+}
+
+/* ── Approach — sticky stacking cards ─────────────────────── */
+.approach-stack {
+  position: relative;
+}
+
+.approach-stack-item {
+  /* scroll runway: each step gets a full viewport of stick time */
+  min-height: 85vh;
+}
+
+.approach-stack-item.is-last {
+  min-height: 0;
+  padding-bottom: 0.5rem;
+}
+
+.approach-stack-card {
+  position: sticky;
+  box-shadow:
+    0 1px 3px rgba(18, 18, 28, 0.05),
+    0 12px 40px rgba(18, 18, 28, 0.07);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .approach-stack-item {
+    min-height: 0;
+  }
+
+  .approach-stack-card {
+    position: relative;
+    top: auto !important;
+    margin-bottom: 1rem;
+  }
+}
+
+.approach-image-slot-img {
+  mix-blend-mode: multiply;
+}
+
+/* ── Testimonials — Cycle Testimonial 03 grid ─────────────────── */
+.testimonials-cycle-grid {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .testimonials-cycle-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .testimonials-cycle-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.testimonials-cycle-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  min-height: 16rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-line);
+  background-color: #fff;
+  padding: 2rem 2.5rem;
+}
+
+@media (min-width: 1024px) {
+  .testimonials-cycle-card {
+    min-height: 18.5rem;
+  }
+}
+
+.testimonials-cycle-stat {
+  position: relative;
+  overflow: hidden;
+  min-height: 16rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-line-soft);
+  --heading-gradient: linear-gradient(168deg, #ffffff 0%, #e8e8ee 42%, #c8c8d2 100%);
+}
+
+.testimonials-cycle-stat .testimonials-stat-value {
+  background-image: var(--heading-gradient);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+@media (min-width: 1024px) {
+  .testimonials-cycle-stat {
+    min-height: 18.5rem;
+  }
+}
+
+/* ── CTA band — dark textured background ─────────────────────── */
+.cta-band {
+  background-color: #050505;
+}
+
+.cta-band-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 45%, rgba(125, 52, 255, 0.1), transparent 68%),
+    linear-gradient(180deg, #0c0c0c 0%, #050505 100%);
+}
+
+.cta-band-texture {
+  position: absolute;
+  inset: 0;
+  opacity: 0.12;
+  background-image: url("/images/stratum-geometric-07.webp");
+  background-size: cover;
+  background-position: center;
+}
+
+/* ── Footer — Klarheit Footer 03 layout ────────────────────────── */
+.footer-klarheit-wordmark {
+  width: 100%;
+  margin-top: 3rem;
+  user-select: none;
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .footer-klarheit-wordmark {
+    margin-top: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer-klarheit-wordmark {
+    margin-top: 5rem;
+  }
+}
+
+.footer-klarheit-wordmark svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.footer-klarheit-wordmark-mask {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.28) 0%,
+    rgba(255, 255, 255, 0.16) 38%,
+    rgba(255, 255, 255, 0.06) 72%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.28) 0%,
+    rgba(255, 255, 255, 0.16) 38%,
+    rgba(255, 255, 255, 0.06) 72%,
+    transparent 100%
+  );
+}
+
+/* ── Nav — adapts when overlapping .section-light ─────────── */
+.nav-shell {
+  border: 1px solid var(--color-line-soft);
+  background-color: rgba(15, 15, 15, 0.3);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.nav-shell.is-scrolled {
+  background-color: rgba(15, 15, 15, 0.7);
+}
+
+.nav-shell.nav-light {
+  --color-ink-bright: #14141a;
+  --color-ink-dim: #5c5c68;
+  --color-ink-faint: rgba(26, 26, 34, 0.48);
+  --color-line-soft: rgba(20, 20, 28, 0.08);
+  --color-line: rgba(20, 20, 28, 0.1);
+  --color-surface-glass: rgba(255, 255, 255, 0.88);
+  border-color: rgba(20, 20, 28, 0.08);
+  background-color: rgba(255, 255, 255, 0.72);
+}
+
+.nav-shell.nav-light.is-scrolled {
+  background-color: rgba(255, 255, 255, 0.88);
+}
+
+.nav-shell.nav-light .btn-secondary {
+  background-color: rgba(125, 52, 255, 0.08);
+  color: var(--color-brand);
+}
+
+.nav-shell.nav-light .btn-secondary:hover {
+  background-color: var(--color-brand);
+  color: #fff;
+}
+
+.nav-shell.nav-light .glass {
+  background-color: rgba(255, 255, 255, 0.92);
+  border-color: rgba(20, 20, 28, 0.08);
+}
+
+.nav-shell.nav-light .glass a:hover {
+  background-color: rgba(125, 52, 255, 0.06);
+}
+
+.nav-mobile-panel {
+  border: 1px solid var(--color-line-soft);
+  background-color: rgba(15, 15, 15, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.nav-mobile-panel.nav-light {
+  --color-ink-bright: #14141a;
+  --color-ink-dim: #5c5c68;
+  --color-ink-faint: rgba(26, 26, 34, 0.48);
+  --color-line-soft: rgba(20, 20, 28, 0.08);
+  --color-line: rgba(20, 20, 28, 0.1);
+  border-color: rgba(20, 20, 28, 0.08);
+  background-color: rgba(255, 255, 255, 0.92);
+}
+
+.nav-mobile-panel.nav-light .btn-primary {
+  background-color: var(--color-brand);
+  color: #fff;
+}
+
 /* ── Scroll reveal ─────────────────────────────────────────────
    The hidden state ONLY applies when JS is on (html.reveal-ready),
    so content is always visible without JS / for crawlers. JS adds
@@ -369,6 +687,18 @@ html.reveal-ready [data-reveal] {
 @keyframes gemFloat {
   0%, 100% { transform: translateY(0) rotate(0deg); }
   50% { transform: translateY(-12px) rotate(1.5deg); }
+}
+
+@keyframes refinementGemFloat {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  25% { transform: translate3d(2px, -7px, 0) rotate(-1deg); }
+  50% { transform: translate3d(-1px, -4px, 0) rotate(0.6deg); }
+  75% { transform: translate3d(-2px, -9px, 0) rotate(-0.5deg); }
+}
+
+.refinement-gem-float {
+  animation: refinementGemFloat 5.5s ease-in-out infinite;
+  will-change: transform;
 }
 
 /* marquee for trust bar */

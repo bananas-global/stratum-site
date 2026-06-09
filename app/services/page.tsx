@@ -152,7 +152,7 @@ export default async function ServicesIndex({ searchParams }: ServicesIndexProps
           >
             {SIZING_FACTORS.map((factor, i) => (
               <div key={factor} className="flex flex-col gap-3 bg-bg p-6">
-                <span className="font-mono text-[11px] font-semibold tracking-wider text-brand-light/70">
+                <span className="font-body text-[11px] font-semibold tracking-wider text-brand-light/70">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <span className="font-medium text-ink-bright">{factor}</span>

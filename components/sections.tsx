@@ -197,7 +197,7 @@ export function HowSteps({ steps }: { steps: { n: string; title: string; body: s
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {steps.map((s) => (
-        <div key={s.n} className="flex flex-col gap-4 rounded-md border border-line-soft bg-surface p-6">
+        <div key={s.n} className="panel-card flex flex-col gap-4 rounded-md border p-6">
           <span className="font-display text-3xl text-brand-light">{s.n}</span>
           <h3 className="font-display text-2xl text-ink-bright">{s.title}</h3>
           <p className="text-sm leading-relaxed text-ink-dim">{s.body}</p>

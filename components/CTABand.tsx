@@ -12,17 +12,18 @@ export default function CTABand({
   ctaHref?: string;
 }) {
   return (
-    <section className="section-sm border-t border-line bg-bg">
-      <div className="container">
+    <section className="cta-band section-sm relative overflow-hidden border-t border-line">
+      <div className="cta-band-bg" aria-hidden="true" />
+      <div className="cta-band-texture" aria-hidden="true" />
+
+      <div className="container relative z-10">
         <div
           data-reveal
-          className="grid items-center gap-8 rounded-lg border border-line-soft bg-surface px-8 py-12 md:grid-cols-[1.6fr_1fr] md:px-12 md:py-14"
+          className="mx-auto flex max-w-2xl flex-col items-center gap-6 text-center"
         >
-          <h2 className="display-3 text-balance text-ink-bright">{title}</h2>
-          <div className="flex flex-col items-start gap-6 md:items-end md:text-right">
-            <p className="text-ink-dim md:max-w-xs">{body}</p>
-            <Button href={ctaHref}>{ctaLabel}</Button>
-          </div>
+          <h2 className="display-2 text-balance text-ink-bright">{title}</h2>
+          <p className="max-w-lg text-base leading-relaxed text-ink-dim">{body}</p>
+          <Button href={ctaHref}>{ctaLabel}</Button>
         </div>
       </div>
     </section>
