@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { BracketLabel } from "./ui";
 
 const PILLARS = [
@@ -59,13 +58,13 @@ export default function StratumPillars({ className }: { className?: string }) {
                       <p className="text-sm text-ink-dim md:max-w-xs">{p.body}</p>
                     </div>
                     <div className="flex justify-start">
-                      <GemImg src={p.gem} alt={p.name} />
+                      <GemImg alt={p.name} />
                     </div>
                   </>
                 ) : (
                   <>
                     <div className="order-2 flex justify-end md:order-1">
-                      <GemImg src={p.gem} alt={p.name} />
+                      <GemImg alt={p.name} />
                     </div>
                     <div className="order-1 flex flex-col gap-2 md:order-2">
                       <h3 className="font-display text-4xl font-medium text-ink-bright md:text-5xl">{p.name}</h3>
@@ -82,17 +81,12 @@ export default function StratumPillars({ className }: { className?: string }) {
   );
 }
 
-function GemImg({ src, alt }: { src: string; alt: string }) {
+function GemImg({ alt }: { alt: string }) {
   return (
-    <Image
-      src={src}
-      alt=""
+    <div
       aria-hidden
-      width={200}
-      height={200}
-      className="h-[150px] w-[150px] select-none object-contain drop-shadow-[0_0_40px_rgba(125,52,255,0.25)] md:h-[180px] md:w-[180px]"
-      style={{ animation: "gemFloat 7s ease-in-out infinite" }}
       title={alt}
+      className="h-[150px] w-[150px] select-none rounded-md bg-neutral-700 md:h-[180px] md:w-[180px]"
     />
   );
 }
