@@ -3,6 +3,7 @@ import { PageHero, FeatureGrid, SectionHeader, CardMedia } from "@/components/se
 import { Button, ArrowLink } from "@/components/ui";
 import ServiceCatalog from "@/components/ServiceCatalog";
 import ServiceFilterChips from "@/components/ServiceFilterChips";
+import SizingFactorsGrid from "@/components/SizingFactorsGrid";
 import CTABand from "@/components/CTABand";
 import { jsonLd } from "@/lib/site";
 import { pageMeta, breadcrumb } from "@/lib/seo";
@@ -22,6 +23,7 @@ const CARDS = [
     visual: {
       src: "/images/managed-it.png",
       alt: "Abstract managed IT service visual with structured dark geometry and purple accent lighting.",
+      contain: true,
     },
     body: "Ongoing support, maintenance, monitoring, and oversight of the systems your business depends on every day.",
     tags: ["Help desk & support", "Device management", "Network & infrastructure", "Monitoring", "Vendor coordination"],
@@ -31,6 +33,7 @@ const CARDS = [
     visual: {
       src: "/images/cybersecurity.png",
       alt: "Abstract cybersecurity service visual with layered dark geometry and purple accent lighting.",
+      contain: true,
     },
     body: "Layered protection, stronger recovery readiness, and clearer control across users, endpoints, backups, and access.",
     tags: ["Endpoint protection", "Identity & access", "Email security", "Backup readiness", "Compliance support"],
@@ -40,21 +43,56 @@ const CARDS = [
     visual: {
       src: "/images/business-systems.png",
       alt: "Abstract business systems service visual with structured dark geometry and purple accent lighting.",
+      contain: true,
     },
     body: "ERP, CRM, automation, and AI enablement aligned with how your business actually operates.",
     tags: ["ERP & CRM", "Microsoft 365", "Automation", "AI enablement", "Projects"],
   },
 ];
 
+// Geist-style line icons (minimal, 1.5 stroke) — matches the homepage "Who we work with" tiles.
+const ICON_SVG_PROPS = {
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 1.5,
+  strokeLinecap: "round",
+  strokeLinejoin: "round",
+  "aria-hidden": true,
+} as const;
+
+const OperatingModelIcon = (
+  <svg {...ICON_SVG_PROPS}>
+    <path d="M21 12a9 9 0 1 1-2.64-6.36" />
+    <path d="M21 3v4h-4" />
+    <path d="M9.5 12l2 2 3.5-4" />
+  </svg>
+);
+
+const AccountabilityIcon = (
+  <svg {...ICON_SVG_PROPS}>
+    <path d="M12 3l7 3v5c0 4.4-3 8.4-7 10-4-1.6-7-5.6-7-10V6z" />
+    <path d="M9.5 12l2 2 3.5-4" />
+  </svg>
+);
+
+const LongTermViewIcon = (
+  // Lucide "trending-up"
+  <svg {...ICON_SVG_PROPS}>
+    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+    <polyline points="16 7 22 7 22 13" />
+  </svg>
+);
+
 const SIZING_FACTORS = [
-  "Support demand",
-  "Devices & endpoints",
-  "Servers & infrastructure",
-  "Backups & recovery",
-  "Network & site complexity",
-  "Licenses",
-  "Risk exposure",
-  "Account management",
+  { label: "Support demand", value: 0.38 },
+  { label: "Devices & endpoints", value: 0.78 },
+  { label: "Servers & infrastructure", value: 0.22 },
+  { label: "Backups & recovery", value: 0.55 },
+  { label: "Network & site complexity", value: 0.14 },
+  { label: "Licenses", value: 0.5 },
+  { label: "Risk exposure", value: 0.85 },
+  { label: "Account management", value: 0.68 },
 ];
 
 const INDUSTRY_STRIP = [
@@ -132,6 +170,18 @@ export default async function ServicesIndex({ searchParams }: ServicesIndexProps
         </div>
       </section>
 
+      {/* Service catalog */}
+      <section className="section bg-surface">
+        <div className="container flex flex-col gap-12">
+          <SectionHeader
+            eyebrow="Service catalog"
+            title="Every capability Stratum covers, in one place."
+            lede="Filter by category or search below. Each item explains what it delivers for your business — outcomes and accountability, not a list of tools."
+          />
+          <ServiceCatalog initialQuery={serviceFilter} />
+        </div>
+      </section>
+
       {/* Sizing principle — strategic differentiator, placed high for prominence */}
       <section className="section bg-bg">
         <div className="container flex flex-col gap-12">
@@ -146,24 +196,12 @@ export default async function ServicesIndex({ searchParams }: ServicesIndexProps
             </p>
           </div>
 
-          <div
-            data-reveal
-            className="grid grid-cols-2 gap-px overflow-hidden rounded-md border border-line-soft bg-line-soft sm:grid-cols-3 lg:grid-cols-4"
-          >
-            {SIZING_FACTORS.map((factor, i) => (
-              <div key={factor} className="flex flex-col gap-3 bg-bg p-6">
-                <span className="font-body text-[11px] font-semibold tracking-wider text-brand-light/70">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="font-medium text-ink-bright">{factor}</span>
-              </div>
-            ))}
-          </div>
+          <SizingFactorsGrid factors={SIZING_FACTORS} />
         </div>
       </section>
 
       {/* How they work together */}
-      <section className="section bg-bg">
+      <section className="section section-light">
         <div className="container flex flex-col gap-12">
           <SectionHeader
             eyebrow="How they work together"
@@ -173,24 +211,12 @@ export default async function ServicesIndex({ searchParams }: ServicesIndexProps
           <div data-reveal>
             <FeatureGrid
               items={[
-                { title: "Same operating model", body: "Tickets, dispatch, escalation, and follow-up are handled the same way across every category." },
-                { title: "Same accountability", body: "One partner responsible for the environment — no finger-pointing when something breaks." },
-                { title: "Same long-term view", body: "Roadmap, lifecycle planning, and account management connect the categories instead of fragmenting them." },
+                { title: "Same operating model", icon: OperatingModelIcon, body: "Tickets, dispatch, escalation, and follow-up are handled the same way across every category." },
+                { title: "Same accountability", icon: AccountabilityIcon, body: "One partner responsible for the environment — no finger-pointing when something breaks." },
+                { title: "Same long-term view", icon: LongTermViewIcon, body: "Roadmap, lifecycle planning, and account management connect the categories instead of fragmenting them." },
               ]}
             />
           </div>
-        </div>
-      </section>
-
-      {/* Service catalog */}
-      <section className="section bg-surface">
-        <div className="container flex flex-col gap-12">
-          <SectionHeader
-            eyebrow="Service catalog"
-            title="Every capability Stratum covers, in one place."
-            lede="Filter by category or search below. Each item explains what it delivers for your business — outcomes and accountability, not a list of tools."
-          />
-          <ServiceCatalog initialQuery={serviceFilter} />
         </div>
       </section>
 

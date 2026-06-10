@@ -4,6 +4,7 @@ import type { MouseEvent } from "react";
 
 export default function ServiceFilterChips({ items }: { items: string[] }) {
   function applyServiceFilter(event: MouseEvent<HTMLAnchorElement>, item: string) {
+    if (!document.getElementById("service-catalog")) return; // not on /services — follow the link
     event.preventDefault();
     const params = new URLSearchParams(window.location.search);
     params.set("serviceFilter", item);

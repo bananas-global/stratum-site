@@ -60,14 +60,8 @@ export function CardMedia({ visual }: { visual: EditorialVisual }) {
         alt={visual.alt}
         fill
         sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
-        className={visual.contain ? "object-contain p-8" : "object-contain"}
+        className={visual.contain ? "object-contain p-8" : "object-cover"}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-      {visual.label && (
-        <span className="absolute bottom-4 left-4 rounded-sm border border-white/15 bg-black/35 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-faint backdrop-blur">
-          {visual.label}
-        </span>
-      )}
     </div>
   );
 }
@@ -171,11 +165,51 @@ export function ScopeGrid({ items, cols = 3 }: { items: { label: string; sub: st
 }
 
 /* ── Feature card grid (heading + body) ───────────────────── */
+/* Glossy amethyst app-icon tile — same treatment as the active card in the
+   homepage "Who we work with" carousel. */
+function FeatureIconTile({ children }: { children: ReactNode }) {
+  return (
+    <div
+      className="relative flex h-16 w-16 items-center justify-center overflow-hidden"
+      style={{
+        borderRadius: "1.15rem",
+        background: "#f7f4fc",
+        border: "1px solid rgba(125, 52, 255, 0.2)",
+        boxShadow: "0 10px 28px -10px rgba(125, 52, 255, 0.28)",
+      }}
+      aria-hidden="true"
+    >
+      <div
+        className="pointer-events-none absolute"
+        style={{
+          inset: "1px",
+          borderRadius: "calc(1.15rem - 1px)",
+          background: "linear-gradient(165deg, #ffffff 0%, #ede5ff 48%, #c9a8ff 100%)",
+        }}
+      />
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2"
+        style={{ background: "radial-gradient(ellipse at bottom, rgba(125, 52, 255, 0.18), transparent 72%)" }}
+      />
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-1/2"
+        style={{ background: "linear-gradient(to bottom, rgba(255,255,255,0.9), transparent)" }}
+      />
+      <span
+        className="relative [&>svg]:h-7 [&>svg]:w-7"
+        style={{ color: "var(--color-brand)", filter: "drop-shadow(0 1px 2px rgba(125, 52, 255, 0.2))" }}
+      >
+        {children}
+      </span>
+    </div>
+  );
+}
+
 export function FeatureGrid({
   items,
   cols = 3,
 }: {
-  items: { title: string; body: ReactNode }[];
+  items: { title: string; body: ReactNode; icon?: ReactNode }[];
   cols?: 2 | 3 | 4;
 }) {
   const colCls = cols === 2 ? "md:grid-cols-2" : cols === 4 ? "sm:grid-cols-2 lg:grid-cols-4" : "md:grid-cols-3";
@@ -183,7 +217,11 @@ export function FeatureGrid({
     <div className={`grid gap-4 ${colCls}`}>
       {items.map((it) => (
         <div key={it.title} className="card flex flex-col gap-3">
-          <span className="mt-1 h-2 w-2 rounded-full bg-brand" />
+          {it.icon ? (
+            <FeatureIconTile>{it.icon}</FeatureIconTile>
+          ) : (
+            <span className="mt-1 h-2 w-2 rounded-full bg-brand" />
+          )}
           <h3 className="font-display text-2xl text-ink-bright">{it.title}</h3>
           <p className="text-sm leading-relaxed text-ink-dim">{it.body}</p>
         </div>

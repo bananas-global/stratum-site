@@ -2,8 +2,58 @@ import type { Metadata } from "next";
 import { PageHero, FeatureGrid, SectionHeader, CardMedia } from "@/components/sections";
 import { Button } from "@/components/ui";
 import CTABand from "@/components/CTABand";
+import ServiceFilterChips from "@/components/ServiceFilterChips";
 import { jsonLd } from "@/lib/site";
 import { pageMeta, breadcrumb } from "@/lib/seo";
+
+// Geist-style line icons (minimal, 1.5 stroke) — same treatment as the services page tiles.
+const ICON_SVG_PROPS = {
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 1.5,
+  strokeLinecap: "round",
+  strokeLinejoin: "round",
+  "aria-hidden": true,
+} as const;
+
+const AccountingIcon = (
+  // Lucide "calculator"
+  <svg {...ICON_SVG_PROPS}>
+    <rect width="16" height="20" x="4" y="2" rx="2" />
+    <line x1="8" x2="16" y1="6" y2="6" />
+    <line x1="16" x2="16" y1="14" y2="18" />
+    <path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01" />
+  </svg>
+);
+
+const LogisticsIcon = (
+  // Lucide "truck"
+  <svg {...ICON_SVG_PROPS}>
+    <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" />
+    <path d="M15 18H9" />
+    <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" />
+    <circle cx="17" cy="18" r="2" />
+    <circle cx="7" cy="18" r="2" />
+  </svg>
+);
+
+const NonprofitIcon = (
+  // Lucide "heart"
+  <svg {...ICON_SVG_PROPS}>
+    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.51 4.04 3 5.5l7 7Z" />
+  </svg>
+);
+
+const RealEstateIcon = (
+  // Lucide "building-2"
+  <svg {...ICON_SVG_PROPS}>
+    <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z" />
+    <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" />
+    <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" />
+    <path d="M10 6h4M10 10h4M10 14h4M10 18h4" />
+  </svg>
+);
 
 export const metadata: Metadata = pageMeta({
   title: "Industries We Serve — Managed IT for Growing Organizations",
@@ -120,7 +170,7 @@ export default function IndustriesIndex() {
       </PageHero>
 
       {/* Primary industries */}
-      <section className="section bg-surface">
+      <section className="section section-light">
         <div className="container flex flex-col gap-12">
           <SectionHeader
             eyebrow="Primary industries"
@@ -137,13 +187,7 @@ export default function IndustriesIndex() {
                   <div className="flex flex-col gap-4">
                     <h2 className="font-display text-3xl text-ink-bright">{NAMES[slug]}</h2>
                     <p className="text-sm leading-relaxed text-ink-dim">{c.blurb}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {c.tags.map((t) => (
-                        <span key={t} className="rounded-full border border-line bg-black/40 px-3 py-1 text-xs text-ink-dim">
-                          {t}
-                        </span>
-                      ))}
-                    </div>
+                    <ServiceFilterChips items={c.tags} />
                   </div>
                 </div>
               );
@@ -175,7 +219,7 @@ export default function IndustriesIndex() {
       </section>
 
       {/* Next-wave industries */}
-      <section className="section bg-surface">
+      <section className="section section-light">
         <div className="container flex flex-col gap-12">
           <SectionHeader
             eyebrow="Next-wave industries"
@@ -186,10 +230,10 @@ export default function IndustriesIndex() {
             <FeatureGrid
               cols={4}
               items={[
-                { title: "Accounting & Bookkeeping", body: "Uptime, sensitive data, security, and seasonal continuity pressure." },
-                { title: "Transportation & Logistics", body: "Dispatch, warehouse, office, mobile, and multi-role operations." },
-                { title: "Nonprofits & Associations", body: "Where stewardship, simplicity, and dependable support matter." },
-                { title: "Real Estate & Property", body: "Multi-site, communication-heavy, vendor-heavy operating environments." },
+                { title: "Accounting & Bookkeeping", icon: AccountingIcon, body: "Uptime, sensitive data, security, and seasonal continuity pressure." },
+                { title: "Transportation & Logistics", icon: LogisticsIcon, body: "Dispatch, warehouse, office, mobile, and multi-role operations." },
+                { title: "Nonprofits & Associations", icon: NonprofitIcon, body: "Where stewardship, simplicity, and dependable support matter." },
+                { title: "Real Estate & Property", icon: RealEstateIcon, body: "Multi-site, communication-heavy, vendor-heavy operating environments." },
               ]}
             />
           </div>
