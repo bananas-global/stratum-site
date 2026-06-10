@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { PageHero, FeatureGrid, SectionHeader, CardMedia } from "@/components/sections";
-import { Button, ArrowLink } from "@/components/ui";
+import { Button } from "@/components/ui";
 import CTABand from "@/components/CTABand";
 import { jsonLd } from "@/lib/site";
 import { pageMeta, breadcrumb } from "@/lib/seo";
@@ -109,16 +109,13 @@ export default function IndustriesIndex() {
         eyebrow="Industries"
         title="Industries where Stratum leads."
         lede="We focus on industries where operational complexity is highest and the cost of unreliable IT is real. The services are the same — Managed IT, Cybersecurity, and Business Systems — but the way they apply changes by vertical."
-        visual={{
-          src: "/bananas/industries-structure-bg.webp",
-          alt: "Precision graphite platform with drafting marks and a purple light channel.",
-          label: "Industry structure",
-          caption: "The same service model changes shape around each operating environment.",
+        backgroundVisual={{
+          src: "/images/industries-hero-bg.png",
+          alt: "",
         }}
       >
         <div className="flex flex-wrap items-center gap-4">
           <Button href="/contact">Talk With Stratum</Button>
-          <ArrowLink href="/services">Or see our services</ArrowLink>
         </div>
       </PageHero>
 
