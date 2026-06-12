@@ -1,4 +1,5 @@
 import Image from "next/image";
+import ScrollScrubVideo from "./ScrollScrubVideo";
 
 export type ApproachStep = {
   n: string;
@@ -9,22 +10,26 @@ export type ApproachStep = {
 const STACK_TOP = "5.5rem"; // clears fixed nav
 const STACK_STEP = "1.25rem"; // peek of cards beneath
 
-const APPROACH_IMAGES = [
+const APPROACH_IMAGES: { src: string; alt: string; video?: string }[] = [
   {
     src: "/images/refinement/raw-environment.png",
     alt: "Raw amethyst-bearing stone representing the analysis stage.",
+    video: "/videos/approach-analyze.mp4",
   },
   {
     src: "/images/refinement/scoped-engagement.png",
     alt: "Split stone with exposed amethyst crystals representing a scoped engagement.",
+    video: "/videos/approach-engage.mp4",
   },
   {
     src: "/images/refinement/running-refined.png",
     alt: "Faceted amethyst gem representing ongoing support.",
+    video: "/videos/approach-support.mp4",
   },
   {
     src: "/images/refinement/polished-partnership.png",
     alt: "Polished oval amethyst gem representing long-term client success.",
+    video: "/videos/approach-success.mp4",
   },
 ];
 
@@ -36,13 +41,21 @@ function ApproachImageSlot({ index }: { index: number }) {
       className="approach-image-slot relative h-full min-h-[18rem] self-stretch overflow-hidden rounded-sm bg-white md:min-h-[20rem]"
     >
       <div className="absolute inset-0 flex translate-x-4 items-center justify-center p-4 md:translate-x-10 md:p-6">
-        <Image
-          src={image.src}
-          alt={image.alt}
-          width={480}
-          height={480}
-          className="approach-image-slot-img refinement-gem-float h-full w-full max-h-[22rem] object-contain object-center"
-        />
+        {image.video ? (
+          <ScrollScrubVideo
+            src={image.video}
+            ariaLabel={image.alt}
+            className="approach-image-slot-img refinement-gem-float h-full w-full max-h-[22rem] object-contain object-center"
+          />
+        ) : (
+          <Image
+            src={image.src}
+            alt={image.alt}
+            width={480}
+            height={480}
+            className="approach-image-slot-img refinement-gem-float h-full w-full max-h-[22rem] object-contain object-center"
+          />
+        )}
       </div>
     </div>
   );
