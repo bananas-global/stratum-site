@@ -16,8 +16,8 @@ export default function FooterWordmark() {
 
     svg.style.filter = `url(#${filterId})`;
 
-    svg.querySelector("feTurbulence animate")?.beginElement();
-    svg.querySelector("feDisplacementMap animate")?.beginElement();
+    svg.querySelector<SVGAnimateElement>("feTurbulence animate")?.beginElement();
+    svg.querySelector<SVGAnimateElement>("feDisplacementMap animate")?.beginElement();
 
     window.setTimeout(() => {
       if (svgRef.current) svgRef.current.style.filter = "";
