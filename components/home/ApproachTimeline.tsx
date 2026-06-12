@@ -6,88 +6,25 @@ export type ApproachStep = {
   body: string;
 };
 
-const REFINEMENT_STAGES = [
-  {
-    gem: "/images/gem-structure.png",
-    label: "Raw environment",
-    sub: "Unstructured systems, unclear ownership",
-    alt: "Rough amethyst gem representing an unstructured technology environment.",
-  },
-  {
-    gem: "/images/gem-stability.png",
-    label: "Scoped engagement",
-    sub: "Sized around how you actually operate",
-    alt: "Partially formed amethyst gem representing a scoped engagement.",
-  },
-  {
-    gem: "/images/gem-simplicity.png",
-    label: "Running & refined",
-    sub: "Support rhythm, fewer surprises",
-    alt: "Refined amethyst gem representing ongoing operational clarity.",
-  },
-  {
-    gem: "/images/gem-stewardship.png",
-    label: "Polished partnership",
-    sub: "Structured, trusted, long-term",
-    alt: "Polished amethyst gem representing a fully stewarded partnership.",
-  },
-];
-
 const STACK_TOP = "5.5rem"; // clears fixed nav
 const STACK_STEP = "1.25rem"; // peek of cards beneath
 
-function RefinementCard({ index }: { index: number }) {
-  const stage = REFINEMENT_STAGES[index] ?? REFINEMENT_STAGES[0];
-
-  return (
-    <div className="mt-6 flex max-w-md items-center gap-4 rounded-md border border-line bg-surface/90 p-4 shadow-[0_1px_3px_rgba(18,18,28,0.04)]">
-      <div className="flex min-w-0 flex-1 flex-col justify-center gap-1.5">
-        <div className="text-sm font-semibold text-ink-bright">{stage.label}</div>
-        <div className="flex items-center gap-2 text-xs text-ink-faint">
-          <GemSparkIcon />
-          <span>{stage.sub}</span>
-        </div>
-      </div>
-
-      <div className="relative h-[5.5rem] w-[5.5rem] shrink-0 overflow-visible">
-        <div className="refinement-gem-float relative h-full w-full">
-          <Image
-            src={stage.gem}
-            alt={stage.alt}
-            fill
-            sizes="88px"
-            className="object-contain object-center"
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function GemSparkIcon({ className = "h-3.5 w-3.5" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 12 12" fill="currentColor" className={`shrink-0 text-brand ${className}`} aria-hidden="true">
-      <path d="M6 1.2 7.4 4.6 10.8 6 7.4 7.4 6 10.8 4.6 7.4 1.2 6 4.6 4.6 6 1.2Z" />
-    </svg>
-  );
-}
-
 const APPROACH_IMAGES = [
   {
-    src: "/images/approach/analyze.png",
-    alt: "Glossy magnifying glass icon representing environment analysis.",
+    src: "/images/refinement/raw-environment.png",
+    alt: "Raw amethyst-bearing stone representing the analysis stage.",
   },
   {
-    src: "/images/approach/engage.png",
-    alt: "Glossy padlock icon representing a scoped, secure engagement.",
+    src: "/images/refinement/scoped-engagement.png",
+    alt: "Split stone with exposed amethyst crystals representing a scoped engagement.",
   },
   {
-    src: "/images/approach/support.png",
-    alt: "Glossy shield icon representing ongoing support and protection.",
+    src: "/images/refinement/running-refined.png",
+    alt: "Faceted amethyst gem representing ongoing support.",
   },
   {
-    src: "/images/approach/success.png",
-    alt: "Glossy medallion icon representing long-term client success.",
+    src: "/images/refinement/polished-partnership.png",
+    alt: "Polished oval amethyst gem representing long-term client success.",
   },
 ];
 
@@ -96,15 +33,15 @@ function ApproachImageSlot({ index }: { index: number }) {
 
   return (
     <div
-      className="approach-image-slot relative h-full min-h-[14rem] self-stretch overflow-hidden rounded-sm bg-white"
+      className="approach-image-slot relative h-full min-h-[18rem] self-stretch overflow-hidden rounded-sm bg-white md:min-h-[20rem]"
     >
-      <div className="absolute inset-0 flex items-center justify-center p-6 md:p-8">
+      <div className="absolute inset-0 flex translate-x-4 items-center justify-center p-4 md:translate-x-10 md:p-6">
         <Image
           src={image.src}
           alt={image.alt}
           width={480}
           height={480}
-          className="approach-image-slot-img h-full w-full max-h-[18rem] object-contain object-center"
+          className="approach-image-slot-img refinement-gem-float h-full w-full max-h-[22rem] object-contain object-center"
         />
       </div>
     </div>
@@ -144,7 +81,6 @@ export default function ApproachTimeline({ steps }: { steps: ApproachStep[] }) {
                 </h3>
                 <div className="h-px w-full max-w-[12rem] bg-line" />
                 <p className="max-w-lg text-sm leading-relaxed text-ink-dim md:text-base">{step.body}</p>
-                <RefinementCard index={i} />
               </div>
 
               <ApproachImageSlot index={i} />

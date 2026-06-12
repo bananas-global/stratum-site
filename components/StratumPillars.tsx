@@ -1,30 +1,31 @@
+import Image from "next/image";
 import { BracketLabel } from "./ui";
 
 const PILLARS = [
   {
     name: "Structure",
     body: "We organize technology, process, support, and accountability so clients are not operating in chaos.",
-    gem: "/images/gem-structure.png",
+    gem: "/images/pillars/structure.png",
   },
   {
     name: "Security",
     body: "We protect clients from cyber risk, operational disruption, data loss, and avoidable exposure.",
-    gem: "/images/gem-security.png",
+    gem: "/images/pillars/security.png",
   },
   {
     name: "Stability",
     body: "We build and maintain dependable systems that reduce downtime, surprises, and reactive firefighting.",
-    gem: "/images/gem-stability.png",
+    gem: "/images/pillars/stability.png",
   },
   {
     name: "Simplicity",
     body: "We make technology easier to understand, easier to use, and easier to make decisions around.",
-    gem: "/images/gem-simplicity.png",
+    gem: "/images/pillars/simplicity.png",
   },
   {
     name: "Stewardship",
     body: "We act as a long-term technology partner responsible for protecting the client's best interests.",
-    gem: "/images/gem-stewardship.png",
+    gem: "/images/pillars/stewardship.png",
   },
 ];
 
@@ -58,13 +59,13 @@ export default function StratumPillars({ className }: { className?: string }) {
                       <p className="text-sm text-ink-dim md:max-w-xs">{p.body}</p>
                     </div>
                     <div className="flex justify-start">
-                      <GemImg alt={p.name} />
+                      <GemImg src={p.gem} alt={p.name} />
                     </div>
                   </>
                 ) : (
                   <>
                     <div className="order-2 flex justify-end md:order-1">
-                      <GemImg alt={p.name} />
+                      <GemImg src={p.gem} alt={p.name} />
                     </div>
                     <div className="order-1 flex flex-col gap-2 md:order-2">
                       <h3 className="font-display text-4xl font-medium text-ink-bright md:text-5xl">{p.name}</h3>
@@ -81,12 +82,16 @@ export default function StratumPillars({ className }: { className?: string }) {
   );
 }
 
-function GemImg({ alt }: { alt: string }) {
+function GemImg({ src, alt }: { src: string; alt: string }) {
   return (
-    <div
-      aria-hidden
-      title={alt}
-      className="h-[150px] w-[150px] select-none rounded-md bg-neutral-700 md:h-[180px] md:w-[180px]"
-    />
+    <div className="relative h-[150px] w-[150px] select-none md:h-[180px] md:w-[180px]">
+      <Image
+        src={src}
+        alt={`Geometric form representing the ${alt} pillar.`}
+        fill
+        sizes="180px"
+        className="object-contain object-center"
+      />
+    </div>
   );
 }
