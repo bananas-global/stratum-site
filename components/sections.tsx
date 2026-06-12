@@ -230,6 +230,28 @@ export function FeatureGrid({
   );
 }
 
+/* ── Numbered feature list (editorial rows with dividers) ─── */
+export function FeatureList({ items }: { items: { title: string; body: ReactNode }[] }) {
+  return (
+    <div className="flex flex-col divide-y divide-line-soft border-y border-line-soft">
+      {items.map((it, i) => (
+        <div
+          key={it.title}
+          data-reveal
+          data-reveal-delay={i * 0.05 || undefined}
+          className="grid gap-2 py-7 md:grid-cols-[3.5rem_minmax(0,0.85fr)_minmax(0,1.15fr)] md:items-baseline md:gap-10"
+        >
+          <span className="font-display text-xl text-brand-light">
+            {String(i + 1).padStart(2, "0")}
+          </span>
+          <h3 className="font-display text-2xl text-ink-bright md:text-3xl">{it.title}</h3>
+          <p className="max-w-xl text-sm leading-relaxed text-ink-dim">{it.body}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /* ── Numbered process steps ───────────────────────────────── */
 export function HowSteps({ steps }: { steps: { n: string; title: string; body: string }[] }) {
   return (

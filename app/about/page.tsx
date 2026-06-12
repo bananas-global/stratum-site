@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { PageHero, FeatureGrid, HowSteps, SectionHeader, EditorialPanel } from "@/components/sections";
+import { PageHero, FeatureGrid, HowSteps, SectionHeader } from "@/components/sections";
+import MissingMiddleVisual from "@/components/MissingMiddleVisual";
 import { Button } from "@/components/ui";
 import CTABand from "@/components/CTABand";
 import StratumPillars from "@/components/StratumPillars";
@@ -43,12 +44,9 @@ export default function AboutPage() {
         eyebrow="About Stratum"
         title="An operational technology partner for growing businesses."
         lede="Stratum is a structured, security-aware technology partner for organizations that need reliable systems, clear accountability, and long-term stewardship — without the overhead of an enterprise IT department."
-        visual={{
-          src: "/bananas/stratum-object-01.png",
-          alt: "Segmented graphite Stratum object with purple light lines.",
-          label: "Stewardship",
-          caption: "A long-term partner responsible for the shape and health of the environment.",
-          contain: true,
+        backgroundVisual={{
+          src: "/images/bg-hero-about.png",
+          alt: "",
         }}
       >
         <Button href="/contact">Talk With Stratum</Button>
@@ -66,14 +64,7 @@ export default function AboutPage() {
               partner responsible for the environment over time.
             </p>
           </div>
-          <EditorialPanel
-            visual={{
-              src: "/bananas/missing-middle-bg.webp",
-              alt: "Dark cinematic structural surface with subtle purple depth.",
-              label: "The missing middle",
-              caption: "A service model shaped for businesses between break-fix IT and a full internal team.",
-            }}
-          />
+          <MissingMiddleVisual />
         </div>
       </section>
 

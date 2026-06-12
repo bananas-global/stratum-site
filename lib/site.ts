@@ -29,6 +29,13 @@ export const NAV: NavItem[] = [
   { label: "About", href: "/about" },
 ];
 
+export const SOCIAL = [
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/stratum-technology",
+  },
+];
+
 export const FOOTER = {
   explore: [
     { label: "Services", href: "/services" },
@@ -57,6 +64,7 @@ export const orgGraph = {
   description:
     "Technology company for growing organizations — structured service across support, continuity, and business systems.",
   telephone: "+1-855-200-0076",
+  sameAs: ["https://www.linkedin.com/company/stratum-technology"],
   areaServed: { "@type": "Country", name: "Canada" },
   contactPoint: [
     {

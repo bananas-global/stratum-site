@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageHero, FeatureGrid, SectionHeader, CardMedia } from "@/components/sections";
+import { PageHero, FeatureGrid, FeatureList, SectionHeader, CardMedia } from "@/components/sections";
 import { Button } from "@/components/ui";
 import CTABand from "@/components/CTABand";
 import ServiceFilterChips from "@/components/ServiceFilterChips";
@@ -204,17 +204,14 @@ export default function IndustriesIndex() {
             title="What every industry we serve has in common."
             lede="Different verticals, same shape of problem: operational complexity, uptime pressure, risk exposure, and limited internal IT depth. Stratum is built for exactly that pattern."
           />
-          <div data-reveal>
-            <FeatureGrid
-              cols={4}
-              items={[
-                { title: "Downtime hurts operations", body: "Support must be responsive during business hours — across every site and shift." },
-                { title: "Environment complexity", body: "Users, devices, vendors, printers, servers, backups, networks, and sites — all at once." },
-                { title: "Decision-making gap", body: "Leaders need clear answers without technical confusion." },
-                { title: "Risk exposure", body: "Security, backup, and continuity gaps create avoidable business risk." },
-              ]}
-            />
-          </div>
+          <FeatureList
+            items={[
+              { title: "Downtime hurts operations", body: "Support must be responsive during business hours — across every site and shift." },
+              { title: "Environment complexity", body: "Users, devices, vendors, printers, servers, backups, networks, and sites — all at once." },
+              { title: "Decision-making gap", body: "Leaders need clear answers without technical confusion." },
+              { title: "Risk exposure", body: "Security, backup, and continuity gaps create avoidable business risk." },
+            ]}
+          />
         </div>
       </section>
 
