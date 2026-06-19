@@ -88,7 +88,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
         <div className="flex flex-wrap items-center gap-4">
           <Button href="/contact">{svc.heroCta}</Button>
           <a href={SITE.phoneHref} className="link-arrow">
-            <span>Talk to a Human: {SITE.phoneDisplay}</span>
+            <span>Get in touch: {SITE.phoneDisplay}</span>
           </a>
         </div>
       </PageHero>

@@ -33,7 +33,7 @@ export default function ServicesShowcase() {
   const [active, setActive] = useState(0);
 
   return (
-    <section className="section">
+    <section className="section relative z-10 bg-black pt-[12vh]">
       <div className="container">
         <div className="grid gap-10 md:grid-cols-[0.55fr_1fr]">
           {/* Header */}

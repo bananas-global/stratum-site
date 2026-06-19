@@ -1,0 +1,84 @@
+{
+  "style": {
+    "aesthetic": "futuristic minimalist 3D render",
+    "genre": "premium tech / industrial product design brand visual",
+    "mood": "mysterious, sleek, premium, precision-engineered, quietly confident",
+    "lighting": {
+      "type": "low-key, dark, restrained — slightly darker overall, deeper blacks",
+      "key_light": "soft-box from right-top-down",
+      "accent": "single-source amethyst separation light that defines the silhouette — subtle, never glowing",
+      "shadows": "deep, high contrast",
+      "reflections": "soft even satin specular sheen with crisp bright metallic highlights catching the edges; smooth and non-directional, no streaks or grain"
+    },
+    "color_palette": {
+      "primary": "#000000 (pure black)",
+      "secondary": "#0f0f0f / #1a1a1a (near-black, gunmetal)",
+      "accent": "#7d34ff (amethyst — used sparingly, as a single edge or separation light)",
+      "highlights": "#FFFFFF (white, controlled)",
+      "contrast": "high contrast, low saturation overall, dark and cinematic"
+    },
+    "materials": {
+      "main_object": "smooth anodized aluminum — like Apple Space Gray / unibody MacBook: fine bead-blasted matte metal, cool gunmetal/graphite tone, clearly metallic but velvety-smooth (NOT brushed, NOT rubber, NOT matte plastic, NOT painted)",
+      "surface_finish": "fine micro-bead-blasted satin anodized finish, soft non-directional sheen (no brushed streaks or visible grain), crisp bright specular highlights along the edges, subtle environment reflections, flawless precision-machined surface",
+      "metalness": "high — reads unmistakably as anodized metal through its soft even specular response and crisp edge highlights, not through surface texture"
+    },
+    "rendering": {
+      "engine_style": "Octane / Redshift 3D render",
+      "resolution": "ultra high definition",
+      "detail_level": "crisp edges, micro-surface detail, ray tracing"
+    },
+    "camera": {
+      "angle": "close-up, macro",
+      "lens": "50mm prime",
+      "depth_of_field": "large format sensor, shallow"
+    },
+    "influences": [
+      "Apple industrial design",
+      "precision-engineered hardware / CNC-machined product",
+      "high-end brand reveal",
+      "editorial minimalism"
+    ],
+    "form_language": "geometric forms with softly rounded edges — chamfers, fillets, radii — clean and engineered (NOT organic, NOT flowing, NOT blobby, NOT liquid)"
+  },
+  "negative_prompt": {
+    "description": "Hard exclusions. The look must read as a premium, restrained tech/architecture brand — NOT a gaming product. Avoid anything loud, cheap, or 'gamer'.",
+    "avoid": [
+      "gamer aesthetic",
+      "RGB lighting",
+      "neon rainbow gradients",
+      "glowing edges and bloom overload",
+      "blue-and-purple cyberpunk cliche",
+      "green or cyan circuit-board glow",
+      "hexagon patterns",
+      "HUD overlays and sci-fi UI",
+      "lens flares and light streaks",
+      "excessive particles, sparks, or dust",
+      "chromatic aberration",
+      "holographic and iridescent surfaces",
+      "high saturation and oversaturated neon",
+      "garish or candy colors",
+      "cheap plastic look",
+      "rubber or rubbery material",
+      "matte flat finish that hides the metal",
+      "painted or powder-coated look",
+      "brushed metal texture",
+      "anisotropic streaks or directional grain",
+      "visible surface scratches or machining lines",
+      "amateur CGI render",
+      "tacky / kitsch / 'brega'",
+      "esports and gaming-rig vibe",
+      "tron-like glowing lines",
+      "busy or cluttered composition",
+      "stock-photo feel",
+      "organic / flowing / liquid forms",
+      "blobby or amorphous shapes",
+      "cloth, ribbon, or fabric-like draping",
+      "crystal",
+      "gemstone or precious stone",
+      "faceted gem geometry",
+      "mineral or rock formation",
+      "diamond or quartz look",
+      "text, logos, watermarks, captions"
+    ]
+  }
+}

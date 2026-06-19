@@ -78,7 +78,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
           <div className="flex flex-wrap items-center gap-3">
             <Button href="/contact">Talk with Stratum</Button>
             <a href={SITE.phoneHref} className="link-arrow">
-              <span>Talk to a Human: {SITE.phoneDisplay}</span>
+              <span>Get in touch: {SITE.phoneDisplay}</span>
             </a>
           </div>
           <ChipRow items={ind.tags} />

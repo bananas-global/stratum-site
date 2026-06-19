@@ -7,11 +7,11 @@ import { SITE, jsonLd, orgGraph, websiteGraph } from "@/lib/site";
 import { pageMeta, breadcrumb } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
-  title: "Contact Stratum — Talk to a Human",
+  title: "Contact Stratum — Get in touch",
   description:
     "Talk to Stratum about managed IT, cybersecurity, or a project. Choose the right path — support, projects, or new business — and we'll get back to you the same business day.",
   path: "/contact",
-  ogTitle: "Contact Stratum — Talk to a Human",
+  ogTitle: "Contact Stratum — Get in touch",
   ogDescription: "Talk to Stratum about managed IT, cybersecurity, or a project.",
 });
 
@@ -68,7 +68,7 @@ export default function ContactPage() {
       <PageHero
         breadcrumb={[{ label: "Home", href: "/" }, { label: "Contact" }]}
         eyebrow="Contact"
-        title="Talk to a human at Stratum."
+        title="Get in touch with Stratum."
         lede="Pick the path that fits — support, projects, or new business — and we will respond the same business day."
       />
 

@@ -1,0 +1,2 @@
+- [Stratum image art direction](stratum-image-art-direction.md) — Apple-style anodized geometric forms, dark, amethyst edge; the look for all AI-generated imagery
+- [Higgsfield CLI setup](higgsfield-cli-setup.md) — how image/video generation is wired up (global CLI + skills, nano_banana_2)

@@ -4,8 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { NAV, SITE } from "@/lib/site";
-import { ArrowE } from "./ui";
+import { NAV } from "@/lib/site";
+import { ArrowE, Button } from "./ui";
 
 function ChevronDown() {
   return (
@@ -55,12 +55,12 @@ export default function Nav() {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-[999] px-[3%] py-5">
-      <div className="mx-auto max-w-[64rem]">
+    <header className="fixed inset-x-0 top-0 z-[999] py-5">
+      <div className="container">
         <div
           ref={barRef}
           className={[
-            "nav-shell relative flex items-center justify-between rounded-sm py-1 pl-4 pr-1",
+            "nav-shell relative flex items-center justify-between rounded-sm p-2",
             scrolled || open ? "is-scrolled" : "",
             lightNav ? "nav-light" : "",
           ]
@@ -88,7 +88,7 @@ export default function Nav() {
                 <div key={item.label} className="group relative">
                   <Link
                     href={item.href}
-                    className={`flex items-center gap-1 whitespace-nowrap px-4 py-1.5 text-[13px] transition-colors ${
+                    className={`flex items-center gap-1 whitespace-nowrap px-4 py-1.5 text-base transition-colors ${
                       isActive(item.href) ? "text-ink-bright" : "text-ink-dim hover:text-ink-bright"
                     }`}
                   >
@@ -124,7 +124,7 @@ export default function Nav() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`whitespace-nowrap px-4 py-1.5 text-[13px] transition-colors ${
+                  className={`whitespace-nowrap px-4 py-1.5 text-base transition-colors ${
                     isActive(item.href) ? "text-ink-bright" : "text-ink-dim hover:text-ink-bright"
                   }`}
                 >
@@ -136,9 +136,9 @@ export default function Nav() {
 
           {/* Right actions */}
           <div className="flex flex-1 items-center justify-end gap-2">
-            <a href={SITE.phoneHref} className="btn btn-secondary hidden sm:inline-flex">
-              <span>Talk to a Human</span>
-            </a>
+            <Button href="/contact" variant="secondary" className="hidden sm:inline-flex">
+              Get in touch
+            </Button>
             <button
               type="button"
               aria-label="Toggle menu"
@@ -193,9 +193,9 @@ export default function Nav() {
                 )}
               </div>
             ))}
-            <a href={SITE.phoneHref} className="btn btn-primary mt-3 w-full">
-              <span>Talk to a Human</span>
-            </a>
+            <Button href="/contact" className="mt-3 w-full">
+              Get in touch
+            </Button>
           </div>
         </div>
       </div>

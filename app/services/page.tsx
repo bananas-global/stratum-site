@@ -147,7 +147,7 @@ export default async function ServicesIndex({ searchParams }: ServicesIndexProps
         title="Three service categories. One structured partner."
         lede="Stratum operates as a single technology partner across the entire environment. Each service category is built around business outcomes — not tool lists — and works in coordination with the others."
         backgroundVisual={{
-          src: "/images/bg-hero-services.jpg",
+          src: "/images/bg-hero-services.png",
           alt: "",
         }}
       >

@@ -60,7 +60,7 @@ export function CardMedia({ visual }: { visual: EditorialVisual }) {
         alt={visual.alt}
         fill
         sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
-        className={visual.contain ? "object-contain p-8" : "object-cover"}
+        className={visual.contain ? "object-contain p-4" : "object-cover"}
       />
     </div>
   );
@@ -115,6 +115,9 @@ export function PageHero({
             sizes="100vw"
             className="object-cover object-[66%_42%]"
           />
+          {/* Readability scrim: solid black on the left fading to transparent on the right,
+              so heading + lede stay legible over the lighter Nano Banana hero renders. */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent" />
         </div>
       )}
       {/* ambient brand glow */}
