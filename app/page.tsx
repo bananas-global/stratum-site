@@ -154,7 +154,7 @@ export default function Home() {
                 and too small for a full internal team.
               </h2>
 
-              <div data-reveal className="flex flex-col">
+              <div data-reveal className="grid grid-cols-[auto_1fr]">
                 {[
                   { value: "19+", label: "Years in operation", sub: "Serving the Lower Mainland since 2007." },
                   { value: "140+", label: "Businesses supported", sub: "Across automotive, medical, legal, construction, and manufacturing." },
@@ -162,11 +162,11 @@ export default function Home() {
                 ].map((stat) => (
                   <div
                     key={stat.label}
-                    className="flex items-start gap-6 border-t border-line-soft/40 py-6 first:border-t-0 first:pt-0"
+                    className="col-span-2 grid grid-cols-subgrid items-start gap-6 border-t border-line-soft/40 py-6 first:border-t-0 first:pt-0"
                   >
                     <CountUp
                       value={stat.value}
-                      className="min-w-[5.5rem] font-display text-[clamp(2rem,3vw,2.75rem)] leading-none text-brand-light"
+                      className="font-display text-[clamp(2rem,3vw,2.75rem)] leading-none text-brand-light"
                     />
                     <div className="flex flex-col gap-2 pt-1">
                       <div className="font-body text-[1rem] font-bold leading-tight tracking-[0.02em] text-ink-bright">

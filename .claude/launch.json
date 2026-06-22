@@ -4,7 +4,7 @@
     {
       "name": "Next dev",
       "runtimeExecutable": "/bin/sh",
-      "runtimeArgs": ["-c", "PATH=/opt/homebrew/opt/node@22/bin:$PATH pnpm dev"],
+      "runtimeArgs": ["-c", "PATH=/opt/homebrew/opt/node@22/bin:$PATH PORT=5242 pnpm dev"],
       "port": 5242,
       "autoPort": false
     },

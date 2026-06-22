@@ -12,7 +12,7 @@ export default function TextMarquee() {
         {track.map((item, i) => (
           <span
             key={`${item}-${i}`}
-            className="shrink-0 font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-none tracking-[-0.03em] text-white/30"
+            className="shrink-0 font-display text-[clamp(1.375rem,3.4vw,2.5rem)] leading-none tracking-[-0.03em] text-white/30"
           >
             {item}
           </span>

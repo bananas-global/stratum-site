@@ -11,10 +11,13 @@ export default function ScrollScrubVideo({
   src,
   className,
   ariaLabel,
+  reverse = false,
 }: {
   src: string;
   className?: string;
   ariaLabel?: string;
+  /** Play the scrub backwards so the gem spins the other way. */
+  reverse?: boolean;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -35,6 +38,7 @@ export default function ScrollScrubVideo({
 
     const track = (video.closest(".approach-stack-item") as HTMLElement) ?? video;
     let current = 0;
+    let primed = false;
     let raf = 0;
 
     const loop = () => {
@@ -45,8 +49,10 @@ export default function ScrollScrubVideo({
       const progress = Math.max(0, Math.min(1, (vh - rect.top) / total));
 
       if (video.duration) {
-        const target = progress * video.duration;
-        current += (target - current) * 0.12;
+        const target = (reverse ? 1 - progress : progress) * video.duration;
+        // Snap to the right frame the first time duration is known, then ease.
+        current = primed ? current + (target - current) * 0.12 : target;
+        primed = true;
         if (!video.seeking && Math.abs(current - video.currentTime) > 0.015) {
           video.currentTime = current;
         }
@@ -56,7 +62,7 @@ export default function ScrollScrubVideo({
     };
     raf = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(raf);
-  }, []);
+  }, [reverse]);
 
   return (
     <video

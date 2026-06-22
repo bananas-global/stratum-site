@@ -10,11 +10,12 @@ export type ApproachStep = {
 const STACK_TOP = "5.5rem"; // clears fixed nav
 const STACK_STEP = "1.25rem"; // peek of cards beneath
 
-const APPROACH_IMAGES: { src: string; alt: string; video?: string }[] = [
+const APPROACH_IMAGES: { src: string; alt: string; video?: string; reverse?: boolean }[] = [
   {
     src: "/images/refinement/raw-environment.png",
     alt: "Raw amethyst-bearing stone representing the analysis stage.",
     video: "/videos/approach-analyze.mp4",
+    reverse: true, // source spins counter-clockwise; reverse the scrub so it spins clockwise like the others
   },
   {
     src: "/images/refinement/scoped-engagement.png",
@@ -45,6 +46,7 @@ function ApproachImageSlot({ index }: { index: number }) {
           <ScrollScrubVideo
             src={image.video}
             ariaLabel={image.alt}
+            reverse={image.reverse}
             className="approach-image-slot-img refinement-gem-float h-full w-full max-h-[22rem] object-contain object-center"
           />
         ) : (

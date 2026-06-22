@@ -24,8 +24,8 @@ export type NavItem = {
  */
 export const NAV: NavItem[] = [
   { label: "Services", href: "/services" },
+  { label: "Hardware", href: "/hardware" },
   { label: "Industries", href: "/industries" },
-  { label: "Insights", href: "/insights" },
   { label: "About", href: "/about" },
 ];
 
@@ -39,6 +39,7 @@ export const SOCIAL = [
 export const FOOTER = {
   explore: [
     { label: "Services", href: "/services" },
+    { label: "Hardware", href: "/hardware" },
     { label: "Industries", href: "/industries" },
   ],
   company: [

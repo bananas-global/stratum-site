@@ -61,14 +61,11 @@ const INDUSTRIES = [
   },
 ];
 
-const CARD_W = 280;
-const GAP = 12;
-const VIEWPORT_MIN_H = "30rem"; // reserves row height so the section never jumps
-const DURATION = 600; // ms — carousel slide duration
-
-function easeOutCubic(t: number) {
-  return 1 - Math.pow(1 - t, 3);
-}
+const GAP = 12; // px gap between cards — kept in sync with the flex `gap`
+const AUTO_INTERVAL = 4000; // ms between auto-advances
+const RESUME_DELAY = 2800; // ms of idle before autoplay resumes after an interaction
+const easeInOutCubic = (t: number) =>
+  t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
 type IconProps = { className?: string; style?: React.CSSProperties };
 
@@ -107,103 +104,207 @@ const ManufacturingIcon = ({ className , style }: IconProps) => (
 const ICONS = [CarIcon, MedicalIcon, LawIcon, ConstructionIcon, ManufacturingIcon];
 
 export default function IndustriesTabs() {
-  const [active, setActive] = useState(0);
-  const [hasOverflow, setHasOverflow] = useState(true);
-
-  const trackRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
-  const translateRef = useRef(0);
-  const rafRef = useRef<number>(0);
+
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
+  const [canScroll, setCanScroll] = useState(true);
+  const [dragging, setDragging] = useState(false);
+
+  // Mouse drag-to-scroll state (touch uses native scrolling, so we only handle mouse)
+  const drag = useRef({ active: false, startX: 0, startScroll: 0 });
+
+  // Motion engine refs (autoplay glide + pause/resume)
+  const rafRef = useRef(0);
   const animatingRef = useRef(false);
+  const pausedRef = useRef(false);
+  const resumeTimerRef = useRef(0);
+  const reduceRef = useRef(false);
 
-  const last = INDUSTRIES.length - 1;
-
-  // Compute the ideal translate so the target card is centered (clamped to edges)
-  const getTargetTranslate = useCallback((index: number) => {
-    const track = trackRef.current;
-    const viewport = viewportRef.current;
-    if (!track || !viewport) return 0;
-
-    const totalW = INDUSTRIES.length * CARD_W + (INDUSTRIES.length - 1) * GAP;
-    const viewW = viewport.offsetWidth;
-    const maxTranslate = 0;
-    const minTranslate = -(totalW - viewW);
-
-    if (index === 0) return maxTranslate;
-    if (index === last) return Math.min(minTranslate, 0);
-
-    const cardOffset = index * (CARD_W + GAP);
-    const centered = -(cardOffset - (viewW - CARD_W) / 2);
-    return Math.max(Math.min(centered, maxTranslate), minTranslate);
-  }, [last]);
-
-  const animateTo = useCallback((targetTranslate: number) => {
-    if (animatingRef.current) return;
-    animatingRef.current = true;
-
-    const start = translateRef.current;
-    const delta = targetTranslate - start;
-    if (Math.abs(delta) < 1) { animatingRef.current = false; return; }
-
-    const startTime = performance.now();
-
-    const step = (now: number) => {
-      const progress = Math.min((now - startTime) / DURATION, 1);
-      const eased = easeOutCubic(progress);
-      const current = start + delta * eased;
-      translateRef.current = current;
-
-      if (trackRef.current) {
-        trackRef.current.style.transform = `translateX(${current}px)`;
-      }
-
-      if (progress < 1) {
-        rafRef.current = requestAnimationFrame(step);
-      } else {
-        translateRef.current = targetTranslate;
-        animatingRef.current = false;
-      }
-    };
-
-    cancelAnimationFrame(rafRef.current);
-    rafRef.current = requestAnimationFrame(step);
+  // Recompute edge state (which fades / arrows to show) from the live scroll position
+  const updateEdges = useCallback(() => {
+    const el = viewportRef.current;
+    if (!el) return;
+    const max = el.scrollWidth - el.clientWidth;
+    setCanScroll(max > 1);
+    setAtStart(el.scrollLeft <= 1);
+    setAtEnd(el.scrollLeft >= max - 1);
   }, []);
 
-  const goTo = useCallback((index: number) => {
-    const clamped = Math.max(0, Math.min(index, last));
-    setActive(clamped);
-    animateTo(getTargetTranslate(clamped));
-  }, [last, animateTo, getTargetTranslate]);
-
-  // Snap on resize + recompute whether the track overflows its viewport
   useEffect(() => {
-    const onResize = () => {
-      const target = getTargetTranslate(active);
-      translateRef.current = target;
-      if (trackRef.current) trackRef.current.style.transform = `translateX(${target}px)`;
+    const el = viewportRef.current;
+    if (!el) return;
+    updateEdges();
+    el.addEventListener("scroll", updateEdges, { passive: true });
+    window.addEventListener("resize", updateEdges, { passive: true });
+    return () => {
+      el.removeEventListener("scroll", updateEdges);
+      window.removeEventListener("resize", updateEdges);
+    };
+  }, [updateEdges]);
 
-      const viewport = viewportRef.current;
-      if (viewport) {
-        const totalW = INDUSTRIES.length * CARD_W + (INDUSTRIES.length - 1) * GAP;
-        setHasOverflow(totalW > viewport.offsetWidth + 1);
+  // Cancel any in-flight glide and hand control back to native scroll-snap
+  const stopAnim = useCallback(() => {
+    cancelAnimationFrame(rafRef.current);
+    animatingRef.current = false;
+    if (viewportRef.current) viewportRef.current.style.scrollSnapType = "";
+  }, []);
+
+  // Buttery eased glide to an absolute scrollLeft. Snap is disabled mid-flight so
+  // mandatory snapping can't fight the per-frame writes, then restored to settle.
+  const glideTo = useCallback((target: number) => {
+    const el = viewportRef.current;
+    if (!el) return;
+    const start = el.scrollLeft;
+    const delta = target - start;
+    if (Math.abs(delta) < 1) return;
+    cancelAnimationFrame(rafRef.current);
+    if (reduceRef.current) {
+      el.scrollLeft = target;
+      return;
+    }
+    const duration = Math.min(1100, Math.max(550, Math.abs(delta) * 1.3));
+    el.style.scrollSnapType = "none";
+    animatingRef.current = true;
+    const startTime = performance.now();
+    const frame = (now: number) => {
+      const t = Math.min((now - startTime) / duration, 1);
+      el.scrollLeft = start + delta * easeInOutCubic(t);
+      if (t < 1) {
+        rafRef.current = requestAnimationFrame(frame);
+      } else {
+        animatingRef.current = false;
+        el.style.scrollSnapType = "";
       }
     };
-    window.addEventListener("resize", onResize, { passive: true });
-    onResize();
-    return () => window.removeEventListener("resize", onResize);
-  }, [active, getTargetTranslate]);
+    rafRef.current = requestAnimationFrame(frame);
+  }, []);
 
-  // Fades are a pure function of position: more content to a side ⇒ fade that side.
-  const showLeftFade = hasOverflow && active > 0;
-  const showRightFade = hasOverflow && active < last;
+  // Pause autoplay now; schedule it to resume after the viewer goes idle
+  const pauseNow = useCallback(() => {
+    pausedRef.current = true;
+    if (resumeTimerRef.current) window.clearTimeout(resumeTimerRef.current);
+  }, []);
+  const resumeSoon = useCallback(() => {
+    if (resumeTimerRef.current) window.clearTimeout(resumeTimerRef.current);
+    resumeTimerRef.current = window.setTimeout(() => {
+      pausedRef.current = false;
+    }, RESUME_DELAY);
+  }, []);
 
-  // Cleanup raf
-  useEffect(() => () => cancelAnimationFrame(rafRef.current), []);
+  // Autoplay: advance one card every tick, looping home at the end.
+  useEffect(() => {
+    const el = viewportRef.current;
+    if (!el) return;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    reduceRef.current = mq.matches;
+    const onMq = (e: MediaQueryListEvent) => {
+      reduceRef.current = e.matches;
+    };
+    mq.addEventListener?.("change", onMq);
+    if (reduceRef.current) return () => mq.removeEventListener?.("change", onMq);
+
+    const tick = () => {
+      if (pausedRef.current || animatingRef.current || document.hidden) return;
+      const card = el.querySelector<HTMLElement>("[data-card]");
+      if (!card) return;
+      const step = card.offsetWidth + GAP;
+      const max = el.scrollWidth - el.clientWidth;
+      if (max <= 1) return;
+      const current = Math.round(el.scrollLeft / step);
+      let target = (current + 1) * step;
+      if (target > max) {
+        // Last card can't left-align (it's clamped). Show the tail first, then loop home.
+        target = el.scrollLeft >= max - 1 ? 0 : max;
+      }
+      glideTo(Math.max(0, Math.min(target, max)));
+    };
+
+    const id = window.setInterval(tick, AUTO_INTERVAL);
+    return () => {
+      window.clearInterval(id);
+      mq.removeEventListener?.("change", onMq);
+    };
+  }, [glideTo]);
+
+  // Pause on hover / wheel / keyboard focus; resume after idle. Cleanup raf + timers.
+  useEffect(() => {
+    const el = viewportRef.current;
+    if (!el) return;
+    const onEnter = (e: PointerEvent) => {
+      if (e.pointerType === "mouse") pauseNow();
+    };
+    const onLeave = (e: PointerEvent) => {
+      if (e.pointerType === "mouse") resumeSoon();
+    };
+    const onWheel = () => {
+      pauseNow();
+      resumeSoon();
+    };
+    el.addEventListener("pointerenter", onEnter);
+    el.addEventListener("pointerleave", onLeave);
+    el.addEventListener("wheel", onWheel, { passive: true });
+    el.addEventListener("focusin", pauseNow);
+    el.addEventListener("focusout", resumeSoon);
+    return () => {
+      el.removeEventListener("pointerenter", onEnter);
+      el.removeEventListener("pointerleave", onLeave);
+      el.removeEventListener("wheel", onWheel);
+      el.removeEventListener("focusin", pauseNow);
+      el.removeEventListener("focusout", resumeSoon);
+      cancelAnimationFrame(rafRef.current);
+      if (resumeTimerRef.current) window.clearTimeout(resumeTimerRef.current);
+    };
+  }, [pauseNow, resumeSoon]);
+
+  // Optional arrow controls — glide by one card width
+  const scrollByCards = useCallback((dir: 1 | -1) => {
+    const el = viewportRef.current;
+    if (!el) return;
+    pauseNow();
+    resumeSoon();
+    const card = el.querySelector<HTMLElement>("[data-card]");
+    const step = card ? card.offsetWidth + GAP : el.clientWidth * 0.8;
+    const max = el.scrollWidth - el.clientWidth;
+    glideTo(Math.max(0, Math.min(el.scrollLeft + dir * step, max)));
+  }, [glideTo, pauseNow, resumeSoon]);
+
+  // Any pointer contact pauses autoplay and takes over; mouse also drags-to-scroll.
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    stopAnim();
+    pauseNow();
+    if (e.pointerType !== "mouse") return;
+    const el = viewportRef.current;
+    if (!el) return;
+    drag.current = { active: true, startX: e.clientX, startScroll: el.scrollLeft };
+    setDragging(true);
+    el.style.scrollSnapType = "none";
+    el.setPointerCapture(e.pointerId);
+  };
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!drag.current.active) return;
+    const el = viewportRef.current;
+    if (!el) return;
+    el.scrollLeft = drag.current.startScroll - (e.clientX - drag.current.startX);
+  };
+  const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
+    const el = viewportRef.current;
+    if (drag.current.active && el) {
+      drag.current.active = false;
+      setDragging(false);
+      el.style.scrollSnapType = ""; // restore mandatory snap → settles to nearest card
+      el.releasePointerCapture?.(e.pointerId);
+    }
+    resumeSoon();
+  };
+
+  const showLeftFade = canScroll && !atStart;
+  const showRightFade = canScroll && !atEnd;
 
   return (
     <section className="section section-light">
       <div className="container">
-        <div className="flex flex-col gap-10 md:grid md:grid-cols-[280px_1fr] md:items-stretch md:gap-16">
+        <div className="flex flex-col gap-8 md:grid md:grid-cols-[280px_1fr] md:items-stretch md:gap-16">
 
           {/* Sidebar */}
           <div className="flex h-full flex-col justify-between gap-8" data-reveal>
@@ -220,21 +321,22 @@ export default function IndustriesTabs() {
               <Button href="/industries" className="w-fit">See all industries</Button>
             </div>
 
-            <div className="flex gap-2">
+            {/* Arrows are optional — swipe / drag / scroll works without them. Hidden when nothing overflows. */}
+            <div className="hidden gap-2 md:flex" style={{ visibility: canScroll ? "visible" : "hidden" }}>
               <button
                 type="button"
-                onClick={() => goTo(active - 1)}
-                disabled={active === 0}
-                aria-label="Previous industry"
+                onClick={() => scrollByCards(-1)}
+                disabled={atStart}
+                aria-label="Previous industries"
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-line transition-colors hover:border-brand hover:text-brand disabled:cursor-not-allowed disabled:opacity-30"
               >
                 <ArrowLeftIcon />
               </button>
               <button
                 type="button"
-                onClick={() => goTo(active + 1)}
-                disabled={active >= last}
-                aria-label="Next industry"
+                onClick={() => scrollByCards(1)}
+                disabled={atEnd}
+                aria-label="Next industries"
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-brand bg-brand text-white transition-colors hover:bg-brand-light disabled:cursor-not-allowed disabled:opacity-30"
               >
                 <ArrowRightIcon />
@@ -242,128 +344,108 @@ export default function IndustriesTabs() {
             </div>
           </div>
 
-          {/* Carousel */}
-          <div ref={viewportRef} className="relative overflow-hidden" style={{ minHeight: VIEWPORT_MIN_H }} data-reveal>
-            {/* Edge fades */}
+          {/* Carousel — native horizontal scroll-snap, all cards open.
+              min-w-0 lets the 1fr grid column shrink so overflow-x-auto can scroll. */}
+          <div className="relative min-w-0" data-reveal>
+            {/* Edge fades hint there's more to scroll */}
             <div
-              className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-bg to-transparent transition-opacity duration-500"
+              className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-bg to-transparent transition-opacity duration-300"
               style={{ opacity: showLeftFade ? 1 : 0 }}
             />
             <div
-              className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-bg to-transparent transition-opacity duration-500"
+              className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-bg to-transparent transition-opacity duration-300"
               style={{ opacity: showRightFade ? 1 : 0 }}
             />
 
             <div
-              ref={trackRef}
-              className="flex items-start"
-              style={{ gap: GAP, willChange: "transform" }}
+              ref={viewportRef}
+              onPointerDown={onPointerDown}
+              onPointerMove={onPointerMove}
+              onPointerUp={endDrag}
+              onPointerCancel={endDrag}
+              className="no-scrollbar flex snap-x snap-mandatory items-stretch overflow-x-auto pb-2"
+              style={{
+                gap: GAP,
+                overscrollBehaviorX: "contain",
+                cursor: dragging ? "grabbing" : "grab",
+                userSelect: dragging ? "none" : "auto",
+                WebkitOverflowScrolling: "touch",
+              }}
             >
               {INDUSTRIES.map((ind, i) => {
-                const isActive = i === active;
                 const Icon = ICONS[i];
                 return (
                   <div
                     key={ind.name}
-                    onClick={() => goTo(i)}
-                    style={{
-                      width: CARD_W,
-                      minWidth: CARD_W,
-                      transition: "background-color 0.4s ease, opacity 0.4s ease",
-                      cursor: isActive ? "default" : "pointer",
-                    }}
-                    className={[
-                      "panel-card group relative flex flex-shrink-0 flex-col overflow-hidden rounded-md border p-6 transition-all duration-500",
-                      isActive
-                        ? "is-active bg-surface"
-                        : "bg-surface/55 opacity-70 hover:opacity-100 hover:bg-surface/90",
-                    ].join(" ")}
+                    data-card
+                    className="panel-card group relative flex w-[80vw] max-w-[320px] flex-shrink-0 snap-start flex-col overflow-hidden rounded-md border p-6 sm:w-[300px] sm:max-w-none"
                   >
-                    {/* App-icon slot — glossy amethyst gem when active, subtle chip when collapsed */}
+                    {/* App-icon slot — glossy amethyst gem */}
                     <div
-                      className="relative flex shrink-0 items-center justify-center overflow-hidden transition-all duration-500"
+                      className="relative flex shrink-0 items-center justify-center overflow-hidden"
                       style={{
-                        width: isActive ? "4rem" : "2.5rem",
-                        height: isActive ? "4rem" : "2.5rem",
-                        marginBottom: isActive ? "1.25rem" : "0.75rem",
-                        borderRadius: isActive ? "1.15rem" : "0.5rem",
-                        background: isActive ? "#f7f4fc" : "rgba(125, 52, 255, 0.06)",
-                        border: isActive ? "1px solid rgba(125, 52, 255, 0.2)" : "1px solid rgba(125, 52, 255, 0.12)",
-                        boxShadow: isActive ? "0 10px 28px -10px rgba(125, 52, 255, 0.28)" : "none",
+                        width: "4rem",
+                        height: "4rem",
+                        marginBottom: "1.25rem",
+                        borderRadius: "1.15rem",
+                        background: "#f7f4fc",
+                        border: "1px solid rgba(125, 52, 255, 0.2)",
+                        boxShadow: "0 10px 28px -10px rgba(125, 52, 255, 0.28)",
                       }}
                       aria-hidden="true"
                     >
                       {/* gradient fill — inset 1px so its bright bottom never bleeds onto the top rounded edge */}
-                      {isActive && (
-                        <div
-                          className="pointer-events-none absolute"
-                          style={{
-                            inset: "1px",
-                            borderRadius: "calc(1.15rem - 1px)",
-                            background: "linear-gradient(165deg, #ffffff 0%, #ede5ff 48%, #c9a8ff 100%)",
-                          }}
-                        />
-                      )}
-                      {/* bottom glow bloom */}
-                      {isActive && (
-                        <div
-                          className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2"
-                          style={{ background: "radial-gradient(ellipse at bottom, rgba(125, 52, 255, 0.18), transparent 72%)" }}
-                        />
-                      )}
-                      {/* top gloss highlight — soft, contained */}
-                      {isActive && (
-                        <div
-                          className="pointer-events-none absolute inset-x-0 top-0 h-1/2"
-                          style={{ background: "linear-gradient(to bottom, rgba(255,255,255,0.9), transparent)" }}
-                        />
-                      )}
-                      <Icon
-                        className="relative transition-all duration-500"
+                      <div
+                        className="pointer-events-none absolute"
                         style={{
-                          width: isActive ? "1.85rem" : "1.25rem",
-                          height: isActive ? "1.85rem" : "1.25rem",
-                          color: isActive ? "var(--color-brand)" : "var(--color-ink-faint)",
-                          filter: isActive ? "drop-shadow(0 1px 2px rgba(125, 52, 255, 0.2))" : "none",
+                          inset: "1px",
+                          borderRadius: "calc(1.15rem - 1px)",
+                          background: "linear-gradient(165deg, #ffffff 0%, #ede5ff 48%, #c9a8ff 100%)",
+                        }}
+                      />
+                      {/* bottom glow bloom */}
+                      <div
+                        className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2"
+                        style={{ background: "radial-gradient(ellipse at bottom, rgba(125, 52, 255, 0.18), transparent 72%)" }}
+                      />
+                      {/* top gloss highlight — soft, contained */}
+                      <div
+                        className="pointer-events-none absolute inset-x-0 top-0 h-1/2"
+                        style={{ background: "linear-gradient(to bottom, rgba(255,255,255,0.9), transparent)" }}
+                      />
+                      <Icon
+                        className="relative"
+                        style={{
+                          width: "1.85rem",
+                          height: "1.85rem",
+                          color: "var(--color-brand)",
+                          filter: "drop-shadow(0 1px 2px rgba(125, 52, 255, 0.2))",
                         }}
                       />
                     </div>
 
                     <div className="flex flex-col">
                       <div
-                        className="font-display leading-[1.15] transition-all duration-500"
-                        style={{
-                          fontSize: "1.75rem",
-                          color: isActive ? "var(--color-ink-bright)" : "var(--color-ink-dim)",
-                        }}
+                        className="font-display leading-[1.15]"
+                        style={{ fontSize: "1.75rem", color: "var(--color-ink-bright)" }}
                       >
                         {ind.name}
                       </div>
 
-                      {/* Expandable content */}
-                      <div
-                        className="overflow-hidden transition-all duration-500"
-                        style={{
-                          opacity: isActive ? 1 : 0,
-                          maxHeight: isActive ? "20rem" : 0,
-                          transitionDelay: isActive ? "0.12s" : "0s",
-                        }}
-                      >
-                        <p className="mt-3 text-sm leading-relaxed text-ink">{ind.desc}</p>
-                        <ul className="mt-5 flex flex-col border-t border-line-soft/40 divide-y divide-line-soft/40">
-                          {ind.points.map((pt, pi) => (
-                            <li
-                              key={pi}
-                              className="flex items-center gap-3 py-2.5 first:pt-3"
-                            >
-                              <span className="shrink-0 font-body text-[11px] font-medium tabular-nums text-brand-light/70">
-                                {String(pi + 1).padStart(2, "0")}
-                              </span>
-                              <span className="text-sm leading-snug text-ink-dim">{pt}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                      <p className="mt-3 text-sm leading-relaxed text-ink">{ind.desc}</p>
+                      <ul className="mt-5 flex flex-col border-t border-line-soft/40 divide-y divide-line-soft/40">
+                        {ind.points.map((pt, pi) => (
+                          <li
+                            key={pi}
+                            className="flex items-center gap-3 py-2.5 first:pt-3"
+                          >
+                            <span className="shrink-0 font-body text-[11px] font-medium tabular-nums text-brand-light/70">
+                              {String(pi + 1).padStart(2, "0")}
+                            </span>
+                            <span className="text-sm leading-snug text-ink-dim">{pt}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
                 );

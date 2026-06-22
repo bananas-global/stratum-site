@@ -340,6 +340,15 @@ h1, h2, h3, h4, h5, h6 {
 .service-filter-chip:focus-visible {
   color: var(--color-ink-bright);
 }
+
+/* horizontal scrollers that hide their scrollbar (carousels) */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
 }
 /* end @layer components */
 
