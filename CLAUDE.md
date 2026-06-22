@@ -12,7 +12,7 @@ A **Next.js 15 (App Router) marketing site** for Stratum (stratumtech.ca), an MS
 
 ```
 pnpm install
-pnpm dev      # dev server (http://localhost:3000)
+pnpm dev      # dev server (http://localhost:5242)
 pnpm build    # production build — run this to verify before shipping
 pnpm start    # serve the production build
 ```

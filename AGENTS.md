@@ -19,7 +19,7 @@ Use the Next.js dev server:
 
 ```
 pnpm dev
-# then open http://localhost:3000/
+# then open http://localhost:5242/
 ```
 
 ## Architecture
