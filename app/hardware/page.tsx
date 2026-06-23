@@ -16,23 +16,15 @@ export const metadata: Metadata = pageMeta({
 });
 
 const SUPPLY = [
-  { label: "Workstations & laptops", sub: "Standardized, business-grade devices spec'd to the role — not whatever was on sale." },
-  { label: "Servers & infrastructure", sub: "On-prem and hybrid compute sized for how your operation actually runs." },
-  { label: "Networking", sub: "Firewalls, switches, and Wi-Fi built for a secure, segmented network." },
-  { label: "Backup & storage", sub: "Appliances and storage aligned to your recovery plan, not bought in isolation." },
-  { label: "Peripherals & accessories", sub: "Monitors, docks, and the rest — kept to one consistent, supportable standard." },
-  { label: "Mobile & field devices", sub: "Tablets and rugged hardware configured for work beyond the office." },
+  { label: "Workstations & laptops", sub: "Standardized, business-grade devices spec'd to the role — not whatever was on sale.", image: "/images/hardware/hw-workstations.png" },
+  { label: "Servers & infrastructure", sub: "On-prem and hybrid compute sized for how your operation actually runs.", image: "/images/hardware/hw-servers.png" },
+  { label: "Networking", sub: "Firewalls, switches, and Wi-Fi built for a secure, segmented network.", image: "/images/hardware/hw-networking.png" },
+  { label: "Backup & storage", sub: "Appliances and storage aligned to your recovery plan, not bought in isolation.", image: "/images/hardware/hw-backup.png" },
+  { label: "Peripherals & accessories", sub: "Monitors, docks, and the rest — kept to one consistent, supportable standard.", image: "/images/hardware/hw-peripherals.png" },
+  { label: "Mobile & field devices", sub: "Tablets and rugged hardware configured for work beyond the office.", image: "/images/hardware/hw-mobile.png" },
 ];
 
 // 5S hardware standard — mapped from the brand lens. Label + supporting line.
-const STANDARD = [
-  { label: "Structure", sub: "Standardized selection, lifecycle, warranty, and replacement planning." },
-  { label: "Security", sub: "Imaged, hardened, and enrolled in management before deployment — never out of the box." },
-  { label: "Stability", sub: "Quality, supported equipment that fails less and lasts longer." },
-  { label: "Simplicity", sub: "Buying technology becomes one clear approval, not a research project." },
-  { label: "Stewardship", sub: "We recommend what fits your needs — not whatever carries the best margin." },
-];
-
 export default function HardwarePage() {
   const ld = {
     "@type": "Service",
@@ -125,28 +117,6 @@ export default function HardwarePage() {
           />
           <div data-reveal>
             <ScopeGrid items={SUPPLY} cols={3} />
-          </div>
-        </div>
-      </section>
-
-      {/* The Stratum hardware standard — 5S */}
-      <section className="section bg-black">
-        <div className="container flex flex-col gap-12">
-          <SectionHeader
-            eyebrow="The Stratum standard"
-            title="Held to the same 5S lens as everything we do."
-            lede="Structure, Security, Stability, Simplicity, and Stewardship aren't just how we run services — they're how we choose, configure, and stand behind the hardware we sell."
-          />
-          <div
-            data-reveal
-            className="grid gap-px overflow-hidden rounded-md border border-line-soft bg-line-soft sm:grid-cols-2 lg:grid-cols-5"
-          >
-            {STANDARD.map((it) => (
-              <div key={it.label} className="flex flex-col gap-2 bg-surface p-6">
-                <span className="font-display text-2xl text-ink-bright">{it.label}</span>
-                <span className="text-sm leading-relaxed text-ink-dim">{it.sub}</span>
-              </div>
-            ))}
           </div>
         </div>
       </section>

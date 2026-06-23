@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageHero, FeatureGrid, HowSteps, SectionHeader } from "@/components/sections";
+import { PageHero, SectionHeader } from "@/components/sections";
 import MissingMiddleVisual from "@/components/MissingMiddleVisual";
 import { Button } from "@/components/ui";
 import CTABand from "@/components/CTABand";
@@ -68,50 +68,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Values */}
-      <section className="section bg-bg">
-        <div className="container flex flex-col gap-12">
-          <SectionHeader
-            eyebrow="What we operate by"
-            title="Structure, Security, Stability, Simplicity, Stewardship."
-            lede="The 5S lens is the filter for our service model, our proposals, our internal decisions, and how we show up for clients every day."
-          />
-          <div data-reveal>
-            <FeatureGrid
-              cols={4}
-              items={[
-                { title: "Plain language", body: "We translate technical issues into business decisions — without dumbing them down." },
-                { title: "Direct communication", body: "Status updates, expectations, and tradeoffs are stated clearly, not hidden in tickets." },
-                { title: "Long-term thinking", body: "We act as if we will be supporting your environment three and five years from now — because we plan to." },
-                { title: "Calm under pressure", body: "Outages, incidents, and emergencies are handled with structure — not panic." },
-              ]}
-            />
-          </div>
-        </div>
-      </section>
-
       <StratumPillars />
-
-      {/* Operating style */}
-      <section className="section bg-surface">
-        <div className="container flex flex-col gap-12">
-          <SectionHeader
-            eyebrow="Operating style"
-            title="Structured partnership from day one."
-            lede="Whether you start with a single service or a full engagement, the operating model is the same."
-          />
-          <div data-reveal>
-            <HowSteps
-              steps={[
-                { n: "01", title: "Understand", body: "Review systems, documentation, and operating complexity before recommending anything." },
-                { n: "02", title: "Define scope", body: "Size the engagement around real usage, environment, and risk — not just user count." },
-                { n: "03", title: "Deliver", body: "Clear accountability, structured process, proactive oversight, plain-language updates." },
-                { n: "04", title: "Stay", body: "Lifecycle planning, roadmap reviews, and account management that look ahead." },
-              ]}
-            />
-          </div>
-        </div>
-      </section>
 
       {/* Leadership */}
       <section className="section bg-bg">
@@ -133,40 +90,6 @@ export default function AboutPage() {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How we show up */}
-      <section className="section bg-black">
-        <div className="container flex flex-col gap-12">
-          <SectionHeader
-            eyebrow="Accountable partnership"
-            title="Structured service — remote and onsite when it matters."
-            lede="Stratum is built for organizations that need a real technology partner, not a ticket queue in another time zone. We combine structured remote delivery with onsite work when the situation calls for it."
-          />
-          <div data-reveal>
-            <FeatureGrid
-              cols={4}
-              items={[
-                { title: "Structured delivery", body: "Clear ownership, documented environments, and an operating model your team can rely on — not ad hoc fixes." },
-                { title: "Your working day", body: "Support aligned to when your business runs, with direct communication and plain-language updates." },
-                { title: "Onsite when it matters", body: "Scheduled and emergency onsite work for what genuinely needs hands on the equipment." },
-                { title: "Built for real operations", body: "Vendor coordination, insurance baselines, and compliance shaped around how businesses actually operate." },
-              ]}
-            />
-          </div>
-          <div data-reveal className="grid gap-6 rounded-lg border border-line-soft bg-surface p-8 md:grid-cols-[1.6fr_1fr] md:items-center md:p-10">
-            <div className="flex flex-col gap-3">
-              <h3 className="font-display text-2xl text-ink-bright">Want to see if we are a fit?</h3>
-              <p className="text-ink-dim">
-                Tell us about your environment and what you are trying to move forward. We will be direct about scope and
-                next steps.
-              </p>
-            </div>
-            <div className="md:justify-self-end">
-              <Button href="/contact">Talk With Stratum</Button>
-            </div>
           </div>
         </div>
       </section>

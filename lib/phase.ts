@@ -7,7 +7,7 @@
  */
 export const PHASE_2_ROUTES_ENABLED = false;
 
-export const PHASE_1_SITEMAP_PATHS = ["", "/services", "/hardware", "/industries", "/about", "/insights", "/contact"];
+export const PHASE_1_SITEMAP_PATHS = ["", "/services", "/hardware", "/industries", "/about", "/insights", "/contact", "/privacy"];
 
 export const PHASE_2_ROUTE_GROUPS = {
   serviceDetailPages: ["/services/managed-it", "/services/cybersecurity", "/services/business-systems"],

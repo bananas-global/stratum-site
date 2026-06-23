@@ -153,16 +153,45 @@ export function PageHero({
 }
 
 /* ── Scope grid (label + small subtext) ───────────────────── */
-export function ScopeGrid({ items, cols = 3 }: { items: { label: string; sub: string }[]; cols?: 2 | 3 | 4 }) {
+export function ScopeGrid({
+  items,
+  cols = 3,
+}: {
+  items: { label: string; sub: string; image?: string }[];
+  cols?: 2 | 3 | 4;
+}) {
   const colCls = cols === 2 ? "md:grid-cols-2" : cols === 4 ? "md:grid-cols-2 lg:grid-cols-4" : "md:grid-cols-3";
   return (
     <div className={`grid gap-px overflow-hidden rounded-md border border-line-soft bg-line-soft ${colCls}`}>
-      {items.map((it) => (
-        <div key={it.label} className="flex flex-col gap-2 bg-surface p-6">
-          <span className="font-medium text-ink-bright">{it.label}</span>
-          <span className="text-sm leading-relaxed text-ink-dim">{it.sub}</span>
-        </div>
-      ))}
+      {items.map((it) =>
+        it.image ? (
+          // Image card: the standardized 8:5 render is anchored to the bottom at its
+          // natural (full-width) size; the taller card leaves extra white space at the
+          // top for the overlaid text.
+          <div
+            key={it.label}
+            className="relative aspect-[5/4] overflow-hidden bg-surface"
+          >
+            <Image
+              src={it.image}
+              alt=""
+              width={1600}
+              height={1000}
+              sizes="(max-width: 768px) 100vw, 33vw"
+              className="absolute inset-x-0 bottom-0 w-full h-auto"
+            />
+            <div className="relative flex flex-col gap-2 p-6">
+              <span className="font-medium text-ink-bright">{it.label}</span>
+              <span className="text-sm leading-relaxed text-ink-dim">{it.sub}</span>
+            </div>
+          </div>
+        ) : (
+          <div key={it.label} className="flex flex-col gap-2 bg-surface p-6">
+            <span className="font-medium text-ink-bright">{it.label}</span>
+            <span className="text-sm leading-relaxed text-ink-dim">{it.sub}</span>
+          </div>
+        ),
+      )}
     </div>
   );
 }

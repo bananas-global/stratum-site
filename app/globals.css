@@ -349,6 +349,25 @@ h1, h2, h3, h4, h5, h6 {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+/* Legal / long-form policy body (privacy, terms) */
+.legal-prose ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.legal-prose li {
+  padding-left: 0.25rem;
+}
+.legal-prose li::marker {
+  color: var(--color-brand);
+}
+.legal-prose strong {
+  color: var(--color-ink-bright);
+  font-weight: 500;
+}
 }
 /* end @layer components */
 

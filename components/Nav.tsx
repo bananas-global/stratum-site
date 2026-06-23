@@ -76,7 +76,7 @@ export default function Nav() {
                 width={144}
                 height={28}
                 priority
-                className="nav-logo h-6 w-auto transition-opacity duration-300"
+                className="nav-logo h-6 w-auto pl-2 transition-opacity duration-300"
               />
             </Link>
           </div>

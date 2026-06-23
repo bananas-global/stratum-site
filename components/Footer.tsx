@@ -90,9 +90,6 @@ export default function Footer() {
             <Link href="/privacy" className="transition-colors hover:text-ink-bright">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="transition-colors hover:text-ink-bright">
-              Terms of Service
-            </Link>
             {SOCIAL.map((s) => (
               <a
                 key={s.href}

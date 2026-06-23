@@ -166,7 +166,7 @@ export default function Home() {
                   >
                     <CountUp
                       value={stat.value}
-                      className="font-display text-[clamp(2rem,3vw,2.75rem)] leading-none text-brand-light"
+                      className="inline-block w-[5ch] tabular-nums font-display text-[clamp(2rem,3vw,2.75rem)] leading-none text-brand-light"
                     />
                     <div className="flex flex-col gap-2 pt-1">
                       <div className="font-body text-[1rem] font-bold leading-tight tracking-[0.02em] text-ink-bright">
