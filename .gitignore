@@ -32,3 +32,7 @@ next-env.d.ts
 
 # ShipStudio metadata
 .shipstudio/
+
+# Notion-baked insights content (regenerated each build by scripts/notion-sync.mjs)
+/content/insights/
+/public/insights/
