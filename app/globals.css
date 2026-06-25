@@ -627,8 +627,11 @@ h1, h2, h3, h4, h5, h6 {
 .nav-shell {
   border: 1px solid var(--color-line-soft);
   background-color: rgba(15, 15, 15, 0.55);
-  backdrop-filter: blur(16px);
+  /* -webkit- must come first: the production CSS minifier drops the
+     unprefixed property when it precedes the prefixed one, which kills
+     the blur in Firefox (no -webkit- alias). Order matches .glass. */
   -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   transition:
     background-color 0.3s ease,
     border-color 0.3s ease,
@@ -700,8 +703,8 @@ h1, h2, h3, h4, h5, h6 {
 .nav-mobile-panel {
   border: 1px solid var(--color-line-soft);
   background-color: rgba(15, 15, 15, 0.8);
-  backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   transition:
     background-color 0.3s ease,
     border-color 0.3s ease;
