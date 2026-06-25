@@ -463,8 +463,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .approach-stack-item {
-  /* scroll runway: each step gets a full viewport of stick time */
-  min-height: 85vh;
+  /* scroll runway: each step gets ~half a viewport of stick time
+     so the section reads tighter and all four steps come quickly */
+  min-height: 48vh;
 }
 
 .approach-stack-item.is-last {
@@ -625,7 +626,7 @@ h1, h2, h3, h4, h5, h6 {
 /* ── Nav — adapts when overlapping .section-light ─────────── */
 .nav-shell {
   border: 1px solid var(--color-line-soft);
-  background-color: rgba(15, 15, 15, 0.3);
+  background-color: rgba(15, 15, 15, 0.55);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   transition:
@@ -635,7 +636,31 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .nav-shell.is-scrolled {
-  background-color: rgba(15, 15, 15, 0.7);
+  background-color: rgba(15, 15, 15, 0.78);
+}
+
+/* Fallback: when backdrop-filter is unavailable or silently fails,
+   the blur can't carry legibility — make the panel near-opaque so the
+   nav never reads as transparent floating text over busy content. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .nav-shell {
+    background-color: rgba(15, 15, 15, 0.92);
+  }
+  .nav-shell.is-scrolled {
+    background-color: rgba(15, 15, 15, 0.95);
+  }
+  .nav-shell.nav-light {
+    background-color: rgba(255, 255, 255, 0.95);
+  }
+  .nav-shell.nav-light.is-scrolled {
+    background-color: rgba(255, 255, 255, 0.97);
+  }
+  .nav-mobile-panel {
+    background-color: rgba(15, 15, 15, 0.97);
+  }
+  .nav-mobile-panel.nav-light {
+    background-color: rgba(255, 255, 255, 0.97);
+  }
 }
 
 .nav-shell.nav-light {

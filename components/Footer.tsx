@@ -58,7 +58,7 @@ function FooterContactCol() {
             {SITE.phoneDisplay}
           </a>
         </li>
-        <li>Lower Mainland, BC</li>
+        <li>HQ in Abbotsford, BC — serving the Lower Mainland</li>
       </ul>
     </div>
   );
