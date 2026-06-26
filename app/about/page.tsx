@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { PageHero, SectionHeader } from "@/components/sections";
-import MissingMiddleVisual from "@/components/MissingMiddleVisual";
 import { ArrowLink, Button } from "@/components/ui";
 import CTABand from "@/components/CTABand";
 import StratumPillars from "@/components/StratumPillars";
@@ -21,13 +20,13 @@ const TEAM = [
   {
     name: "Austin Wollf",
     role: "Chief Executive Officer",
-    photo: "/images/team/austin-wollf.jpg",
+    photo: "/images/people/austin.png",
     linkedin: "https://www.linkedin.com/in/austinwollf/",
   },
   {
     name: "Nathan Chernoff",
     role: "Chief Marketing Officer",
-    photo: "/images/team/nathan-chernoff.jpg",
+    photo: "/images/people/nathan.png",
     linkedin: "https://www.linkedin.com/in/nathanchernoff/",
   },
 ] as const;
@@ -72,7 +71,7 @@ export default function AboutPage() {
         title="An operational technology partner for growing businesses."
         lede="Stratum is a structured, security-aware technology partner for organizations that need reliable systems, clear accountability, and long-term stewardship — without the overhead of an enterprise IT department."
         backgroundVisual={{
-          src: "/images/bg-hero-about.png",
+          src: "/images/stratum-bg-pattern.png",
           alt: "",
         }}
       >
@@ -80,19 +79,28 @@ export default function AboutPage() {
       </PageHero>
 
       {/* Our story */}
-      <section className="section bg-surface">
-        <div className="container grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
-          <div data-reveal className="flex flex-col gap-6">
-            <SectionHeader eyebrow="Our story" title="Stratum exists because the middle was missing." />
-            <p className="text-lg font-light leading-relaxed text-ink-dim">
-              Growing organizations kept ending up in the same place — too complex for break-fix IT, too small to justify
-              deep internal IT teams, and underserved by generic MSP offers. We built Stratum to be the structured
-              operational partner that actually fits this gap. Not a vendor selling tools. Not a help desk on standby. A
-              partner responsible for the environment over time.
-            </p>
+      <section className="bg-[#111112]">
+        <div className="section pb-0">
+          <div className="container">
+            <div data-reveal className="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
+              <SectionHeader center eyebrow="Market fit" title="The missing middle" />
+              <p className="text-lg font-light leading-relaxed text-ink-dim">
+                Growing organizations kept ending up in the same place — too complex for break-fix IT, too small to
+                justify deep internal IT teams, and underserved by generic MSP offers. We built Stratum to be the
+                structured operational partner that actually fits this gap. Not a vendor selling tools. Not a help desk
+                on standby. A partner responsible for the environment over time.
+              </p>
+            </div>
           </div>
-          <MissingMiddleVisual />
         </div>
+        <Image
+          src="/images/missing-middle.png"
+          alt=""
+          width={2752}
+          height={1094}
+          data-reveal
+          className="block h-auto w-full"
+        />
       </section>
 
       <StratumPillars />

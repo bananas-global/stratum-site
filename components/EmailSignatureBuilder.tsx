@@ -1,7 +1,8 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { SITE } from "@/lib/site";
+import type { SignatureCta } from "@/lib/signature-cta";
 
 /* ────────────────────────────────────────────────────────────────
    Stratum email signature builder (hidden internal tool)
@@ -64,8 +65,21 @@ function spacingToWidth(text: string, fontSize: number, targetWidth: number) {
   return Math.max(0.5, (targetWidth - w) / gaps);
 }
 
+/** A bracketed, brand-accented call-to-action banner row, or "" if no CTA. */
+function ctaBanner(cta: SignatureCta | undefined): string {
+  if (!cta?.headline) return "";
+  const brand = "#7d34ff";
+  const ink = "#14141A";
+  const headline = esc(cta.headline);
+  const link =
+    cta.url && cta.linkText
+      ? ` <a href="${esc(cta.url)}" style="color:${brand};font-weight:bold;text-decoration:none;white-space:nowrap;">${esc(cta.linkText)} &rarr;</a>`
+      : "";
+  return `<div style="margin-top:14px;padding:8px 12px;background:#f4efff;border-left:3px solid ${brand};font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.45;color:${ink};">${headline}${link}</div>`;
+}
+
 /** Build the table-based, inline-styled signature for email clients. */
-function buildSignature(f: Fields, logoUrl: string): string {
+function buildSignature(f: Fields, logoUrl: string, cta?: SignatureCta): string {
   const name = esc(f.fullName.trim()) || "Your Name";
   const title = esc(f.jobTitle.trim());
   const email = f.email.trim();
@@ -108,6 +122,7 @@ function buildSignature(f: Fields, logoUrl: string): string {
       </div>
       <div style="border-top:1px solid rgba(20,20,26,0.1);font-size:0;line-height:0;height:0;margin:14px 0;">&nbsp;</div>
       <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">${contactRows}</table>
+      ${ctaBanner(cta)}
     </td>
   </tr>
 </table>`;
@@ -142,16 +157,26 @@ function CheckIcon() {
   );
 }
 
-export default function EmailSignatureBuilder() {
+export default function EmailSignatureBuilder({ ctas = [] }: { ctas?: SignatureCta[] }) {
   const [f, setF] = useState<Fields>(DEFAULTS);
   const [copied, setCopied] = useState<"" | "rich" | "source">("");
   const [tab, setTab] = useState<"preview" | "html">("preview");
+  // Which active CTA to stamp in. Default to the first for stable SSR/hydration;
+  // when several are active we rotate to a random one on mount, so staff copying
+  // at different times naturally spread different campaigns across their mail.
+  const [ctaIndex, setCtaIndex] = useState(0);
   const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (ctas.length > 1) setCtaIndex(Math.floor(Math.random() * ctas.length));
+  }, [ctas.length]);
+
+  const cta = ctas[ctaIndex];
 
   // Preview renders with a relative logo path so it shows in-browser; the
   // copied versions embed the absolute URL for use inside email clients.
-  const previewHtml = useMemo(() => buildSignature(f, LOGO_PREVIEW), [f]);
-  const html = useMemo(() => buildSignature(f, LOGO_ABSOLUTE), [f]);
+  const previewHtml = useMemo(() => buildSignature(f, LOGO_PREVIEW, cta), [f, cta]);
+  const html = useMemo(() => buildSignature(f, LOGO_ABSOLUTE, cta), [f, cta]);
 
   const set = (key: keyof Fields) => (e: React.ChangeEvent<HTMLInputElement>) =>
     setF((prev) => ({ ...prev, [key]: e.target.value }));
@@ -163,7 +188,10 @@ export default function EmailSignatureBuilder() {
   };
 
   const copyRich = async () => {
-    const plain = `${f.fullName} — Stratum Technology\n${f.jobTitle}\n${f.phone}${f.mobile ? " / " + f.mobile : ""}\n${f.email}\nhttps://${normalizeUrl(f.website)}`;
+    const ctaLine = cta?.headline
+      ? `\n\n${cta.headline}${cta.url ? " " + cta.url : ""}`
+      : "";
+    const plain = `${f.fullName} — Stratum Technology\n${f.jobTitle}\n${f.phone}${f.mobile ? " / " + f.mobile : ""}\n${f.email}\nhttps://${normalizeUrl(f.website)}${ctaLine}`;
     try {
       await navigator.clipboard.write([
         new ClipboardItem({

@@ -1,0 +1,11 @@
+.side-rays-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  pointer-events: none;
+  z-index: 3;
+  overflow: hidden;
+  /* Rays only add light — black pixels of the canvas must not darken the video
+     beneath. Screen blending makes black a no-op while bright rays lighten. */
+  mix-blend-mode: screen;
+}

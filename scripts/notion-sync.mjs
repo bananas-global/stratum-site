@@ -31,9 +31,14 @@ try {
 const TOKEN = process.env.NOTION_TOKEN;
 const DATA_SOURCE_ID =
   process.env.NOTION_DATA_SOURCE_ID || "3de72646-a2a5-41f9-9d23-5208fd336e48";
+// "Signature CTA" database — the rotating call-to-action line the email
+// signature builder bakes into generated signatures.
+const CTA_DATA_SOURCE_ID =
+  process.env.NOTION_CTA_DATA_SOURCE_ID || "c24ede1b-5671-46c3-b37d-c56e5516a2ec";
 
 const CONTENT_DIR = path.resolve("content/insights");
 const PUBLIC_DIR = path.resolve("public/insights");
+const CTA_FILE = path.resolve("content/signature-cta.json");
 
 if (!TOKEN) {
   console.warn(
@@ -116,6 +121,39 @@ async function localizeInlineImages(markdown, slug) {
   return { markdown: out, images };
 }
 
+/* ── signature CTA ────────────────────────────────────────── */
+// Bake the active call-to-action rows into content/signature-cta.json. The
+// signature builder reads this at build time and stamps one into generated
+// signatures. Best-effort: a failure here (e.g. the integration lacks access
+// to the CTA database) must never break the news build, so the caller swallows
+// errors and the app falls back to no banner.
+async function syncSignatureCtas() {
+  console.log("[notion-sync] querying active signature CTAs…");
+  const rows = [];
+  let cursor;
+  do {
+    const res = await notion.dataSources.query({
+      data_source_id: CTA_DATA_SOURCE_ID,
+      filter: { property: "Active", checkbox: { equals: true } },
+      start_cursor: cursor,
+    });
+    rows.push(...res.results);
+    cursor = res.has_more ? res.next_cursor : undefined;
+  } while (cursor);
+
+  const ctas = rows
+    .map((page) => ({
+      headline: plain(prop(page, "Headline")?.title).trim(),
+      linkText: plain(prop(page, "Link text")?.rich_text).trim(),
+      url: (prop(page, "URL")?.url ?? "").trim(),
+    }))
+    // A usable CTA needs at least a headline; the link is optional.
+    .filter((c) => c.headline);
+
+  await writeFile(CTA_FILE, JSON.stringify(ctas, null, 2));
+  console.log(`[notion-sync] done — wrote ${ctas.length} active CTA(s)`);
+}
+
 /* ── main ─────────────────────────────────────────────────── */
 async function main() {
   console.log("[notion-sync] querying published posts…");
@@ -179,6 +217,13 @@ async function main() {
 
   await writeFile(path.join(CONTENT_DIR, "index.json"), JSON.stringify(index, null, 2));
   console.log(`[notion-sync] done — wrote ${index.length} posts`);
+
+  // Secondary content — never let a CTA hiccup fail the news build.
+  try {
+    await syncSignatureCtas();
+  } catch (err) {
+    console.warn(`[notion-sync] signature CTA sync failed — keeping existing: ${err.message}`);
+  }
 }
 
 main().catch((err) => {

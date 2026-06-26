@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { Button } from "../ui";
 import ServicesShowcase from "./ServicesShowcase";
+import SideRays from "./SideRays";
 
 export default function CinematicHero() {
   const containerRef = useRef<HTMLElement>(null);
@@ -92,22 +93,37 @@ export default function CinematicHero() {
         </video>
         {/* darkening overlay driven by scroll */}
         <div ref={overlayRef} className="pointer-events-none absolute inset-0 bg-black" style={{ opacity: 0 }} />
-        {/* vignette for text legibility */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/70 via-black/20 to-transparent" />
+        {/* vignette for text legibility — vertical scrim on mobile (text is
+            centered full-width over the render), left-anchored on desktop */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/80 via-black/45 to-black/85 md:bg-gradient-to-r md:from-black/70 md:via-black/20 md:to-transparent" />
+        {/* Light rays — lives inside the parallax stage so it drifts with the video
+            (no seam). Screen-blends over the video; never darkens it. */}
+        <div className="pointer-events-none absolute inset-0 z-[2]">
+          <SideRays
+            origin="top-right"
+            rayColor1="#ffffff"
+            rayColor2="#c0b3df"
+            speed={2.5}
+            intensity={2}
+            spread={2}
+            tilt={0}
+            saturation={1.5}
+            blend={0.75}
+            falloff={1.6}
+            opacity={1}
+          />
+        </div>
       </div>
 
       {/* Overlaid content — full 300vh, hero pinned to top, services pinned to bottom */}
       <div className="relative z-10 flex h-[200vh] flex-col">
-        {/* Hero text — first viewport */}
-        <div className="flex h-screen items-center">
+        {/* Hero text — first viewport. pt clears the fixed nav on mobile so the
+            centered block never slides up behind it; desktop keeps true center. */}
+        <div className="flex h-screen items-center pt-28 md:pt-0">
           <div className="container">
             <div className="flex max-w-xl flex-col gap-5">
               <h1 data-reveal data-reveal-delay="0.05" className="font-display text-[clamp(2.5rem,5vw,4.25rem)] leading-[0.97] tracking-[-0.04em]">
-                The{" "}
-                <span className="bg-gradient-to-br from-brand-light via-brand to-brand-dark bg-clip-text text-transparent">
-                  structure
-                </span>{" "}
-                behind dependable technology
+                Structure behind dependable technology
               </h1>
               <p data-reveal data-reveal-delay="0.12" className="max-w-sm text-lg font-light leading-relaxed text-ink-dim">
                 Stratum brings structure, security, and long-term stewardship to the systems your business

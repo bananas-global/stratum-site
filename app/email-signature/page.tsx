@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SectionHeader } from "@/components/ui";
 import EmailSignatureBuilder from "@/components/EmailSignatureBuilder";
+import { getSignatureCtas } from "@/lib/signature-cta";
 
 // Hidden internal tool — not part of the public IA. Kept out of search,
 // the nav, the footer, and the sitemap. Reachable only by direct link.
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default function EmailSignaturePage() {
+  const ctas = getSignatureCtas();
   return (
     <section className="section bg-surface pt-40 md:pt-48">
       <div className="container flex flex-col gap-10">
@@ -20,7 +22,7 @@ export default function EmailSignaturePage() {
           lede="Everything updates live. The logo and brand colours are baked in — you only add your own details."
         />
         <div data-reveal>
-          <EmailSignatureBuilder />
+          <EmailSignatureBuilder ctas={ctas} />
         </div>
       </div>
     </section>

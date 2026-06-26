@@ -76,7 +76,7 @@ export default function Footer() {
           </div>
 
           <div className="grid gap-8 sm:grid-cols-3 sm:gap-6 lg:gap-10">
-            <FooterCol title="Services" links={FOOTER.explore} />
+            <FooterCol title="Solutions" links={FOOTER.explore} />
             <FooterCol title="Company" links={FOOTER.company} />
             <FooterContactCol />
           </div>

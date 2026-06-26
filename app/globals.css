@@ -86,8 +86,8 @@ body {
 }
 
 ::selection {
-  background: var(--color-brand);
-  color: #fff;
+  background: #fff;
+  color: var(--color-brand);
 }
 
 a {
