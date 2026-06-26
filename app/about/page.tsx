@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { PageHero, SectionHeader } from "@/components/sections";
 import MissingMiddleVisual from "@/components/MissingMiddleVisual";
-import { Button } from "@/components/ui";
+import { ArrowLink, Button } from "@/components/ui";
 import CTABand from "@/components/CTABand";
 import StratumPillars from "@/components/StratumPillars";
 import { jsonLd } from "@/lib/site";
@@ -16,6 +17,21 @@ export const metadata: Metadata = pageMeta({
   ogDescription: "Our story, values, and operating style as a structured managed IT partner for growing organizations.",
 });
 
+const TEAM = [
+  {
+    name: "Austin Wollf",
+    role: "Chief Executive Officer",
+    photo: "/images/team/austin-wollf.jpg",
+    linkedin: "https://www.linkedin.com/in/austinwollf/",
+  },
+  {
+    name: "Nathan Chernoff",
+    role: "Chief Marketing Officer",
+    photo: "/images/team/nathan-chernoff.jpg",
+    linkedin: "https://www.linkedin.com/in/nathanchernoff/",
+  },
+] as const;
+
 export default function AboutPage() {
   const ld = {
     "@type": "AboutPage",
@@ -29,6 +45,16 @@ export default function AboutPage() {
     mainEntity: { "@id": "https://stratumtech.ca/#organization" },
   };
 
+  const people = TEAM.map((person) => ({
+    "@type": "Person",
+    "@id": `https://stratumtech.ca/about#${person.name.toLowerCase().replace(/\s+/g, "-")}`,
+    name: person.name,
+    jobTitle: person.role,
+    image: `https://stratumtech.ca${person.photo}`,
+    sameAs: [person.linkedin],
+    worksFor: { "@id": "https://stratumtech.ca/#organization" },
+  }));
+
   return (
     <>
       <script
@@ -36,6 +62,7 @@ export default function AboutPage() {
         dangerouslySetInnerHTML={jsonLd([
           breadcrumb([{ name: "Home", path: "/" }, { name: "About", path: "/about" }]),
           ld,
+          ...people,
         ])}
       />
 
@@ -78,15 +105,24 @@ export default function AboutPage() {
             title="People behind the partnership."
             lede="Stratum is led by an experienced team that has worked across managed services, cybersecurity, and business systems implementation."
           />
-          <div data-reveal className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {[0, 1, 2, 3].map((i) => (
-              <div key={i} className="flex flex-col gap-4">
-                <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-md border border-line-soft bg-gradient-to-br from-surface-2 to-black">
-                  <span className="text-xs uppercase tracking-wider text-ink-faint">Portrait</span>
+          <div data-reveal className="grid max-w-2xl gap-6 sm:grid-cols-2">
+            {TEAM.map((person, i) => (
+              <div key={person.name} className="flex flex-col gap-4" data-reveal-delay={`${0.05 * i}`}>
+                <div className="relative aspect-square overflow-hidden rounded-md border border-line-soft bg-gradient-to-br from-surface-2 to-black">
+                  <Image
+                    src={person.photo}
+                    alt={`Portrait of ${person.name}`}
+                    fill
+                    sizes="(min-width: 640px) 50vw, 100vw"
+                    className="object-cover object-top"
+                  />
                 </div>
-                <div>
-                  <div className="heading-gradient font-display text-xl">Leadership Name</div>
-                  <div className="text-sm text-ink-faint">Role / Title</div>
+                <div className="flex flex-col gap-1">
+                  <div className="heading-gradient font-display text-xl">{person.name}</div>
+                  <div className="text-sm text-ink-faint">{person.role}</div>
+                  <ArrowLink href={person.linkedin} className="mt-1 text-sm">
+                    LinkedIn
+                  </ArrowLink>
                 </div>
               </div>
             ))}
