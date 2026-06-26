@@ -1,95 +1,65 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /**
- * Scroll-scrubbed "missing middle" visual: two circles (break-fix IT and a
- * full internal team) converge as the section crosses the viewport, and the
- * intersection lights up in the brand accent. Same rAF + viewport-math scrub
- * pattern as CinematicHero; once fully converged the lens breathes gently.
+ * "Missing middle" visual: a stack of machined anodized strata with a gap in
+ * the centre. As the section scrolls into view the missing middle plate slides
+ * in and seats, its top edge catching the amethyst accent — the brand metaphor
+ * (Stratum = layers) made literal. Plays once on entry; reduced-motion users get
+ * the settled end frame as a still.
  */
-
-// Circle geometry in the 640x400 viewBox: [start cx, end cx].
-const SMALL = { r: 78, cy: 186, from: 128, to: 268 };
-const BIG = { r: 118, cy: 186, from: 512, to: 392 };
-
-const easeInOut = (t: number) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
-const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
-
 export default function MissingMiddleVisual() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const smallRef = useRef<SVGCircleElement>(null);
-  const bigRef = useRef<SVGCircleElement>(null);
-  const clipRef = useRef<SVGCircleElement>(null);
-  const lensRef = useRef<SVGCircleElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const render = (progress: number, breathe: number) => {
-      const e = easeInOut(progress);
-      const drift = progress >= 0.999 ? Math.sin(breathe) * 3 : 0;
-      const sx = SMALL.from + (SMALL.to - SMALL.from) * e + drift;
-      const bx = BIG.from + (BIG.to - BIG.from) * e - drift;
-
-      smallRef.current?.setAttribute("cx", String(sx));
-      clipRef.current?.setAttribute("cx", String(sx));
-      bigRef.current?.setAttribute("cx", String(bx));
-      lensRef.current?.setAttribute("cx", String(bx));
-
-      lensRef.current?.setAttribute("opacity", String(clamp01((e - 0.62) / 0.3)));
-    };
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      render(1, 0);
-      return;
-    }
-
-    let current = 0;
-    let breathe = 0;
-    let raf = 0;
-
-    const loop = () => {
-      const rect = container.getBoundingClientRect();
-      const vh = window.innerHeight || 1;
-      // Converge as the visual travels from 85% to 40% of the viewport height.
-      const target = clamp01((vh * 0.85 - rect.top) / (vh * 0.45));
-      current += (target - current) * 0.1;
-      if (current > 0.999) {
-        current = Math.max(current, target === 1 ? 1 : current);
-        breathe += 0.025;
-      }
-      render(current, breathe);
-      raf = requestAnimationFrame(loop);
-    };
-    raf = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(raf);
+    setReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   }, []);
 
-  return (
-    <div ref={containerRef} data-reveal>
-      <svg
-        viewBox="0 0 640 372"
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || reducedMotion) return;
+
+    // Play once the moment the visual is comfortably in view, then disconnect.
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          video.play().catch(() => {});
+          io.disconnect();
+        }
+      },
+      { threshold: 0.4 }
+    );
+    io.observe(video);
+    return () => io.disconnect();
+  }, [reducedMotion]);
+
+  if (reducedMotion) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        data-reveal
+        src="/videos/missing-middle-end.jpg"
+        alt="A stack of machined layers with the previously missing middle layer seated in, its edge lit in the brand accent."
         className="block h-auto w-full"
-        role="img"
-        aria-label="Two circles converging; their intersection — the missing middle — highlighted in purple."
-      >
-        <circle ref={smallRef} cx={SMALL.from} cy={SMALL.cy} r={SMALL.r} fill="#d9d9d9" />
-        <circle ref={bigRef} cx={BIG.from} cy={BIG.cy} r={BIG.r} fill="#d9d9d9" />
-        <clipPath id="missing-middle-clip">
-          <circle ref={clipRef} cx={SMALL.from} cy={SMALL.cy} r={SMALL.r} />
-        </clipPath>
-        <circle
-          ref={lensRef}
-          cx={BIG.from}
-          cy={BIG.cy}
-          r={BIG.r}
-          fill="var(--color-brand)"
-          clipPath="url(#missing-middle-clip)"
-          opacity="0"
-        />
-      </svg>
-    </div>
+      />
+    );
+  }
+
+  return (
+    <video
+      ref={videoRef}
+      data-reveal
+      className="block h-auto w-full"
+      muted
+      playsInline
+      preload="metadata"
+      poster="/videos/missing-middle-poster.jpg"
+      aria-label="A stack of machined layers; the missing middle layer slides in and seats, its edge lighting in the brand accent."
+    >
+      <source src="/videos/missing-middle.webm" type="video/webm" />
+      <source src="/videos/missing-middle.mp4" type="video/mp4" />
+    </video>
   );
 }
