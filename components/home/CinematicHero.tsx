@@ -19,9 +19,16 @@ export default function CinematicHero() {
     if (!container || !video || !stage) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) {
-      video.play().catch(() => {});
-      return;
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    // Mobile (and reduced-motion): no scroll-scrub. The hero is a static 100svh
+    // block, so just autoplay the video on a loop and skip the parallax/transform.
+    // Retry on `canplay` so a not-yet-buffered video still starts (load race).
+    if (reduce || isMobile) {
+      video.loop = true;
+      const tryPlay = () => video.play().catch(() => {});
+      tryPlay();
+      video.addEventListener("canplay", tryPlay);
+      return () => video.removeEventListener("canplay", tryPlay);
     }
 
     video.loop = false;
@@ -76,11 +83,14 @@ export default function CinematicHero() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative h-[200vh] overflow-hidden">
-      {/* bottom fade — non-sticky, just sits at the section's absolute bottom */}
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-[5] h-[100vh] bg-gradient-to-t from-black to-transparent" />
-      {/* Scrubbed video — pinned then parallax-drifted via JS transform */}
-      <div ref={stageRef} className="absolute left-0 right-0 top-0 h-screen overflow-hidden will-change-transform">
+    <section ref={containerRef} className="relative md:h-[200vh] md:overflow-hidden">
+      {/* bottom fade — desktop only; sits at the 200vh section's absolute bottom.
+          On mobile the hero is a single 100svh block, so the fade lives inside the
+          stage instead (see below). */}
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-[5] hidden h-[100vh] bg-gradient-to-t from-black to-transparent md:block" />
+      {/* Video stage — full hero height. Desktop scrubs + parallaxes via JS;
+          mobile autoplays a loop inside a static 100svh hero. */}
+      <div ref={stageRef} className="absolute left-0 right-0 top-0 h-[100svh] overflow-hidden will-change-transform md:h-screen">
         <video
           ref={videoRef}
           className="h-full w-full object-cover"
@@ -113,13 +123,17 @@ export default function CinematicHero() {
             opacity={1}
           />
         </div>
+        {/* mobile-only bottom fade — blends the video into the services section below */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-2/5 bg-gradient-to-t from-black via-black/60 to-transparent md:hidden" />
       </div>
 
-      {/* Overlaid content — full 300vh, hero pinned to top, services pinned to bottom */}
-      <div className="relative z-10 flex h-[200vh] flex-col">
-        {/* Hero text — first viewport. pt clears the fixed nav on mobile so the
-            centered block never slides up behind it; desktop keeps true center. */}
-        <div className="flex h-screen items-center pt-28 md:pt-0">
+      {/* Overlaid content. Mobile: auto height — a 100svh hero, then the services
+          showcase in normal flow. Desktop: 200vh with the showcase pinned bottom. */}
+      <div className="relative z-10 flex flex-col md:h-[200vh]">
+        {/* Hero text. Mobile: its own full 100svh, vertically centered, never
+            crushed (shrink-0) so it can't collapse against the services section.
+            Desktop: h-screen, default shrink, true-centered as before. */}
+        <div className="flex min-h-[100svh] shrink-0 items-center md:h-screen md:min-h-0 md:shrink">
           <div className="container">
             <div className="flex max-w-xl flex-col gap-5">
               <h1 data-reveal data-reveal-delay="0.05" className="font-display text-[clamp(2.5rem,5vw,4.25rem)] leading-[0.97] tracking-[-0.04em]">
@@ -136,8 +150,8 @@ export default function CinematicHero() {
           </div>
         </div>
 
-        {/* Services at the bottom */}
-        <div className="mt-auto">
+        {/* Services — normal flow on mobile, pinned to the bottom of the 200vh on desktop */}
+        <div className="md:mt-auto">
           <ServicesShowcase />
         </div>
       </div>

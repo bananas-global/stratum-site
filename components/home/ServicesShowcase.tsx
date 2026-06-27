@@ -65,8 +65,8 @@ export default function ServicesShowcase() {
               <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/80 to-black/20" />
             </div>
             <div className="relative">
-              {/* links */}
-              <div className="flex flex-col">
+              {/* links — desktop hover-list (mobile uses the cards below) */}
+              <div className="hidden md:flex md:flex-col">
                 {SERVICES.map((s, i) => (
                   <Link
                     key={s.name}
@@ -102,12 +102,30 @@ export default function ServicesShowcase() {
                 ))}
               </div>
 
-              {/* mobile cards (always shown stacked) */}
-              <div className="mt-6 flex flex-col gap-3 md:hidden">
+              {/* mobile cards — self-contained (the hover list above is desktop-only) */}
+              <div className="flex flex-col gap-3 md:hidden">
                 {SERVICES.map((s) => (
-                  <div key={s.name} className="rounded-sm bg-white p-5 text-black">
-                    <p className="text-sm text-black/80">{s.body}</p>
-                  </div>
+                  <Link
+                    key={s.name}
+                    href={s.href}
+                    className="flex flex-col gap-3 rounded-sm bg-white p-5 text-black"
+                  >
+                    <div className="flex items-baseline justify-between gap-3">
+                      <span className="font-display text-2xl leading-none">{s.name}</span>
+                      <span className="text-xs tabular-nums text-black/40">{s.n}</span>
+                    </div>
+                    <p className="text-sm leading-relaxed text-black/70">{s.body}</p>
+                    <div className="mt-1 flex flex-wrap gap-1.5">
+                      {s.features.map((f) => (
+                        <span
+                          key={f}
+                          className="rounded-full bg-black/[0.06] px-2.5 py-1 text-[11px] font-medium text-black/55"
+                        >
+                          {f}
+                        </span>
+                      ))}
+                    </div>
+                  </Link>
                 ))}
               </div>
             </div>

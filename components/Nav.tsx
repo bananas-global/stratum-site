@@ -56,6 +56,17 @@ export default function Nav() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-[999] py-5">
+      {/* Mobile menu backdrop — dims the page behind the open panel; tap to close.
+          lg:hidden so it never affects desktop. -z-10 keeps it behind the bar/panel
+          but (within the header's z-[999] stacking context) above page content. */}
+      <div
+        aria-hidden
+        onClick={() => setOpen(false)}
+        className={[
+          "fixed inset-0 -z-10 bg-black/60 backdrop-blur-sm transition-opacity duration-300 lg:hidden",
+          open ? "opacity-100" : "pointer-events-none opacity-0",
+        ].join(" ")}
+      />
       <div className="container">
         <div
           ref={barRef}
