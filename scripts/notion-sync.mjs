@@ -16,8 +16,7 @@
 import { Client } from "@notionhq/client";
 import { NotionToMarkdown } from "notion-to-md";
 import { imageSize } from "image-size";
-import { mkdir, writeFile, rm, readdir } from "node:fs/promises";
-import { existsSync } from "node:fs";
+import { mkdir, writeFile, rm } from "node:fs/promises";
 import path from "node:path";
 
 // Load .env.local when present (local dev). On Vercel the vars are already in

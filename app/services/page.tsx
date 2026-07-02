@@ -21,7 +21,7 @@ const CARDS = [
   {
     name: "Managed IT",
     visual: {
-      src: "/images/managed-it.png",
+      src: "/images/managed-it.webp",
       alt: "Abstract managed IT service visual with structured dark geometry and purple accent lighting.",
       contain: true,
     },
@@ -31,7 +31,7 @@ const CARDS = [
   {
     name: "Cybersecurity",
     visual: {
-      src: "/images/cybersecurity.png",
+      src: "/images/cybersecurity.webp",
       alt: "Abstract cybersecurity service visual with layered dark geometry and purple accent lighting.",
       contain: true,
     },
@@ -41,7 +41,7 @@ const CARDS = [
   {
     name: "Business Systems",
     visual: {
-      src: "/images/business-systems.png",
+      src: "/images/business-systems.webp",
       alt: "Abstract business systems service visual with structured dark geometry and purple accent lighting.",
       contain: true,
     },
@@ -103,15 +103,9 @@ const INDUSTRY_STRIP = [
   { label: "Manufacturing", sub: "Multi-site, lifecycle, OT-aware" },
 ];
 
-type ServicesIndexProps = {
-  searchParams?: Promise<{ serviceFilter?: string | string[] }>;
-};
-
-export default async function ServicesIndex({ searchParams }: ServicesIndexProps) {
-  const params = await searchParams;
-  const serviceFilterParam = params?.serviceFilter;
-  const serviceFilter = Array.isArray(serviceFilterParam) ? serviceFilterParam[0] : serviceFilterParam;
-
+export default function ServicesIndex() {
+  // The ?serviceFilter deep-link is applied client-side by ServiceCatalog
+  // (it reads window.location on mount), keeping this route fully static.
   const ld = {
     "@type": "CollectionPage",
     "@id": "https://stratumtech.ca/services#webpage",
@@ -147,7 +141,7 @@ export default async function ServicesIndex({ searchParams }: ServicesIndexProps
         title="Three service categories. One structured partner."
         lede="Stratum operates as a single technology partner across the entire environment. Each service category is built around business outcomes — not tool lists — and works in coordination with the others."
         backgroundVisual={{
-          src: "/images/bg-hero-services.png",
+          src: "/images/bg-hero-services.webp",
           alt: "",
         }}
       >
@@ -178,7 +172,7 @@ export default async function ServicesIndex({ searchParams }: ServicesIndexProps
             title="Every capability Stratum covers, in one place."
             lede="Filter by category or search below. Each item explains what it delivers for your business — outcomes and accountability, not a list of tools."
           />
-          <ServiceCatalog initialQuery={serviceFilter} />
+          <ServiceCatalog />
         </div>
       </section>
 

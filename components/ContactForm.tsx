@@ -2,22 +2,40 @@
 
 import { useState } from "react";
 import { ArrowNE } from "./ui";
+import { SITE } from "@/lib/site";
 
 const FIELD =
   "w-full rounded-sm border border-line bg-black/40 px-4 py-3 text-ink-bright placeholder:text-ink-faint focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand transition-colors";
 const LABEL = "flex flex-col gap-2 text-sm text-ink-dim";
 
+type Status = "idle" | "sending" | "sent" | "error";
+
 export default function ContactForm() {
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (status === "sending" || status === "sent") return;
+    setStatus("sending");
+
+    const form = e.currentTarget;
+    const payload = Object.fromEntries(new FormData(form).entries());
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error(`status ${res.status}`);
+      setStatus("sent");
+      form.reset();
+    } catch {
+      setStatus("error");
+    }
+  }
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        setSent(true);
-      }}
-      className="flex flex-col gap-5"
-    >
+    <form onSubmit={handleSubmit} className="flex flex-col gap-5">
       <div className="grid gap-5 sm:grid-cols-2">
         <label className={LABEL}>
           First name
@@ -65,15 +83,44 @@ export default function ContactForm() {
           className={FIELD}
         />
       </label>
-      <button type="submit" className="btn btn-primary w-fit" disabled={sent}>
-        <span>{sent ? "Thanks — we'll be in touch" : "Send message"}</span>
+      {/* Honeypot — hidden from real users, bots tend to fill every field. */}
+      <div aria-hidden="true" className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden">
+        <label>
+          Website
+          <input type="text" name="website" tabIndex={-1} autoComplete="off" />
+        </label>
+      </div>
+      <button
+        type="submit"
+        className="btn btn-primary w-fit"
+        disabled={status === "sending" || status === "sent"}
+      >
+        <span>
+          {status === "sending"
+            ? "Sending…"
+            : status === "sent"
+              ? "Thanks — we'll be in touch"
+              : "Send message"}
+        </span>
         <ArrowNE />
       </button>
-      {sent && (
-        <p className="text-sm text-brand-light">
-          This is a demo form. Wire it to your CRM / email endpoint before launch.
-        </p>
-      )}
+      <p aria-live="polite" className="min-h-5 text-sm">
+        {status === "sent" && (
+          <span className="text-brand-light">
+            Your message is on its way. We typically respond within one business day.
+          </span>
+        )}
+        {status === "error" && (
+          <span className="text-ink-dim">
+            Something went wrong sending your message. Please try again, or email
+            us directly at{" "}
+            <a href={`mailto:${SITE.email}`} className="text-brand-light underline">
+              {SITE.email}
+            </a>
+            .
+          </span>
+        )}
+      </p>
     </form>
   );
 }

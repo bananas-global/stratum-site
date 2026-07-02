@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { PageHero, SectionHeader } from "@/components/sections";
-import { ArrowLink, Button } from "@/components/ui";
+import { Button } from "@/components/ui";
 import CTABand from "@/components/CTABand";
 import StratumPillars from "@/components/StratumPillars";
 import { jsonLd } from "@/lib/site";
@@ -15,21 +15,6 @@ export const metadata: Metadata = pageMeta({
   ogTitle: "About Stratum — Operational Technology Partner",
   ogDescription: "Our story, values, and operating style as a structured managed IT partner for growing organizations.",
 });
-
-const TEAM = [
-  {
-    name: "Austin Wollf",
-    role: "Chief Executive Officer",
-    photo: "/images/people/austin.png",
-    linkedin: "https://www.linkedin.com/in/austinwollf/",
-  },
-  {
-    name: "Nathan Chernoff",
-    role: "Chief Marketing Officer",
-    photo: "/images/people/nathan.png",
-    linkedin: "https://www.linkedin.com/in/nathanchernoff/",
-  },
-] as const;
 
 export default function AboutPage() {
   const ld = {
@@ -73,7 +58,7 @@ export default function AboutPage() {
         title="An operational technology partner for growing businesses."
         lede="Stratum is a structured, security-aware technology partner for organizations that need reliable systems, clear accountability, and long-term stewardship — without the overhead of an enterprise IT department."
         backgroundVisual={{
-          src: "/images/stratum-bg-pattern.png",
+          src: "/images/stratum-bg-pattern.webp",
           alt: "",
         }}
       >
@@ -96,7 +81,7 @@ export default function AboutPage() {
           </div>
         </div>
         <Image
-          src="/images/missing-middle.png"
+          src="/images/missing-middle.webp"
           alt=""
           width={2752}
           height={1094}

@@ -118,7 +118,7 @@ const INDUSTRY_VISUALS: Record<string, { src: string; alt: string; label: string
     label: "Office, site, field",
   },
   manufacturing: {
-    src: "/images/industries/manufacturing.png",
+    src: "/images/industries/manufacturing.webp",
     alt: "Modern manufacturing control room overlooking a production floor and network cabinet.",
     label: "Operational stability",
   },
@@ -160,7 +160,7 @@ export default function IndustriesIndex() {
         title="Industries where Stratum leads."
         lede="We focus on industries where operational complexity is highest and the cost of unreliable IT is real. The services are the same — Managed IT, Cybersecurity, and Business Systems — but the way they apply changes by vertical."
         backgroundVisual={{
-          src: "/images/industries-hero-bg.png",
+          src: "/images/industries-hero-bg.webp",
           alt: "",
         }}
       >

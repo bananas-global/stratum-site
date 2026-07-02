@@ -77,7 +77,7 @@ export default function InsightsPage() {
         title="Insights for business leaders."
         lede="Practical, plain-language content on managed IT, cybersecurity, and business systems — written for the people running the business, not the IT team."
         backgroundVisual={{
-          src: "/images/bg-hero-insights.png",
+          src: "/images/bg-hero-insights.webp",
           alt: "",
         }}
       />
