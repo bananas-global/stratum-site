@@ -38,7 +38,7 @@ function PostCard({ post, featured }: { post: PostMeta; featured?: boolean }) {
           <span className="text-brand-light">Insight</span>
           <span className="text-ink-faint">{formatPostDate(post.date)}</span>
         </div>
-        <h3 className={`font-display text-ink-bright ${featured ? "text-3xl" : "text-2xl"}`}>{post.title}</h3>
+        <h3 className={`font-display text-ink-bright ${featured ? "text-[1.40625rem] leading-[1.6875rem]" : "text-[1.125rem] leading-[1.5rem]"}`}>{post.title}</h3>
         {post.excerpt && <p className="text-sm leading-relaxed text-ink-dim">{post.excerpt}</p>}
         <span className="link-arrow mt-1 text-sm text-ink-bright">
           <span>Read more</span>

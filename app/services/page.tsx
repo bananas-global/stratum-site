@@ -161,7 +161,7 @@ export default async function ServicesIndex({ searchParams }: ServicesIndexProps
             <div key={c.name} data-reveal className="card flex flex-col gap-5 bg-bg">
               <CardMedia visual={c.visual} />
               <div className="flex flex-col gap-4">
-                <h2 className="font-display text-3xl text-ink-bright">{c.name}</h2>
+                <h2 className="font-display text-[1.40625rem] leading-[1.6875rem] text-ink-bright">{c.name}</h2>
                 <p className="text-sm leading-relaxed text-ink-dim">{c.body}</p>
                 <ServiceFilterChips items={c.tags} />
               </div>

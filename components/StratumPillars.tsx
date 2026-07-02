@@ -55,7 +55,7 @@ export default function StratumPillars({ className }: { className?: string }) {
                 {rightText ? (
                   <>
                     <div className="flex flex-col gap-2 md:items-end md:text-right">
-                      <h3 className="font-display text-4xl font-medium text-ink-bright md:text-5xl">{p.name}</h3>
+                      <h3 className="font-display text-[1.6875rem] leading-[1.875rem] font-medium text-ink-bright md:text-[2.25rem] md:leading-none">{p.name}</h3>
                       <p className="text-sm text-ink-dim md:max-w-xs">{p.body}</p>
                     </div>
                     <div className="flex justify-start">
@@ -68,7 +68,7 @@ export default function StratumPillars({ className }: { className?: string }) {
                       <GemImg src={p.gem} alt={p.name} />
                     </div>
                     <div className="order-1 flex flex-col gap-2 md:order-2">
-                      <h3 className="font-display text-4xl font-medium text-ink-bright md:text-5xl">{p.name}</h3>
+                      <h3 className="font-display text-[1.6875rem] leading-[1.875rem] font-medium text-ink-bright md:text-[2.25rem] md:leading-none">{p.name}</h3>
                       <p className="text-sm text-ink-dim md:max-w-xs">{p.body}</p>
                     </div>
                   </>

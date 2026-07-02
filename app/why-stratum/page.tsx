@@ -115,7 +115,7 @@ export default function WhyStratum() {
                   height={120}
                   className="h-24 w-24 object-contain drop-shadow-[0_0_30px_rgba(125,52,255,0.25)]"
                 />
-                <h3 className="font-display text-2xl text-ink-bright">{p.name}</h3>
+                <h3 className="font-display text-[1.125rem] leading-[1.5rem] text-ink-bright">{p.name}</h3>
                 <p className="text-sm leading-relaxed text-ink-dim">{p.body}</p>
               </div>
             ))}
@@ -138,7 +138,7 @@ export default function WhyStratum() {
                   {TABLE.cols.map((c, i) => (
                     <th
                       key={c}
-                      className={`p-4 font-display text-xl ${i === 2 ? "text-brand-light" : "text-ink-dim"}`}
+                      className={`p-4 font-display text-[0.9375rem] leading-[1.3125rem] ${i === 2 ? "text-brand-light" : "text-ink-dim"}`}
                     >
                       {c}
                     </th>
@@ -207,7 +207,7 @@ export default function WhyStratum() {
           </div>
           <div data-reveal className="grid gap-6 rounded-lg border border-line-soft bg-bg p-8 md:grid-cols-[1.6fr_1fr] md:items-center md:p-10">
             <div className="flex flex-col gap-3">
-              <h3 className="font-display text-2xl text-ink-bright">The shape of the engagement comes from your operation.</h3>
+              <h3 className="font-display text-[1.125rem] leading-[1.5rem] text-ink-bright">The shape of the engagement comes from your operation.</h3>
               <p className="text-ink-dim">
                 We talk through these inputs in the first conversation. The structure of the partnership follows from what
                 we find — not from a tier you fit into.

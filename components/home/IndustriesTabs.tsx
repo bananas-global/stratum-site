@@ -311,7 +311,7 @@ export default function IndustriesTabs() {
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-4">
                 <BracketLabel>Who we work with</BracketLabel>
-                <h2 className="font-display text-[clamp(1.75rem,2.8vw,2.5rem)] leading-[1.05] tracking-[-0.03em]">
+                <h2 className="font-display text-[clamp(1.3125rem,2.1vw,1.875rem)] leading-[1.05] tracking-[-0.03em]">
                   Technology built around how your industry operates.
                 </h2>
                 <p className="text-sm leading-relaxed text-ink-dim">
@@ -427,7 +427,7 @@ export default function IndustriesTabs() {
                     <div className="flex flex-col">
                       <div
                         className="font-display leading-[1.15]"
-                        style={{ fontSize: "1.75rem", color: "var(--color-ink-bright)" }}
+                        style={{ fontSize: "1.3125rem", color: "var(--color-ink-bright)" }}
                       >
                         {ind.name}
                       </div>
