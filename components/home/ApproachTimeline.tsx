@@ -66,18 +66,18 @@ export default function ApproachTimeline({ steps }: { steps: ApproachStep[] }) {
           key={step.n}
           className="approach-card panel-card flex flex-col gap-5 rounded-md border p-6 md:p-7"
         >
-          <span
-            className="font-display text-[clamp(2rem,3vw,2.5rem)] leading-none tracking-[-0.04em] text-brand-light/80"
-            aria-hidden="true"
-          >
-            {step.n}
-          </span>
-
           <div className="flex flex-col gap-3">
-            <h3 className="font-display text-[clamp(1.125rem,1.6vw,1.375rem)] leading-tight tracking-[-0.02em] text-ink-bright">
-              {step.title}
-            </h3>
-            <div className="h-px w-full max-w-[12rem] bg-line" />
+            <div className="flex items-baseline gap-3">
+              <span
+                className="font-display text-[clamp(1.375rem,1.9vw,1.625rem)] leading-tight tracking-[-0.02em] text-brand-light"
+                aria-hidden="true"
+              >
+                {step.n}
+              </span>
+              <h3 className="font-display text-[clamp(1.375rem,1.9vw,1.625rem)] leading-tight tracking-[-0.02em] text-ink-bright">
+                {step.title}
+              </h3>
+            </div>
             <p className="text-sm leading-relaxed text-ink-dim md:text-base">{step.body}</p>
           </div>
 
