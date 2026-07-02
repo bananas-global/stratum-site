@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { PageHero, ScopeGrid, FeatureGrid, OutcomeStrip, SectionHeader } from "@/components/sections";
-import { Button, BracketLabel } from "@/components/ui";
+import { Button } from "@/components/ui";
 import CTABand from "@/components/CTABand";
 import { jsonLd } from "@/lib/site";
 import { pageMeta, breadcrumb } from "@/lib/seo";

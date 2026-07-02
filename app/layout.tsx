@@ -62,6 +62,8 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Parastoo isn't on next/font/google; the root layout applies site-wide, so the pages-router single-page caveat doesn't apply. */}
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link
           href="https://fonts.googleapis.com/css2?family=Parastoo:wght@400;500;600;700&display=swap"
           rel="stylesheet"
