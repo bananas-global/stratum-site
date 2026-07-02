@@ -40,7 +40,7 @@ export default function ServicesShowcase() {
           <div data-reveal className="flex flex-col justify-between gap-6 py-6 md:pr-4">
             <div className="flex flex-col gap-5">
               <BracketLabel>What we do</BracketLabel>
-              <h2 className="font-display text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.05] tracking-[-0.04em]">
+              <h2 className="font-display text-[clamp(1.3125rem,2.25vw,1.875rem)] leading-[1.05] tracking-[-0.04em]">
                 Structured technology services for complex businesses.
               </h2>
             </div>
@@ -77,7 +77,7 @@ export default function ServicesShowcase() {
                   >
                     <div className="flex items-end justify-between gap-4">
                       <span className="text-base text-ink-dim transition-colors group-hover:text-brand-light">{s.n}</span>
-                      <span className="font-display text-3xl text-ink-bright transition-colors group-hover:text-brand-light md:text-5xl">
+                      <span className="font-display text-[1.40625rem] leading-[1.6875rem] text-ink-bright transition-colors group-hover:text-brand-light md:text-[2.25rem] md:leading-none">
                         {s.name}
                       </span>
                     </div>
@@ -111,7 +111,7 @@ export default function ServicesShowcase() {
                     className="flex flex-col gap-3 rounded-sm bg-white p-5 text-black"
                   >
                     <div className="flex items-baseline justify-between gap-3">
-                      <span className="font-display text-2xl leading-none">{s.name}</span>
+                      <span className="font-display text-[1.125rem] leading-none">{s.name}</span>
                       <span className="text-xs tabular-nums text-black/40">{s.n}</span>
                     </div>
                     <p className="text-sm leading-relaxed text-black/70">{s.body}</p>

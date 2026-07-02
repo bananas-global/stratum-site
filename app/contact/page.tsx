@@ -79,7 +79,7 @@ export default function ContactPage() {
           <div data-reveal className="grid gap-4 md:grid-cols-3">
             {PATHS.map((p) => (
               <div key={p.title} className="card flex flex-col gap-3">
-                <h3 className="font-display text-2xl text-ink-bright">{p.title}</h3>
+                <h3 className="font-display text-[1.125rem] leading-[1.5rem] text-ink-bright">{p.title}</h3>
                 <p className="text-sm leading-relaxed text-ink-dim">{p.body}</p>
                 <a href={`mailto:${p.email}`} className="link-arrow mt-2 text-sm">
                   <span>{p.email}</span>
@@ -103,7 +103,7 @@ export default function ContactPage() {
                 <h3 className="heading-plain text-xs font-semibold uppercase tracking-wider text-ink-faint">{a.title}</h3>
                 <p className="mt-2 text-sm text-ink-dim">{a.body}</p>
                 {a.link && (
-                  <a href={a.link.href} className="mt-1 block font-display text-2xl text-ink-bright transition-colors hover:text-brand-light">
+                  <a href={a.link.href} className="mt-1 block font-display text-[1.125rem] leading-[1.5rem] text-ink-bright transition-colors hover:text-brand-light">
                     {a.link.label}
                   </a>
                 )}

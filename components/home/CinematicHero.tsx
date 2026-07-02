@@ -136,7 +136,7 @@ export default function CinematicHero() {
         <div className="flex min-h-[100svh] shrink-0 items-center md:h-screen md:min-h-0 md:shrink">
           <div className="container">
             <div className="flex max-w-xl flex-col gap-5">
-              <h1 data-reveal data-reveal-delay="0.05" className="font-display text-[clamp(2.5rem,5vw,4.25rem)] leading-[0.97] tracking-[-0.04em]">
+              <h1 data-reveal data-reveal-delay="0.05" className="font-display text-[clamp(1.875rem,3.75vw,3.1875rem)] leading-[0.97] tracking-[-0.04em]">
                 Structure behind dependable technology
               </h1>
               <p data-reveal data-reveal-delay="0.12" className="max-w-sm text-lg font-light leading-relaxed text-ink-dim">

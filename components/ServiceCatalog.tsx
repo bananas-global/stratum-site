@@ -212,7 +212,7 @@ export default function ServiceCatalog() {
                 aria-expanded={open}
               >
                 <span className="flex flex-col gap-1">
-                  <span className="font-display text-xl text-ink-bright">{it.title}</span>
+                  <span className="font-display text-[0.9375rem] leading-[1.3125rem] text-ink-bright">{it.title}</span>
                   <span className="text-xs uppercase tracking-wider text-brand-light">{it.category}</span>
                 </span>
                 <span className={`text-ink-faint transition-transform duration-300 ${open ? "rotate-45" : ""}`}>

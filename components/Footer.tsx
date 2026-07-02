@@ -70,7 +70,7 @@ export default function Footer() {
       <div className="container py-12 md:py-16 lg:py-20">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] lg:items-start lg:gap-16 xl:gap-24">
           <div className="max-w-md">
-            <h2 className="font-display text-[clamp(1.5rem,2.5vw,2.25rem)] leading-[1.15] tracking-[-0.02em] text-ink-bright">
+            <h2 className="font-display text-[clamp(1.125rem,1.875vw,1.6875rem)] leading-[1.15] tracking-[-0.02em] text-ink-bright">
               Let&apos;s talk about a more structured environment.
             </h2>
           </div>

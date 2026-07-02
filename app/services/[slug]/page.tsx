@@ -39,7 +39,7 @@ function TrustLogos({ items }: { items: string[] }) {
   return (
     <div className="flex flex-wrap items-center gap-x-10 gap-y-4">
       {items.map((l) => (
-        <span key={l} className="font-display text-2xl text-ink-faint">
+        <span key={l} className="font-display text-[1.125rem] leading-[1.5rem] text-ink-faint">
           {l}
         </span>
       ))}
@@ -121,8 +121,8 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
             <div data-reveal className="flex flex-col">
               {svc.handles.items.map((it) => (
                 <div key={it.n} className="grid gap-4 border-t border-line py-7 md:grid-cols-[auto_1fr_2fr] md:items-baseline md:gap-10">
-                  <span className="font-display text-3xl text-brand-light">{it.n}</span>
-                  <h3 className="font-display text-2xl text-ink-bright">{it.title}</h3>
+                  <span className="font-display text-[1.40625rem] leading-[1.6875rem] text-brand-light">{it.n}</span>
+                  <h3 className="font-display text-[1.125rem] leading-[1.5rem] text-ink-bright">{it.title}</h3>
                   <p className="text-ink-dim">{it.body}</p>
                 </div>
               ))}

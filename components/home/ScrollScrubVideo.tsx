@@ -4,8 +4,8 @@ import { useEffect, useRef } from "react";
 
 /**
  * Video whose playback position is scrubbed by scroll, like the hero.
- * Progress is measured against the nearest `.approach-stack-item` (the
- * non-sticky scroll track) so the pinned card doesn't stall the scrub.
+ * Progress is measured against the nearest `.approach-card` as it
+ * travels through the viewport.
  */
 export default function ScrollScrubVideo({
   src,
@@ -36,7 +36,7 @@ export default function ScrollScrubVideo({
     video.autoplay = false;
     video.pause();
 
-    const track = (video.closest(".approach-stack-item") as HTMLElement) ?? video;
+    const track = (video.closest(".approach-card") as HTMLElement) ?? video;
     let current = 0;
     let primed = false;
     let raf = 0;

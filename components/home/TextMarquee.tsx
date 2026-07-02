@@ -14,7 +14,7 @@ export default function TextMarquee() {
         {[...HALF, ...HALF].map((item, i) => (
           <span
             key={`${item}-${i}`}
-            className="shrink-0 pr-20 font-display text-[clamp(1.375rem,3.4vw,2.5rem)] leading-none tracking-[-0.03em] text-white/30"
+            className="shrink-0 pr-20 font-display text-[clamp(1.03125rem,2.55vw,1.875rem)] leading-none tracking-[-0.03em] text-white/30"
           >
             {item}
           </span>

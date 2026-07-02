@@ -185,7 +185,7 @@ export default function IndustriesIndex() {
                 <div key={slug} data-reveal className="card flex flex-col gap-5">
                   {visual && <CardMedia visual={visual} />}
                   <div className="flex flex-col gap-4">
-                    <h2 className="font-display text-3xl text-ink-bright">{NAMES[slug]}</h2>
+                    <h2 className="font-display text-[1.40625rem] leading-[1.6875rem] text-ink-bright">{NAMES[slug]}</h2>
                     <p className="text-sm leading-relaxed text-ink-dim">{c.blurb}</p>
                     <ServiceFilterChips items={c.tags} />
                   </div>

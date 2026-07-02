@@ -29,7 +29,7 @@
   --color-line-strong: rgba(255, 255, 255, 0.16);
 
   /* Typography */
-  --font-display: "Parastoo", var(--font-instrument), Georgia, "Times New Roman", serif;
+  --font-display: var(--font-lora), var(--font-instrument), Georgia, "Times New Roman", serif;
   --font-body: var(--font-manrope), ui-sans-serif, system-ui, -apple-system, sans-serif;
 
   /* Radii */
@@ -45,9 +45,6 @@
 
   /* Easing */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-
-  /* Heading sheen — white → light grey (used by h1–h6, display scale, .heading-gradient) */
-  --heading-gradient: linear-gradient(168deg, #ffffff 0%, #d2d2da 42%, #9a9aa8 100%);
 }
 
 @layer base {
@@ -113,21 +110,21 @@ h1, h2, h3, h4, h5, h6 {
 
 .display-1 {
   font-family: var(--font-display);
-  font-size: clamp(2.75rem, 7vw, 5rem);
+  font-size: clamp(2.0625rem, 5.25vw, 3.75rem);
   line-height: 0.98;
   letter-spacing: -0.04em;
 }
 
 .display-2 {
   font-family: var(--font-display);
-  font-size: clamp(2.25rem, 5vw, 4rem);
+  font-size: clamp(1.6875rem, 3.75vw, 3rem);
   line-height: 1;
   letter-spacing: -0.04em;
 }
 
 .display-3 {
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 3.5vw, 3rem);
+  font-size: clamp(1.3125rem, 2.625vw, 2.25rem);
   line-height: 1.05;
   letter-spacing: -0.03em;
 }
@@ -371,28 +368,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 /* end @layer components */
 
-/* ── Heading gradient (outside @layer — must beat Tailwind text-ink-bright) */
+/* ── Heading color (outside @layer — must beat Tailwind text-ink-bright).
+   Previously a background-clip:text gradient sheen, but that clips any
+   glyph ink (e.g. descenders) that falls outside the box formed by the
+   display type scale's tight line-height — a solid color has no such
+   paint-area boundary, so nothing gets cropped. */
 .heading-gradient,
 .display-1,
 .display-2,
 .display-3,
 :where(h1, h2, h3, h4, h5, h6):not(.heading-plain) {
-  background-image: var(--heading-gradient);
-  background-size: 100% 100%;
-  background-position: 0 0;
-  background-repeat: no-repeat;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-}
-
-.heading-plain {
-  background-image: none;
-  -webkit-background-clip: border-box;
-  background-clip: border-box;
-  -webkit-text-fill-color: currentColor;
-  color: inherit;
+  color: var(--color-ink-bright);
 }
 
 /* ── Light section band (homepage contrast break) ───────────── */
@@ -408,7 +394,6 @@ h1, h2, h3, h4, h5, h6 {
   --color-line: rgba(20, 20, 28, 0.1);
   --color-line-soft: rgba(20, 20, 28, 0.06);
   --color-line-strong: rgba(20, 20, 28, 0.14);
-  --heading-gradient: linear-gradient(168deg, #14141a 0%, #3a3a44 45%, #6e6e78 100%);
   background-color: var(--color-bg);
   color: var(--color-ink);
 }
@@ -457,41 +442,7 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: none;
 }
 
-/* ── Approach — sticky stacking cards ─────────────────────── */
-.approach-stack {
-  position: relative;
-}
-
-.approach-stack-item {
-  /* scroll runway: each step gets ~half a viewport of stick time
-     so the section reads tighter and all four steps come quickly */
-  min-height: 48vh;
-}
-
-.approach-stack-item.is-last {
-  min-height: 0;
-  padding-bottom: 0.5rem;
-}
-
-.approach-stack-card {
-  position: sticky;
-  box-shadow:
-    0 1px 3px rgba(18, 18, 28, 0.05),
-    0 12px 40px rgba(18, 18, 28, 0.07);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .approach-stack-item {
-    min-height: 0;
-  }
-
-  .approach-stack-card {
-    position: relative;
-    top: auto !important;
-    margin-bottom: 1rem;
-  }
-}
-
+/* ── Approach — cards ─────────────────────────────────────── */
 .approach-image-slot-img {
   mix-blend-mode: multiply;
 }
@@ -539,17 +490,10 @@ h1, h2, h3, h4, h5, h6 {
   min-height: 16rem;
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-line-soft);
-  --heading-gradient: linear-gradient(168deg, #ffffff 0%, #e8e8ee 42%, #c8c8d2 100%);
 }
 
 .testimonials-cycle-stat .testimonials-stat-value {
-  background-image: var(--heading-gradient);
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: #ffffff;
 }
 
 @media (min-width: 1024px) {
@@ -736,24 +680,6 @@ html.reveal-ready [data-reveal] {
   will-change: opacity, transform;
 }
 /* JS reveals each element by setting inline opacity/transform (see SmoothScroll). */
-
-/* gem floating idle motion */
-@keyframes gemFloat {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-12px) rotate(1.5deg); }
-}
-
-@keyframes refinementGemFloat {
-  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
-  25% { transform: translate3d(2px, -7px, 0) rotate(-1deg); }
-  50% { transform: translate3d(-1px, -4px, 0) rotate(0.6deg); }
-  75% { transform: translate3d(-2px, -9px, 0) rotate(-0.5deg); }
-}
-
-.refinement-gem-float {
-  animation: refinementGemFloat 5.5s ease-in-out infinite;
-  will-change: transform;
-}
 
 /* marquee for trust bar */
 @keyframes marquee {

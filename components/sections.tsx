@@ -254,7 +254,7 @@ export function FeatureGrid({
           ) : (
             <span className="mt-1 h-2 w-2 rounded-full bg-brand" />
           )}
-          <h3 className="font-display text-2xl text-ink-bright">{it.title}</h3>
+          <h3 className="font-display text-[1.125rem] leading-[1.5rem] text-ink-bright">{it.title}</h3>
           <p className="text-sm leading-relaxed text-ink-dim">{it.body}</p>
         </div>
       ))}
@@ -273,10 +273,10 @@ export function FeatureList({ items }: { items: { title: string; body: ReactNode
           data-reveal-delay={i * 0.05 || undefined}
           className="grid gap-2 py-7 md:grid-cols-[3.5rem_minmax(0,0.85fr)_minmax(0,1.15fr)] md:items-baseline md:gap-10"
         >
-          <span className="font-display text-xl text-brand-light">
+          <span className="font-display text-[0.9375rem] leading-[1.3125rem] text-brand-light">
             {String(i + 1).padStart(2, "0")}
           </span>
-          <h3 className="font-display text-2xl text-ink-bright md:text-3xl">{it.title}</h3>
+          <h3 className="font-display text-[1.125rem] leading-[1.5rem] text-ink-bright md:text-[1.40625rem] md:leading-[1.6875rem]">{it.title}</h3>
           <p className="max-w-xl text-sm leading-relaxed text-ink-dim">{it.body}</p>
         </div>
       ))}
@@ -290,8 +290,8 @@ export function HowSteps({ steps }: { steps: { n: string; title: string; body: s
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {steps.map((s) => (
         <div key={s.n} className="panel-card flex flex-col gap-4 rounded-md border p-6">
-          <span className="font-display text-3xl text-brand-light">{s.n}</span>
-          <h3 className="font-display text-2xl text-ink-bright">{s.title}</h3>
+          <span className="font-display text-[1.40625rem] leading-[1.6875rem] text-brand-light">{s.n}</span>
+          <h3 className="font-display text-[1.125rem] leading-[1.5rem] text-ink-bright">{s.title}</h3>
           <p className="text-sm leading-relaxed text-ink-dim">{s.body}</p>
         </div>
       ))}
@@ -305,7 +305,7 @@ export function OutcomeStrip({ items }: { items: { value: string; label: string;
     <div className="grid gap-px overflow-hidden rounded-md border border-line-soft bg-line-soft sm:grid-cols-3">
       {items.map((it) => (
         <div key={it.label} className="flex flex-col gap-1 bg-surface p-8">
-          <span className="font-display text-5xl text-ink-bright">{it.value}</span>
+          <span className="font-display text-[2.25rem] leading-none text-ink-bright">{it.value}</span>
           <span className="mt-2 font-medium text-ink">{it.label}</span>
           {it.sub && <span className="text-sm text-ink-faint">{it.sub}</span>}
         </div>

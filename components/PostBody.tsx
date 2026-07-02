@@ -19,10 +19,10 @@ export default function PostBody({
         remarkPlugins={[remarkGfm]}
         components={{
           h2: ({ children }) => (
-            <h2 className="mt-6 font-display text-3xl text-ink-bright">{children}</h2>
+            <h2 className="mt-6 font-display text-[1.40625rem] leading-[1.6875rem] text-ink-bright">{children}</h2>
           ),
           h3: ({ children }) => (
-            <h3 className="mt-4 font-display text-2xl text-ink-bright">{children}</h3>
+            <h3 className="mt-4 font-display text-[1.125rem] leading-[1.5rem] text-ink-bright">{children}</h3>
           ),
           p: ({ children }) => <p>{children}</p>,
           ul: ({ children }) => (

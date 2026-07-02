@@ -311,8 +311,8 @@ export default function PrivacyPage() {
             {SECTIONS.map((s, i) => (
               <article key={s.id} id={s.id} className="scroll-mt-28" data-reveal>
                 <div className="mb-4 flex items-baseline gap-4">
-                  <span className="font-display text-xl text-brand-light">{String(i + 1).padStart(2, "0")}</span>
-                  <h2 className="font-display text-2xl text-ink-bright md:text-3xl">{s.title}</h2>
+                  <span className="font-display text-[0.9375rem] leading-[1.3125rem] text-brand-light">{String(i + 1).padStart(2, "0")}</span>
+                  <h2 className="font-display text-[1.125rem] leading-[1.5rem] text-ink-bright md:text-[1.40625rem] md:leading-[1.6875rem]">{s.title}</h2>
                 </div>
                 <div className="flex flex-col gap-4 text-base font-light leading-relaxed text-ink-dim">{s.body}</div>
               </article>

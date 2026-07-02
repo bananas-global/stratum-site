@@ -44,15 +44,17 @@ export default function AboutPage() {
     mainEntity: { "@id": "https://stratumtech.ca/#organization" },
   };
 
-  const people = TEAM.map((person) => ({
-    "@type": "Person",
-    "@id": `https://stratumtech.ca/about#${person.name.toLowerCase().replace(/\s+/g, "-")}`,
-    name: person.name,
-    jobTitle: person.role,
-    image: `https://stratumtech.ca${person.photo}`,
-    sameAs: [person.linkedin],
-    worksFor: { "@id": "https://stratumtech.ca/#organization" },
-  }));
+  // Person JSON-LD — suppressed while the team section is hidden (waiting on the rest of the team)
+  const people: object[] = [];
+  // const people = TEAM.map((person) => ({
+  //   "@type": "Person",
+  //   "@id": `https://stratumtech.ca/about#${person.name.toLowerCase().replace(/\s+/g, "-")}`,
+  //   name: person.name,
+  //   jobTitle: person.role,
+  //   image: `https://stratumtech.ca${person.photo}`,
+  //   sameAs: [person.linkedin],
+  //   worksFor: { "@id": "https://stratumtech.ca/#organization" },
+  // }));
 
   return (
     <>
@@ -105,8 +107,8 @@ export default function AboutPage() {
 
       <StratumPillars />
 
-      {/* Leadership */}
-      <section className="section bg-bg">
+      {/* Leadership — hidden until we have the rest of the team's info */}
+      {/* <section className="section bg-bg">
         <div className="container flex flex-col gap-12">
           <SectionHeader
             eyebrow="The team"
@@ -126,7 +128,7 @@ export default function AboutPage() {
                   />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <div className="heading-gradient font-display text-xl">{person.name}</div>
+                  <div className="heading-gradient font-display text-[0.9375rem] leading-[1.3125rem]">{person.name}</div>
                   <div className="text-sm text-ink-faint">{person.role}</div>
                   <ArrowLink href={person.linkedin} className="mt-1 text-sm">
                     LinkedIn
@@ -136,7 +138,7 @@ export default function AboutPage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       <CTABand
         title="Want to know more before you reach out?"

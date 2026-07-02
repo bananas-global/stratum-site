@@ -125,7 +125,7 @@ function IdentityStatCard({
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/55 to-black/25" />
 
       <div className="relative flex h-full flex-col justify-between gap-10 p-8 md:p-10">
-        <div className="testimonials-stat-value font-display text-[clamp(2.5rem,4vw,3.5rem)] leading-none tracking-[-0.03em]">
+        <div className="testimonials-stat-value font-display text-[clamp(1.875rem,3vw,2.625rem)] leading-none tracking-[-0.03em]">
           {item.value}
         </div>
 
@@ -136,7 +136,7 @@ function IdentityStatCard({
             </div>
           )}
           {item.kind === "stat" && item.label && (
-            <div className="font-display text-2xl leading-tight text-white">{item.label}</div>
+            <div className="font-display text-[1.125rem] leading-tight text-white">{item.label}</div>
           )}
           {item.sub && (
             <p className="max-w-xs text-sm leading-relaxed text-white/75">{item.sub}</p>
