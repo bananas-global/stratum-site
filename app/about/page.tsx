@@ -20,13 +20,13 @@ const TEAM = [
   {
     name: "Austin Wollf",
     role: "Chief Executive Officer",
-    photo: "/images/people/austin.png",
+    photo: "/images/people/austin.webp",
     linkedin: "https://www.linkedin.com/in/austinwollf/",
   },
   {
     name: "Nathan Chernoff",
     role: "Chief Marketing Officer",
-    photo: "/images/people/nathan.png",
+    photo: "/images/people/nathan.webp",
     linkedin: "https://www.linkedin.com/in/nathanchernoff/",
   },
 ] as const;
@@ -71,7 +71,7 @@ export default function AboutPage() {
         title="An operational technology partner for growing businesses."
         lede="Stratum is a structured, security-aware technology partner for organizations that need reliable systems, clear accountability, and long-term stewardship — without the overhead of an enterprise IT department."
         backgroundVisual={{
-          src: "/images/stratum-bg-pattern.png",
+          src: "/images/stratum-bg-pattern.webp",
           alt: "",
         }}
       >
@@ -94,7 +94,7 @@ export default function AboutPage() {
           </div>
         </div>
         <Image
-          src="/images/missing-middle.png"
+          src="/images/missing-middle.webp"
           alt=""
           width={2752}
           height={1094}

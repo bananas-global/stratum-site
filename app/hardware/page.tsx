@@ -21,7 +21,7 @@ const SUPPLY = [
   { label: "Networking", sub: "Firewalls, switches, and Wi-Fi built for a secure, segmented network.", image: "/images/hardware/hw-networking.png" },
   { label: "Backup & storage", sub: "Appliances and storage aligned to your recovery plan, not bought in isolation.", image: "/images/hardware/hw-backup.png" },
   { label: "Peripherals & accessories", sub: "Monitors, docks, and the rest — kept to one consistent, supportable standard.", image: "/images/hardware/hw-peripherals.png" },
-  { label: "Mobile & field devices", sub: "Tablets and rugged hardware configured for work beyond the office.", image: "/images/hardware/hw-mobile.png" },
+  { label: "Mobile & field devices", sub: "Tablets and rugged hardware configured for work beyond the office.", image: "/images/hardware/hw-mobile.webp" },
 ];
 
 // 5S hardware standard — mapped from the brand lens. Label + supporting line.
@@ -56,7 +56,7 @@ export default function HardwarePage() {
         title="Custom-built hardware, delivered turnkey."
         lede="Most providers leave you to source your own equipment, then support whatever shows up. Stratum specs, supplies, and configures the hardware your business runs on — secured and ready to work the day it arrives. One partner from purchase to deployment to lifecycle."
         backgroundVisual={{
-          src: "/images/bg-hero-hardware.png",
+          src: "/images/bg-hero-hardware.webp",
           alt: "",
         }}
       >

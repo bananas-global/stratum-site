@@ -22,11 +22,11 @@ export const metadata: Metadata = {
 };
 
 const PILLARS = [
-  { name: "Structure", body: "We organize technology, process, support, and accountability so clients are not operating in chaos.", gem: "/images/gem-structure.png" },
-  { name: "Security", body: "We protect clients from cyber risk, operational disruption, data loss, and avoidable exposure.", gem: "/images/gem-security.png" },
-  { name: "Stability", body: "We build and maintain dependable systems that reduce downtime, surprises, and reactive firefighting.", gem: "/images/gem-stability.png" },
-  { name: "Simplicity", body: "We make technology easier to understand, easier to use, and easier to make decisions around.", gem: "/images/gem-simplicity.png" },
-  { name: "Stewardship", body: "We act as a long-term technology partner responsible for protecting the client's best interests.", gem: "/images/gem-stewardship.png" },
+  { name: "Structure", body: "We organize technology, process, support, and accountability so clients are not operating in chaos.", gem: "/images/gem-structure.webp" },
+  { name: "Security", body: "We protect clients from cyber risk, operational disruption, data loss, and avoidable exposure.", gem: "/images/gem-security.webp" },
+  { name: "Stability", body: "We build and maintain dependable systems that reduce downtime, surprises, and reactive firefighting.", gem: "/images/gem-stability.webp" },
+  { name: "Simplicity", body: "We make technology easier to understand, easier to use, and easier to make decisions around.", gem: "/images/gem-simplicity.webp" },
+  { name: "Stewardship", body: "We act as a long-term technology partner responsible for protecting the client's best interests.", gem: "/images/gem-stewardship.webp" },
 ];
 
 const TABLE = {
