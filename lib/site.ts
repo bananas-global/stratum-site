@@ -58,9 +58,9 @@ export const orgGraph = {
   url: "https://stratumtech.ca/",
   logo: {
     "@type": "ImageObject",
-    url: "https://stratumtech.ca/favicon.svg",
-    width: 544,
-    height: 72,
+    url: "https://stratumtech.ca/images/logo-512.png",
+    width: 512,
+    height: 512,
   },
   description:
     "Technology company for growing organizations — structured service across support, continuity, and business systems.",
