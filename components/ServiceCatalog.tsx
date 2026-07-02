@@ -86,16 +86,10 @@ const ITEMS: Item[] = [
   },
 ];
 
-export default function ServiceCatalog({ initialQuery = "" }: { initialQuery?: string }) {
+export default function ServiceCatalog() {
   const [filter, setFilter] = useState<string | null>(null);
-  const [query, setQuery] = useState(initialQuery);
+  const [query, setQuery] = useState("");
   const [openIdx, setOpenIdx] = useState<number | null>(0);
-
-  useEffect(() => {
-    setQuery(initialQuery);
-    setFilter(null);
-    setOpenIdx(0);
-  }, [initialQuery]);
 
   useEffect(() => {
     const applyFilter = (query: string) => {

@@ -103,15 +103,9 @@ const INDUSTRY_STRIP = [
   { label: "Manufacturing", sub: "Multi-site, lifecycle, OT-aware" },
 ];
 
-type ServicesIndexProps = {
-  searchParams?: Promise<{ serviceFilter?: string | string[] }>;
-};
-
-export default async function ServicesIndex({ searchParams }: ServicesIndexProps) {
-  const params = await searchParams;
-  const serviceFilterParam = params?.serviceFilter;
-  const serviceFilter = Array.isArray(serviceFilterParam) ? serviceFilterParam[0] : serviceFilterParam;
-
+export default function ServicesIndex() {
+  // The ?serviceFilter deep-link is applied client-side by ServiceCatalog
+  // (it reads window.location on mount), keeping this route fully static.
   const ld = {
     "@type": "CollectionPage",
     "@id": "https://stratumtech.ca/services#webpage",
@@ -178,7 +172,7 @@ export default async function ServicesIndex({ searchParams }: ServicesIndexProps
             title="Every capability Stratum covers, in one place."
             lede="Filter by category or search below. Each item explains what it delivers for your business — outcomes and accountability, not a list of tools."
           />
-          <ServiceCatalog initialQuery={serviceFilter} />
+          <ServiceCatalog />
         </div>
       </section>
 
