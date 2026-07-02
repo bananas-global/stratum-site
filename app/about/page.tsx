@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { PageHero, SectionHeader } from "@/components/sections";
-import { ArrowLink, Button } from "@/components/ui";
+import { Button } from "@/components/ui";
 import CTABand from "@/components/CTABand";
 import StratumPillars from "@/components/StratumPillars";
 import { jsonLd } from "@/lib/site";
@@ -15,21 +15,6 @@ export const metadata: Metadata = pageMeta({
   ogTitle: "About Stratum — Operational Technology Partner",
   ogDescription: "Our story, values, and operating style as a structured managed IT partner for growing organizations.",
 });
-
-const TEAM = [
-  {
-    name: "Austin Wollf",
-    role: "Chief Executive Officer",
-    photo: "/images/people/austin.webp",
-    linkedin: "https://www.linkedin.com/in/austinwollf/",
-  },
-  {
-    name: "Nathan Chernoff",
-    role: "Chief Marketing Officer",
-    photo: "/images/people/nathan.webp",
-    linkedin: "https://www.linkedin.com/in/nathanchernoff/",
-  },
-] as const;
 
 export default function AboutPage() {
   const ld = {
