@@ -1,9 +1,24 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import { Button } from "../ui";
 import ServicesShowcase from "./ServicesShowcase";
 import SideRays from "./SideRays";
+
+const RAYS = {
+  origin: "top-right" as const,
+  rayColor1: "#ffffff",
+  rayColor2: "#c0b3df",
+  speed: 2.5,
+  intensity: 2,
+  spread: 2,
+  tilt: 0,
+  saturation: 1.5,
+  blend: 0.75,
+  falloff: 1.6,
+  opacity: 1,
+};
 
 export default function CinematicHero() {
   const containerRef = useRef<HTMLElement>(null);
@@ -19,16 +34,10 @@ export default function CinematicHero() {
     if (!container || !video || !stage) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    // Reduced motion: no scroll-scrub. Just autoplay the video on a loop and
-    // skip the parallax/transform. Retry on `canplay` so a not-yet-buffered
-    // video still starts (load race).
-    if (reduce) {
-      video.loop = true;
-      const tryPlay = () => video.play().catch(() => {});
-      tryPlay();
-      video.addEventListener("canplay", tryPlay);
-      return () => video.removeEventListener("canplay", tryPlay);
-    }
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    // Mobile has no video — a static image hero instead (see render below), so
+    // there's nothing to scrub. Reduced motion skips the scroll-driven scrub too.
+    if (reduce || isMobile) return;
 
     video.loop = false;
     video.autoplay = false;
@@ -82,11 +91,23 @@ export default function CinematicHero() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative overflow-hidden">
-      {/* bottom fade — sits at the section's absolute bottom */}
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-[5] h-[100vh] bg-gradient-to-t from-black to-transparent" />
-      {/* Video stage — full hero height, scrubs + parallaxes via JS on every viewport */}
-      <div ref={stageRef} className="absolute left-0 right-0 top-0 h-[100svh] overflow-hidden will-change-transform">
+    <section ref={containerRef} className="relative md:h-[200vh] md:overflow-hidden">
+      {/* bottom fade — desktop only; sits at the 200vh section's absolute bottom */}
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-[5] hidden h-[100vh] bg-gradient-to-t from-black to-transparent md:block" />
+
+      {/* Mobile hero — static image, no scroll JS. Replaces a scroll-scrubbed
+          video that was unusably heavy on phones; light rays still layer on top. */}
+      <div className="absolute inset-0 h-[100svh] overflow-hidden md:hidden">
+        <Image src="/images/hero-mobile.png" alt="" fill priority sizes="100vw" className="object-cover" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/80 via-black/45 to-black/85" />
+        <div className="pointer-events-none absolute inset-0 z-[2]">
+          <SideRays {...RAYS} />
+        </div>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-2/5 bg-gradient-to-t from-black via-black/60 to-transparent" />
+      </div>
+
+      {/* Desktop video stage — scrubs + parallaxes via JS */}
+      <div ref={stageRef} className="absolute left-0 right-0 top-0 hidden h-screen overflow-hidden will-change-transform md:block">
         <video
           ref={videoRef}
           className="h-full w-full object-cover"
@@ -99,39 +120,20 @@ export default function CinematicHero() {
         </video>
         {/* darkening overlay driven by scroll */}
         <div ref={overlayRef} className="pointer-events-none absolute inset-0 bg-black" style={{ opacity: 0 }} />
-        {/* vignette for text legibility — vertical scrim on mobile (text is
-            centered full-width over the render), left-anchored on desktop */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/80 via-black/45 to-black/85 md:bg-gradient-to-r md:from-black/70 md:via-black/20 md:to-transparent" />
+        {/* vignette for text legibility — left-anchored on desktop */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/70 via-black/20 to-transparent" />
         {/* Light rays — lives inside the parallax stage so it drifts with the video
             (no seam). Screen-blends over the video; never darkens it. */}
         <div className="pointer-events-none absolute inset-0 z-[2]">
-          <SideRays
-            origin="top-right"
-            rayColor1="#ffffff"
-            rayColor2="#c0b3df"
-            speed={2.5}
-            intensity={2}
-            spread={2}
-            tilt={0}
-            saturation={1.5}
-            blend={0.75}
-            falloff={1.6}
-            opacity={1}
-          />
+          <SideRays {...RAYS} />
         </div>
       </div>
 
-      {/* Overlaid content — hero fills the first viewport, services follows in
-          normal flow. Not a fixed 200vh: that assumes hero + services sum to
-          ~2 viewports, which only holds on desktop (services fits in ~100vh
-          there). On mobile the stacked-card services layout is taller, so a
-          hardcoded 200vh flex parent would force-shrink the hero to make
-          room. The scrub/parallax math above only cares about scroll
-          position relative to the section's top, not a fixed total height,
-          so auto height is safe on every breakpoint. */}
-      <div className="relative z-10 flex flex-col">
-        {/* Hero text — first viewport, vertically centered */}
-        <div className="flex h-[100svh] items-center">
+      {/* Overlaid content. Mobile: auto height — a 100svh hero, then the services
+          showcase in normal flow. Desktop: 200vh with the showcase pinned bottom. */}
+      <div className="relative z-10 flex flex-col md:h-[200vh]">
+        {/* Hero text — first viewport, vertically centered on every breakpoint */}
+        <div className="flex h-[100svh] items-center md:h-screen">
           <div className="container">
             <div className="flex max-w-xl flex-col gap-5">
               <h1 data-reveal data-reveal-delay="0.05" className="font-display text-[clamp(1.875rem,3.75vw,3.1875rem)] leading-[0.97] tracking-[-0.04em]">
@@ -148,7 +150,10 @@ export default function CinematicHero() {
           </div>
         </div>
 
-        <ServicesShowcase />
+        {/* Services — normal flow on mobile, pinned to the bottom of the 200vh on desktop */}
+        <div className="md:mt-auto">
+          <ServicesShowcase />
+        </div>
       </div>
     </section>
   );
