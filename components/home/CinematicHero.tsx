@@ -98,8 +98,7 @@ export default function CinematicHero() {
       {/* Mobile hero — static image, no scroll JS. Replaces a scroll-scrubbed
           video that was unusably heavy on phones; light rays still layer on top. */}
       <div className="absolute inset-0 h-[100svh] overflow-hidden md:hidden">
-        <Image src="/images/hero-mobile.png" alt="" fill priority sizes="100vw" className="object-cover" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/80 via-black/45 to-black/85" />
+        <Image src="/images/hero-mobile.webp" alt="" fill priority sizes="100vw" className="object-cover" />
         <div className="pointer-events-none absolute inset-0 z-[2]">
           <SideRays {...RAYS} />
         </div>
@@ -133,10 +132,10 @@ export default function CinematicHero() {
           showcase in normal flow. Desktop: 200vh with the showcase pinned bottom. */}
       <div className="relative z-10 flex flex-col md:h-[200vh]">
         {/* Hero text — first viewport, vertically centered on every breakpoint */}
-        <div className="flex h-[100svh] items-center md:h-screen">
+        <div className="flex h-[100svh] items-start pt-[26svh] md:h-screen md:items-center md:pt-0">
           <div className="container">
             <div className="flex max-w-xl flex-col gap-5">
-              <h1 data-reveal data-reveal-delay="0.05" className="font-display text-[clamp(1.875rem,3.75vw,3.1875rem)] leading-[0.97] tracking-[-0.04em]">
+              <h1 data-reveal data-reveal-delay="0.05" className="font-display text-[clamp(1.875rem,3.75vw,3.1875rem)] leading-[1.1] tracking-[-0.04em]">
                 Structure behind dependable technology
               </h1>
               <p data-reveal data-reveal-delay="0.12" className="max-w-sm text-lg font-light leading-relaxed text-ink-dim">

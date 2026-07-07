@@ -16,11 +16,11 @@ export const metadata: Metadata = pageMeta({
 });
 
 const SUPPLY = [
-  { label: "Workstations & laptops", sub: "Standardized, business-grade devices spec'd to the role — not whatever was on sale.", image: "/images/hardware/hw-workstations.png" },
-  { label: "Servers & infrastructure", sub: "On-prem and hybrid compute sized for how your operation actually runs.", image: "/images/hardware/hw-servers.png" },
-  { label: "Networking", sub: "Firewalls, switches, and Wi-Fi built for a secure, segmented network.", image: "/images/hardware/hw-networking.png" },
-  { label: "Backup & storage", sub: "Appliances and storage aligned to your recovery plan, not bought in isolation.", image: "/images/hardware/hw-backup.png" },
-  { label: "Peripherals & accessories", sub: "Monitors, docks, and the rest — kept to one consistent, supportable standard.", image: "/images/hardware/hw-peripherals.png" },
+  { label: "Workstations & laptops", sub: "Standardized, business-grade devices spec'd to the role — not whatever was on sale.", image: "/images/hardware/hw-workstations.webp" },
+  { label: "Servers & infrastructure", sub: "On-prem and hybrid compute sized for how your operation actually runs.", image: "/images/hardware/hw-servers.webp" },
+  { label: "Networking", sub: "Firewalls, switches, and Wi-Fi built for a secure, segmented network.", image: "/images/hardware/hw-networking.webp" },
+  { label: "Backup & storage", sub: "Appliances and storage aligned to your recovery plan, not bought in isolation.", image: "/images/hardware/hw-backup.webp" },
+  { label: "Peripherals & accessories", sub: "Monitors, docks, and the rest — kept to one consistent, supportable standard.", image: "/images/hardware/hw-peripherals.webp" },
   { label: "Mobile & field devices", sub: "Tablets and rugged hardware configured for work beyond the office.", image: "/images/hardware/hw-mobile.webp" },
 ];
 

@@ -1,33 +1,30 @@
 import Image from "next/image";
 
+// Real testimonials carried over from the previous Stratum Systems site.
 const TESTIMONIALS = [
   {
     quote:
-      "They reviewed our systems before recommending anything — and the support model actually fits how our dealership runs day to day.",
-    name: "Marcus Chen",
-    role: "Operations Manager · Automotive",
-    avatar: "/images/testimonials/marcus-chen.png",
+      "Stratum has been a great IT company for our small business. Their attention to detail, service and response time has been great. The staff are very knowledgeable and they take the time to look into our problems as they come up.",
+    name: "Van Arbour Design",
+    role: "Google review",
   },
   {
     quote:
-      "What changed was accountability. We stopped chasing vendors and started working with one team that owns the full environment.",
-    name: "Dr. Sarah Okonkwo",
-    role: "Practice Administrator · Medical",
-    avatar: "/images/testimonials/sarah-okonkwo.png",
+      "Love being able to rely on this team for all of our server and tech related needs or issues at Crown Door. We always receive punctual service with issues being resolved in a timely manner by a very professional team.",
+    name: "Crown Door",
+    role: "Google review",
   },
   {
     quote:
-      "Document security, backup readiness, and direct access to people who know our matter workflows — not a ticket queue.",
-    name: "James Whitfield",
-    role: "Managing Partner · Legal",
-    avatar: "/images/testimonials/james-whitfield.png",
+      "We've used Stratum for years and have always been pleased with their quick responses and professional service.",
+    name: "Nadine H.",
+    role: "Google review",
   },
   {
     quote:
-      "Connectivity, onboarding, and site support are handled with the same structure whether we are in the trailer or at head office.",
-    name: "Elena Rodriguez",
-    role: "Project Director · Construction",
-    avatar: "/images/testimonials/elena-rodriguez.png",
+      "Their staff are very knowledgeable and friendly and make sure whatever issues we have are taken care of promptly. I very much recommended them for any small to medium sized business.",
+    name: "Chris W.",
+    role: "Google review",
   },
 ] as const;
 
@@ -61,16 +58,23 @@ const GRID: GridCell[] = [
   { kind: "testimonial", index: 3 },
 ];
 
-function Avatar({ src }: { src: string }) {
+/** Initials in the same 40px circle the photo avatars used — these are real
+ *  clients, so no stock/generated faces. */
+function Avatar({ name }: { name: string }) {
+  const initials = name
+    .split(/\s+/)
+    .map((w) => w[0])
+    .filter(Boolean)
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
   return (
-    <Image
-      src={src}
-      alt=""
-      width={40}
-      height={40}
-      className="h-10 w-10 shrink-0 rounded-full object-cover object-top bg-[#e8e6ec]"
+    <span
       aria-hidden="true"
-    />
+      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-line bg-surface text-xs font-semibold tracking-wide text-brand-light"
+    >
+      {initials}
+    </span>
   );
 }
 
@@ -92,7 +96,7 @@ function TestimonialCard({
       </blockquote>
 
       <figcaption className="flex items-center gap-3">
-        <Avatar src={item.avatar} />
+        <Avatar name={item.name} />
         <div className="flex min-w-0 flex-col gap-0.5">
           <span className="text-sm font-semibold text-ink-bright">{item.name}</span>
           <span className="text-xs text-ink-faint">{item.role}</span>

@@ -13,9 +13,34 @@ import { NextResponse } from "next/server";
  *   CONTACT_FROM_EMAIL  — must be on a Resend-verified domain in production;
  *                         the default only delivers to the Resend account owner
  */
-const TO_EMAIL = process.env.CONTACT_TO_EMAIL || "bruce.santos@gmail.com";
+const TO_EMAIL = process.env.CONTACT_TO_EMAIL || "hello@stratumtech.ca";
 const FROM_EMAIL =
   process.env.CONTACT_FROM_EMAIL || "Stratum Website <onboarding@resend.dev>";
+
+// Per-IP throttle. In-memory, so it resets on cold start and is per-instance —
+// on Fluid Compute instances are reused across requests, which is enough to
+// blunt naive form spam alongside the honeypot. For hard guarantees move this
+// to a Vercel WAF rate-limit rule on /api/contact.
+const RATE_LIMIT = { windowMs: 10 * 60 * 1000, max: 5 };
+const hits = new Map<string, number[]>();
+
+function rateLimited(ip: string): boolean {
+  const now = Date.now();
+  const recent = (hits.get(ip) ?? []).filter(
+    (t) => now - t < RATE_LIMIT.windowMs,
+  );
+  if (recent.length >= RATE_LIMIT.max) return true;
+  recent.push(now);
+  hits.set(ip, recent);
+  // Bounded memory: drop the oldest entries once the map grows past ~1k IPs.
+  if (hits.size > 1000) {
+    for (const key of hits.keys()) {
+      if (hits.size <= 500) break;
+      hits.delete(key);
+    }
+  }
+  return false;
+}
 
 const MAX_LENGTHS: Record<string, number> = {
   firstName: 100,
@@ -45,6 +70,15 @@ const escapeHtml = (s: string) =>
   s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
 
 export async function POST(req: Request) {
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  if (rateLimited(ip)) {
+    return NextResponse.json(
+      { error: "Too many messages. Please try again in a few minutes." },
+      { status: 429 },
+    );
+  }
+
   let body: unknown;
   try {
     body = await req.json();

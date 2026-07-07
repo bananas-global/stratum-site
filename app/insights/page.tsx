@@ -23,7 +23,9 @@ function PostCard({ post, featured }: { post: PostMeta; featured?: boolean }) {
       className={`card group flex flex-col gap-4 hover:-translate-y-1 ${featured ? "md:col-span-2 md:flex-row md:gap-8" : ""}`}
     >
       {post.cover ? (
-        <div className={`relative overflow-hidden rounded-md border border-line-soft bg-black ${featured ? "aspect-[16/9] md:w-1/2" : "aspect-[16/9]"}`}>
+        // Decorative inside the card link — the post title right below is the
+        // accessible name, so the cover is explicitly hidden from AT.
+        <div aria-hidden="true" className={`relative overflow-hidden rounded-md border border-line-soft bg-black ${featured ? "aspect-[16/9] md:w-1/2" : "aspect-[16/9]"}`}>
           <Image
             src={post.cover.src}
             alt=""

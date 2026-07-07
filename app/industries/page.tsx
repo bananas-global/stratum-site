@@ -98,22 +98,22 @@ const NAMES: Record<string, string> = {
 
 const INDUSTRY_VISUALS: Record<string, { src: string; alt: string; label: string }> = {
   "automotive-dealerships": {
-    src: "/images/industries/automotive-dealerships.png",
+    src: "/images/industries/automotive-dealerships.webp",
     alt: "Dark automotive dealership showroom and service bay with managed network infrastructure.",
     label: "Dealership uptime",
   },
   "medical-dental": {
-    src: "/images/industries/medical-dental.png",
+    src: "/images/industries/medical-dental.webp",
     alt: "Dark modern dental clinic with secure workstation, imaging display, and network cabinet.",
     label: "Patient trust",
   },
   "law-firms": {
-    src: "/images/industries/law-firms.png",
+    src: "/images/industries/law-firms.webp",
     alt: "Refined law office workspace with secure document storage and server room beyond glass.",
     label: "Continuity",
   },
   "construction-aec": {
-    src: "/images/industries/construction-aec.png",
+    src: "/images/industries/construction-aec.webp",
     alt: "Construction and AEC operations desk with plans, rugged tablet, laptop, and site view.",
     label: "Office, site, field",
   },

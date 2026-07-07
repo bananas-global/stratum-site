@@ -9,23 +9,23 @@ export type ApproachStep = {
 
 const APPROACH_IMAGES: { src: string; alt: string; video?: string; reverse?: boolean }[] = [
   {
-    src: "/images/refinement/raw-environment.png",
+    src: "/images/refinement/raw-environment.webp",
     alt: "Raw amethyst-bearing stone representing the analysis stage.",
     video: "/videos/approach-analyze.mp4",
     reverse: true, // source spins counter-clockwise; reverse the scrub so it spins clockwise like the others
   },
   {
-    src: "/images/refinement/scoped-engagement.png",
+    src: "/images/refinement/scoped-engagement.webp",
     alt: "Split stone with exposed amethyst crystals representing a scoped engagement.",
     video: "/videos/approach-engage.mp4",
   },
   {
-    src: "/images/refinement/running-refined.png",
+    src: "/images/refinement/running-refined.webp",
     alt: "Faceted amethyst gem representing ongoing support.",
     video: "/videos/approach-support.mp4",
   },
   {
-    src: "/images/refinement/polished-partnership.png",
+    src: "/images/refinement/polished-partnership.webp",
     alt: "Polished oval amethyst gem representing long-term client success.",
     video: "/videos/approach-success.mp4",
   },

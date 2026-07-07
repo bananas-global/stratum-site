@@ -2,17 +2,10 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "Next dev",
-      "runtimeExecutable": "/bin/sh",
-      "runtimeArgs": ["-c", "PATH=/opt/homebrew/opt/node@22/bin:$PATH PORT=5242 pnpm dev"],
-      "port": 5242,
-      "autoPort": false
-    },
-    {
-      "name": "Static HTML preview (python http.server)",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["legacy/serve.py", "8000"],
-      "port": 8000
+      "name": "stratum-dev",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["dev"],
+      "port": 5242
     }
   ]
 }

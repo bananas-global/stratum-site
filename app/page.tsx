@@ -6,7 +6,7 @@ import TextMarquee from "@/components/home/TextMarquee";
 import CTABand from "@/components/CTABand";
 import CountUp from "@/components/CountUp";
 import ApproachTimeline from "@/components/home/ApproachTimeline";
-// import TestimonialsShowcase from "@/components/home/TestimonialsShowcase"; // hidden until real testimonial data is available
+import TestimonialsShowcase from "@/components/home/TestimonialsShowcase";
 import { SectionHeader } from "@/components/sections";
 import { Button, BracketLabel } from "@/components/ui";
 import { jsonLd, orgGraph, websiteGraph } from "@/lib/site";
@@ -129,7 +129,7 @@ export default function Home() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/10" />
               <div className="relative flex h-full flex-col justify-between gap-10 p-8 md:p-10">
-                <div className="heading-gradient max-w-[9ch] text-balance font-display text-[clamp(2.0625rem,3.75vw,3.375rem)] leading-[0.98] tracking-[-0.03em]">
+                <div className="heading-gradient max-w-[9ch] text-balance font-display text-[clamp(2.0625rem,3.75vw,3.375rem)] leading-[1.1] tracking-[-0.03em]">
                   Built for the missing middle
                 </div>
                 <div className="flex flex-col gap-3">
@@ -158,7 +158,7 @@ export default function Home() {
                 {[
                   { value: "19+", label: "Years in operation", sub: "Serving the Lower Mainland since 2007." },
                   { value: "140+", label: "Businesses supported", sub: "Across automotive, medical, legal, construction, and manufacturing." },
-                  { value: "99.9%", label: "Uptime delivered", sub: "Across managed and monitored environments." },
+                  { value: "10y", label: "Client tenure", sub: "Long-term partnerships built on dependable service." },
                 ].map((stat) => (
                   <div
                     key={stat.label}
@@ -211,8 +211,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials — Cycle Testimonial 03 grid — hidden until we have real testimonial data */}
-      {/* <section className="section section-light">
+      {/* Testimonials — Cycle Testimonial 03 grid — real reviews from the previous site */}
+      <section className="section section-light">
         <div className="container flex flex-col gap-12">
           <SectionHeader
             eyebrow="What clients say"
@@ -221,7 +221,7 @@ export default function Home() {
           />
           <TestimonialsShowcase />
         </div>
-      </section> */}
+      </section>
 
       <CTABand
         title="If your IT feels reactive, inconsistent, or difficult to trust — let's talk."

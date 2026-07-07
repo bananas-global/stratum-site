@@ -311,7 +311,7 @@ export default function IndustriesTabs() {
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-4">
                 <BracketLabel>Who we work with</BracketLabel>
-                <h2 className="font-display text-[clamp(1.3125rem,2.1vw,1.875rem)] leading-[1.05] tracking-[-0.03em]">
+                <h2 className="font-display text-[clamp(1.3125rem,2.1vw,1.875rem)] leading-[1.1] tracking-[-0.03em]">
                   Technology built around how your industry operates.
                 </h2>
                 <p className="text-sm leading-relaxed text-ink-dim">

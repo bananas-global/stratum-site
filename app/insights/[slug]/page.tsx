@@ -74,7 +74,7 @@ export default async function InsightPostPage({ params }: { params: Promise<{ sl
             <div data-reveal className="mb-10 overflow-hidden rounded-md border border-line-soft bg-black">
               <Image
                 src={post.cover.src}
-                alt=""
+                alt={`Cover image for “${post.title}”`}
                 width={post.cover.width ?? 1600}
                 height={post.cover.height ?? 900}
                 priority

@@ -82,7 +82,7 @@ export default function AboutPage() {
         </div>
         <Image
           src="/images/missing-middle.webp"
-          alt=""
+          alt="Abstract render of a machined channel between two solid blocks — the gap between break-fix IT and a full internal team where Stratum operates."
           width={2752}
           height={1094}
           data-reveal

@@ -5,6 +5,7 @@ import ServiceCatalog from "@/components/ServiceCatalog";
 import ServiceFilterChips from "@/components/ServiceFilterChips";
 import SizingFactorsGrid from "@/components/SizingFactorsGrid";
 import CTABand from "@/components/CTABand";
+import FAQ, { faqPageLd, type FAQItem } from "@/components/FAQ";
 import { jsonLd } from "@/lib/site";
 import { pageMeta, breadcrumb } from "@/lib/seo";
 
@@ -95,6 +96,41 @@ const SIZING_FACTORS = [
   { label: "Account management", value: 0.68 },
 ];
 
+const FAQS: FAQItem[] = [
+  {
+    q: "What does a managed IT services provider do?",
+    a: "A managed IT services provider (MSP) takes ongoing responsibility for a company's technology — support, maintenance, monitoring, security, and planning — instead of only fixing things when they break. Stratum operates as a designated IT department for growing organizations: one partner accountable for the whole environment, working to a structured service model rather than a ticket queue.",
+  },
+  {
+    q: "What areas does Stratum serve?",
+    a: "Stratum is headquartered in Abbotsford, BC and serves businesses across the Lower Mainland — including Chilliwack, Langley, and Surrey. Much of our support, monitoring, and systems work is delivered remotely, so we also support organizations elsewhere in British Columbia and across Canada.",
+  },
+  {
+    q: "What is included in Stratum's Managed IT service?",
+    a: "Managed IT covers day-to-day operation of your environment: help desk and user support, device management, network and infrastructure, proactive monitoring and maintenance, and vendor coordination. The goal is a stable, documented environment that gets easier to support over time — not a break-fix arrangement.",
+  },
+  {
+    q: "What cybersecurity services does Stratum provide?",
+    a: "Stratum provides layered protection across the environment: endpoint protection, identity and access management, email security, security awareness training, backup and recovery readiness, and compliance support. Security is built into how the environment is run — not sold as a separate stack of tools.",
+  },
+  {
+    q: "How is Stratum's pricing structured?",
+    a: "We don't price by user count. Engagements are sized around what actually drives the work — support demand, devices and endpoints, servers, backups, network complexity, licensing, and risk exposure. The result is a package shaped by your operation, reviewed with you before anything is signed.",
+  },
+  {
+    q: "Can Stratum replace an internal IT department?",
+    a: "Yes — Stratum is built for organizations that are too complex for break-fix IT but too small to justify a full internal IT team. We act as your designated IT department: support, security, infrastructure, and long-term planning under one accountable partner.",
+  },
+  {
+    q: "Which industries does Stratum specialize in?",
+    a: "We work extensively with automotive dealerships, medical and dental practices, law firms, construction and AEC companies, and manufacturers — industries where operational complexity is high and the cost of unreliable technology is real.",
+  },
+  {
+    q: "How do we get started with Stratum?",
+    a: "It starts with a conversation — no pressure and no obligation. We review your current systems, support history, and operating complexity, then propose an engagement sized to your environment. Onboarding is handled by our team with minimal disruption to your day-to-day work.",
+  },
+];
+
 const INDUSTRY_STRIP = [
   { label: "Automotive Dealerships", sub: "Multi-department, multi-vendor" },
   { label: "Medical & Dental", sub: "Uptime, data, compliance" },
@@ -132,6 +168,7 @@ export default function ServicesIndex() {
         dangerouslySetInnerHTML={jsonLd([
           breadcrumb([{ name: "Home", path: "/" }, { name: "Services", path: "/services" }]),
           ld,
+          faqPageLd(FAQS, "https://stratumtech.ca/services#faq"),
         ])}
       />
 
@@ -227,6 +264,17 @@ export default function ServicesIndex() {
             ))}
           </div>
           <ArrowLink href="/industries">See the full Industries overview</ArrowLink>
+        </div>
+      </section>
+
+      {/* FAQ — engineered for search + LLM extraction (FAQPage schema above) */}
+      <section className="section bg-bg">
+        <div className="container flex flex-col gap-12">
+          <SectionHeader
+            eyebrow="Common questions"
+            title="Straight answers about how Stratum works."
+          />
+          <FAQ items={FAQS} />
         </div>
       </section>
 

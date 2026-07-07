@@ -5,27 +5,27 @@ const PILLARS = [
   {
     name: "Structure",
     body: "We organize technology, process, support, and accountability so clients are not operating in chaos.",
-    gem: "/images/pillars/structure.png",
+    gem: "/images/pillars/structure.webp",
   },
   {
     name: "Security",
     body: "We protect clients from cyber risk, operational disruption, data loss, and avoidable exposure.",
-    gem: "/images/pillars/security.png",
+    gem: "/images/pillars/security.webp",
   },
   {
     name: "Stability",
     body: "We build and maintain dependable systems that reduce downtime, surprises, and reactive firefighting.",
-    gem: "/images/pillars/stability.png",
+    gem: "/images/pillars/stability.webp",
   },
   {
     name: "Simplicity",
     body: "We make technology easier to understand, easier to use, and easier to make decisions around.",
-    gem: "/images/pillars/simplicity.png",
+    gem: "/images/pillars/simplicity.webp",
   },
   {
     name: "Stewardship",
     body: "We act as a long-term technology partner responsible for protecting the client's best interests.",
-    gem: "/images/pillars/stewardship.png",
+    gem: "/images/pillars/stewardship.webp",
   },
 ];
 

@@ -40,7 +40,7 @@ export default function ServicesShowcase() {
           <div data-reveal className="flex flex-col justify-between gap-6 py-6 md:pr-4">
             <div className="flex flex-col gap-5">
               <BracketLabel>What we do</BracketLabel>
-              <h2 className="font-display text-[clamp(1.3125rem,2.25vw,1.875rem)] leading-[1.05] tracking-[-0.04em]">
+              <h2 className="font-display text-[clamp(1.3125rem,2.25vw,1.875rem)] leading-[1.1] tracking-[-0.04em]">
                 Structured technology services for complex businesses.
               </h2>
             </div>
@@ -103,25 +103,23 @@ export default function ServicesShowcase() {
               </div>
 
               {/* mobile cards — self-contained (the hover list above is desktop-only) */}
-              <div className="flex flex-col gap-3 md:hidden">
+              <div className="flex flex-col md:hidden">
                 {SERVICES.map((s) => (
                   <Link
                     key={s.name}
                     href={s.href}
-                    className="flex flex-col gap-3 rounded-sm bg-white p-5 text-black"
+                    className="group flex flex-col gap-3 border-b border-white/15 py-6 first:pt-0 last:border-b-0 last:pb-0"
                   >
                     <div className="flex items-baseline justify-between gap-3">
-                      <span className="font-display text-[1.125rem] leading-none">{s.name}</span>
-                      <span className="text-xs tabular-nums text-black/40">{s.n}</span>
+                      <span className="text-sm text-ink-dim">{s.n}</span>
+                      <span className="font-display text-[1.5rem] leading-none text-ink-bright">{s.name}</span>
                     </div>
-                    <p className="text-sm leading-relaxed text-black/70">{s.body}</p>
-                    <div className="mt-1 flex flex-wrap gap-1.5">
-                      {s.features.map((f) => (
-                        <span
-                          key={f}
-                          className="rounded-full bg-black/[0.06] px-2.5 py-1 text-[11px] font-medium text-black/55"
-                        >
-                          {f}
+                    <p className="text-sm leading-relaxed text-ink-dim">{s.body}</p>
+                    <div className="mt-1 flex flex-wrap gap-x-0 gap-y-2">
+                      {s.features.map((f, fi) => (
+                        <span key={f} className="flex items-center gap-0">
+                          <span className="chip">{f}</span>
+                          {fi < s.features.length - 1 && <span className="chip-dot mx-2" />}
                         </span>
                       ))}
                     </div>

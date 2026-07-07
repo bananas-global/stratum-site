@@ -28,6 +28,12 @@ export default function ContactForm() {
       });
       if (!res.ok) throw new Error(`status ${res.status}`);
       setStatus("sent");
+      // GA4 conversion event — no-op when analytics isn't loaded.
+      (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag?.(
+        "event",
+        "generate_lead",
+        { form: "contact" },
+      );
       form.reset();
     } catch {
       setStatus("error");

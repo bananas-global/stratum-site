@@ -5,6 +5,7 @@ import { SITE, orgGraph, websiteGraph, jsonLd } from "@/lib/site";
 import SmoothScroll from "@/components/SmoothScroll";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import Analytics from "@/components/Analytics";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -98,6 +99,7 @@ setTimeout(function () {
         <Nav />
         <main id="main">{children}</main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );

@@ -3,6 +3,7 @@ import { PageHero } from "@/components/sections";
 import { SectionHeader } from "@/components/ui";
 import CTABand from "@/components/CTABand";
 import ContactForm from "@/components/ContactForm";
+import FAQ, { faqPageLd, type FAQItem } from "@/components/FAQ";
 import { SITE, jsonLd, orgGraph, websiteGraph } from "@/lib/site";
 import { pageMeta, breadcrumb } from "@/lib/seo";
 
@@ -33,6 +34,29 @@ const PATHS = [
   },
 ];
 
+const FAQS: FAQItem[] = [
+  {
+    q: "How quickly will Stratum respond to my inquiry?",
+    a: "New inquiries get a response the same business day. If you're an existing client with a support issue, use support@stratumtech.ca — response times follow your service agreement.",
+  },
+  {
+    q: "Is the initial conversation free?",
+    a: "Yes. The first conversation is free and carries no obligation — a straightforward discussion about your current environment and what a more structured setup could look like. No pitch deck, no pressure.",
+  },
+  {
+    q: "Do you only work with businesses near Abbotsford?",
+    a: "No. Stratum is based in Abbotsford, BC and serves the Lower Mainland — Chilliwack, Langley, Surrey, and surrounding communities — but much of our work is delivered remotely, so we support organizations across British Columbia and the rest of Canada as well.",
+  },
+  {
+    q: "What should I include in my message?",
+    a: "The more context, the better the first conversation: your industry, team size, number of sites, how IT is supported today, any security or compliance concerns, and your timeline. A couple of sentences on what prompted you to reach out is plenty.",
+  },
+  {
+    q: "I'm already a Stratum client — where do I get support?",
+    a: "Email support@stratumtech.ca or call the service line. Support requests through the client channel are dispatched to our Client Support team and handled per your service agreement.",
+  },
+];
+
 const ASIDE = [
   { title: "Phone", body: "Prefer to talk? Call directly.", link: { label: SITE.phoneDisplay, href: SITE.phoneHref } },
   { title: "Email", body: "General inquiries:", link: { label: "hello@stratumtech.ca", href: "mailto:hello@stratumtech.ca" } },
@@ -60,6 +84,7 @@ export default function ContactPage() {
         dangerouslySetInnerHTML={jsonLd([
           breadcrumb([{ name: "Home", path: "/" }, { name: "Contact", path: "/contact" }]),
           contactPage,
+          faqPageLd(FAQS, "https://stratumtech.ca/contact#faq"),
           orgGraph,
           websiteGraph,
         ])}
@@ -110,6 +135,14 @@ export default function ContactPage() {
               </div>
             ))}
           </aside>
+        </div>
+      </section>
+
+      {/* FAQ — engineered for search + LLM extraction (FAQPage schema above) */}
+      <section className="section-sm bg-surface">
+        <div className="container flex flex-col gap-10">
+          <SectionHeader title="Before you reach out — quick answers." />
+          <FAQ items={FAQS} />
         </div>
       </section>
 
