@@ -64,7 +64,7 @@ export default function HardwarePage() {
       </PageHero>
 
       {/* Why hardware is part of the partnership — the turnkey thesis */}
-      <section className="section bg-surface">
+      <section className="section section-light">
         <div className="container grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
           <div data-reveal className="flex flex-col gap-6">
             <SectionHeader

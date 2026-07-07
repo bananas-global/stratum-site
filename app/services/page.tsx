@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { PageHero, FeatureGrid, SectionHeader, CardMedia } from "@/components/sections";
 import { Button, ArrowLink } from "@/components/ui";
 import ServiceCatalog from "@/components/ServiceCatalog";
@@ -202,7 +203,7 @@ export default function ServicesIndex() {
       </section>
 
       {/* Service catalog */}
-      <section className="section bg-surface">
+      <section className="section section-light">
         <div className="container flex flex-col gap-12">
           <SectionHeader
             eyebrow="Service catalog"
@@ -274,7 +275,23 @@ export default function ServicesIndex() {
             eyebrow="Common questions"
             title="Straight answers about how Stratum works."
           />
-          <FAQ items={FAQS} />
+          <div className="grid items-stretch gap-8 lg:grid-cols-3">
+            <div className="lg:col-span-2">
+              <FAQ items={FAQS} />
+            </div>
+            <div
+              data-reveal
+              className="relative hidden overflow-hidden rounded-md bg-black lg:block"
+            >
+              <Image
+                src="/images/faq-panel.webp"
+                alt=""
+                fill
+                sizes="33vw"
+                className="object-cover"
+              />
+            </div>
+          </div>
         </div>
       </section>
 

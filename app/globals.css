@@ -99,6 +99,31 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
   line-height: 1.15;
 }
+
+/* FAQ accordion — smooth open/close via animatable ::details-content.
+   interpolate-size lets height animate to/from `auto`; falls back to an
+   instant toggle where unsupported. */
+:root {
+  interpolate-size: allow-keywords;
+}
+.faq-accordion details::details-content {
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    height 0.3s ease,
+    opacity 0.3s ease,
+    content-visibility 0.3s allow-discrete;
+}
+.faq-accordion details[open]::details-content {
+  height: auto;
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq-accordion details::details-content {
+    transition: none;
+  }
+}
 }
 /* end @layer base */
 
@@ -440,6 +465,11 @@ h1, h2, h3, h4, h5, h6 {
 .section-light .panel-card.is-active {
   border-color: rgba(125, 52, 255, 0.18);
   box-shadow: none;
+}
+
+/* Partner logos ship as white monochrome SVGs — invert to dark on light bands */
+.section-light .logo-mark {
+  filter: invert(1);
 }
 
 /* ── Approach — cards ─────────────────────────────────────── */

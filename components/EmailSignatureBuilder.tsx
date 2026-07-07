@@ -116,7 +116,7 @@ function buildSignature(f: Fields, logoUrl: string, cta?: SignatureCta): string 
       ${title ? `<div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:${dim};padding-top:2px;">${title}</div>` : ``}
       <div style="padding-top:14px;">
         <a href="https://${esc(site)}" style="text-decoration:none;border:0;outline:none;">
-          <img src="${logoUrl}" alt="Stratum" width="150" height="20" style="display:block;width:150px;height:auto;border:0;" />
+          <img src="${logoUrl}" alt="Stratum" width="150" height="22" style="display:block;width:150px;height:auto;border:0;" />
           <div style="font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:${taglineSpacing.toFixed(2)}px;text-transform:uppercase;color:${dim};padding-top:8px;white-space:nowrap;">${esc(tagline)}</div>
         </a>
       </div>

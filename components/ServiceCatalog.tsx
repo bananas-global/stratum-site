@@ -190,7 +190,7 @@ export default function ServiceCatalog() {
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search services…"
           aria-label="Search services"
-          className="w-full max-w-xs rounded-sm border border-line bg-black/40 px-4 py-2 text-sm text-ink-bright placeholder:text-ink-faint focus:border-brand focus:outline-none sm:w-auto"
+          className="w-full max-w-xs rounded-sm border border-line bg-surface px-4 py-2 text-sm text-ink-bright placeholder:text-ink-faint focus:border-brand focus:outline-none sm:w-auto"
         />
       </div>
 

@@ -22,11 +22,11 @@ export default function FAQ({ items }: { items: FAQItem[] }) {
   return (
     <div
       data-reveal
-      className="flex flex-col divide-y divide-line-soft overflow-hidden rounded-md border border-line-soft bg-surface"
+      className="faq-accordion flex flex-col divide-y divide-line-soft overflow-hidden rounded-md border border-line-soft bg-surface"
     >
       {items.map((it) => (
         <details key={it.q} className="group">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-6 p-6 text-left font-display text-[1.125rem] leading-[1.5rem] text-ink-bright transition-colors hover:text-brand-light [&::-webkit-details-marker]:hidden">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-6 p-6 text-left font-body text-[1.125rem] leading-[1.5rem] text-ink-bright transition-colors hover:text-brand-light [&::-webkit-details-marker]:hidden">
             <span>{it.q}</span>
             <span
               aria-hidden="true"
@@ -35,7 +35,7 @@ export default function FAQ({ items }: { items: FAQItem[] }) {
               +
             </span>
           </summary>
-          <p className="max-w-3xl px-6 pb-6 text-sm leading-relaxed text-ink-dim">{it.a}</p>
+          <p className="px-6 pb-6 text-sm leading-[2] text-ink-dim">{it.a}</p>
         </details>
       ))}
     </div>

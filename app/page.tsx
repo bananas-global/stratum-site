@@ -65,7 +65,7 @@ export default function Home() {
       <CinematicHero />
 
       {/* Trusted foundations — partner / platform logos */}
-      <section className="section-sm bg-black">
+      <section className="section-sm section-light">
         <div className="container flex flex-col items-center gap-12 text-center">
           <div data-reveal className="flex max-w-2xl flex-col items-center gap-4">
             <BracketLabel>Trusted foundations</BracketLabel>
@@ -100,7 +100,7 @@ export default function Home() {
                     alt={logo.name}
                     aria-hidden={i % 2 === 1}
                     style={{ height: logo.h }}
-                    className="w-auto shrink-0 object-contain opacity-50 transition-opacity duration-300 hover:opacity-100"
+                    className="logo-mark w-auto shrink-0 object-contain opacity-50 transition-opacity duration-300 hover:opacity-100"
                   />
                 ))}
             </div>
