@@ -49,22 +49,6 @@ function normalizeUrl(url: string) {
   return trimmed;
 }
 
-const LOGO_WIDTH = 150; // px — keep the tagline justified to the logo width
-
-/**
- * Letter-spacing (px) to stretch `text` across `targetWidth` at the given
- * font size, so the wordmark and the tagline below it share one right edge.
- * Uses a deterministic glyph-width estimate (no canvas) so server and client
- * render identically — measuring with canvas would cause a hydration mismatch.
- */
-function spacingToWidth(text: string, fontSize: number, targetWidth: number) {
-  if (!text) return 1;
-  const approxGlyph = fontSize * 0.66; // ~Arial uppercase advance width
-  const w = text.length * approxGlyph;
-  const gaps = Math.max(text.length - 1, 1);
-  return Math.max(0.5, (targetWidth - w) / gaps);
-}
-
 /** A bracketed, brand-accented call-to-action banner row, or "" if no CTA. */
 function ctaBanner(cta: SignatureCta | undefined): string {
   if (!cta?.headline) return "";
@@ -86,8 +70,6 @@ function buildSignature(f: Fields, logoUrl: string, cta?: SignatureCta): string 
   const phone = f.phone.trim();
   const mobile = f.mobile.trim();
   const site = normalizeUrl(f.website) || "stratumtech.ca";
-  const tagline = site.toUpperCase();
-  const taglineSpacing = spacingToWidth(tagline, 10, LOGO_WIDTH);
 
   const ink = "#14141A";
   const dim = "#5C5C68";
@@ -116,8 +98,7 @@ function buildSignature(f: Fields, logoUrl: string, cta?: SignatureCta): string 
       ${title ? `<div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:${dim};padding-top:2px;">${title}</div>` : ``}
       <div style="padding-top:14px;">
         <a href="https://${esc(site)}" style="text-decoration:none;border:0;outline:none;">
-          <img src="${logoUrl}" alt="Stratum" width="150" height="22" style="display:block;width:150px;height:auto;border:0;" />
-          <div style="font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:${taglineSpacing.toFixed(2)}px;text-transform:uppercase;color:${dim};padding-top:8px;white-space:nowrap;">${esc(tagline)}</div>
+          <img src="${logoUrl}" alt="Stratum — ${esc(site)}" width="150" height="58" style="display:block;width:150px;height:auto;border:0;margin-left:-14px;" />
         </a>
       </div>
       <div style="border-top:1px solid rgba(20,20,26,0.1);font-size:0;line-height:0;height:0;margin:14px 0;">&nbsp;</div>
