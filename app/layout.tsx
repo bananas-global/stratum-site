@@ -6,6 +6,7 @@ import SmoothScroll from "@/components/SmoothScroll";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Analytics from "@/components/Analytics";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -100,6 +101,7 @@ setTimeout(function () {
         <main id="main">{children}</main>
         <Footer />
         <Analytics />
+        <VercelAnalytics />
       </body>
     </html>
   );
