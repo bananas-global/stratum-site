@@ -95,6 +95,7 @@ export default function ContactPage() {
         eyebrow="Contact"
         title="Get in touch with Stratum."
         lede="Pick the path that fits — support, projects, or new business — and we will respond the same business day."
+        backgroundPattern
       />
 
       {/* Inquiry paths */}
