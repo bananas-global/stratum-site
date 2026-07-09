@@ -537,22 +537,15 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #050505;
 }
 
+/* Sits above the <IconPattern> background: a gentle darkening at the edges
+   so the centred heading stays legible over the tiling. */
 .cta-band-bg {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse 70% 55% at 50% 45%, rgba(125, 52, 255, 0.1), transparent 68%),
-    linear-gradient(180deg, #0c0c0c 0%, #050505 100%);
+  background: radial-gradient(ellipse 85% 75% at 50% 50%, transparent 45%, rgba(5, 5, 5, 0.55));
 }
 
-.cta-band-texture {
-  position: absolute;
-  inset: 0;
-  opacity: 0.12;
-  background-image: url("/images/stratum-geometric-07.webp");
-  background-size: cover;
-  background-position: center;
-}
+/* CTA-band texture is now the live <IconPattern> overlay (see CTABand.tsx). */
 
 /* ── Footer — Klarheit Footer 03 layout ────────────────────────── */
 .footer-klarheit-wordmark {

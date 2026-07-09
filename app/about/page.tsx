@@ -57,10 +57,7 @@ export default function AboutPage() {
         eyebrow="About Stratum"
         title="An operational technology partner for growing businesses."
         lede="Stratum is a structured, security-aware technology partner for organizations that need reliable systems, clear accountability, and long-term stewardship — without the overhead of an enterprise IT department."
-        backgroundVisual={{
-          src: "/images/stratum-bg-pattern.webp",
-          alt: "",
-        }}
+        backgroundPattern
       >
         <Button href="/contact">Talk With Stratum</Button>
       </PageHero>

@@ -1,4 +1,5 @@
 import { Button } from "./ui";
+import { IconPattern } from "./IconPattern";
 
 export default function CTABand({
   title,
@@ -13,8 +14,10 @@ export default function CTABand({
 }) {
   return (
     <section className="cta-band section-sm relative overflow-hidden border-t border-line">
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <IconPattern scale={0.32} />
+      </div>
       <div className="cta-band-bg" aria-hidden="true" />
-      <div className="cta-band-texture" aria-hidden="true" />
 
       <div className="container relative z-10">
         <div

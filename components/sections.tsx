@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
 import { BracketLabel, Button, SectionHeader } from "./ui";
+import { IconPattern } from "./IconPattern";
 
 export type EditorialVisual = {
   src: string;
@@ -92,6 +93,7 @@ export function PageHero({
   title,
   lede,
   backgroundVisual,
+  backgroundPattern,
   visual,
   children,
 }: {
@@ -100,11 +102,21 @@ export function PageHero({
   title: ReactNode;
   lede: ReactNode;
   backgroundVisual?: Pick<EditorialVisual, "src" | "alt">;
+  /** Fill the hero with the live Stratum-icon tiling instead of an image. */
+  backgroundPattern?: boolean;
   visual?: EditorialVisual;
   children?: ReactNode;
 }) {
   return (
     <section className="relative overflow-hidden pb-16 pt-40 md:pb-20 md:pt-48">
+      {backgroundPattern && (
+        <div className="pointer-events-none absolute inset-0">
+          <IconPattern color="#000000" scale={0.34} />
+          {/* Readability scrim: solid black on the left fading to transparent on the right,
+              so heading + lede stay legible over the pattern. */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent" />
+        </div>
+      )}
       {backgroundVisual && (
         <div className="pointer-events-none absolute inset-0">
           <Image
@@ -120,8 +132,10 @@ export function PageHero({
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent" />
         </div>
       )}
-      {/* ambient brand glow */}
-      <div className="pointer-events-none absolute -top-40 left-1/2 h-[40rem] w-[40rem] -translate-x-1/2 rounded-full bg-brand/10 blur-[120px]" />
+      {/* ambient brand glow — omitted on the pattern hero to keep it neutral */}
+      {!backgroundPattern && (
+        <div className="pointer-events-none absolute -top-40 left-1/2 h-[40rem] w-[40rem] -translate-x-1/2 rounded-full bg-brand/10 blur-[120px]" />
+      )}
       <div
         className={`container relative grid gap-12 ${
           visual ? "items-end lg:grid-cols-[minmax(0,0.9fr)_minmax(360px,0.72fr)]" : ""
