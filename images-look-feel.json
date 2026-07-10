@@ -4,18 +4,36 @@
     "genre": "premium tech / industrial product design brand visual",
     "mood": "mysterious, sleek, premium, precision-engineered, quietly confident",
     "lighting": {
-      "type": "low-key, dark, restrained — slightly darker overall, deeper blacks",
+      "type": "low-key, restrained studio lighting — controlled, precise, identical setup across every image in a set",
       "key_light": "soft-box from right-top-down",
-      "accent": "single-source amethyst separation light that defines the silhouette — subtle, never glowing",
+      "accent": "single amethyst (#7d34ff) rim light ALWAYS coming from the left — a soft separation light that tints one part of the silhouette contour along the left edges; subtle and desaturated, never a glow, never bloom",
       "shadows": "deep, high contrast",
-      "reflections": "soft even satin specular sheen with crisp bright metallic highlights catching the edges; smooth and non-directional, no streaks or grain"
+      "reflections": "soft even satin specular sheen with crisp bright metallic highlights catching the edges; smooth and non-directional, no streaks or grain; the SAME sheen intensity on every object in a set — no object glossier or flatter than its siblings"
     },
     "color_palette": {
       "primary": "#000000 (pure black)",
       "secondary": "#0f0f0f / #1a1a1a (near-black, gunmetal)",
-      "accent": "#7d34ff (amethyst — used sparingly, as a single edge or separation light)",
+      "accent": "#7d34ff (amethyst — used sparingly, only as the left-side rim light on the contour)",
       "highlights": "#FFFFFF (white, controlled)",
-      "contrast": "high contrast, low saturation overall, dark and cinematic"
+      "contrast": "high contrast, low saturation overall, cinematic"
+    },
+    "modes": {
+      "description": "Every subject is rendered in two variants sharing the same camera, composition, lighting setup, and left amethyst rim light. Only the tonal range and background flip.",
+      "dark": {
+        "background": "solid #000000 — flat pure black, no gradient, no vignette, no floor reflection unless the composition demands one",
+        "object_tonality": "everything pulls toward black and gunmetal — dark anodized aluminum in the Apple Space Black / graphite range, near-black satin metal with controlled white edge highlights",
+        "usage": "dark sections of the site (primary mode — most important)"
+      },
+      "light": {
+        "background": "solid #FFFFFF — flat pure white, no gradient, no vignette",
+        "object_tonality": "everything pulls toward white and silver — natural silver / white anodized aluminum in the Apple Silver range, bright satin metal with soft gray shading",
+        "usage": "light sections of the site (reference: the industries page renders)"
+      }
+    },
+    "consistency": {
+      "perspective": "identical camera angle across every image in a set — three-quarter view, slightly elevated, objects centered with generous negative space; no image shot from a different height or rotation than its siblings",
+      "lighting": "identical light rig across the set: key soft-box right-top-down, amethyst rim light from the left, same exposure and same specular intensity",
+      "material": "one single material for all objects — anodized aluminum; never mix finishes (no glossy piano-black object next to a satin one)"
     },
     "materials": {
       "main_object": "smooth anodized aluminum — like Apple Space Gray / unibody MacBook: fine bead-blasted matte metal, cool gunmetal/graphite tone, clearly metallic but velvety-smooth (NOT brushed, NOT rubber, NOT matte plastic, NOT painted)",
@@ -38,7 +56,7 @@
       "high-end brand reveal",
       "editorial minimalism"
     ],
-    "form_language": "geometric forms with softly rounded edges — chamfers, fillets, radii — clean and engineered (NOT organic, NOT flowing, NOT blobby, NOT liquid)"
+    "form_language": "geometric forms with crisp right-angle edges broken by a small soft fillet radius — the iPhone 16 Pro edge: straight faces meeting at square corners that are gently eased so they would not hurt a finger; NOT knife-sharp, NOT wide 45° chamfer bevels, NOT fully rounded / pillowed like the iPhone 6 (and NOT organic, NOT flowing, NOT blobby, NOT liquid)"
   },
   "negative_prompt": {
     "description": "Hard exclusions. The look must read as a premium, restrained tech/architecture brand — NOT a gaming product. Avoid anything loud, cheap, or 'gamer'.",
@@ -58,6 +76,13 @@
       "high saturation and oversaturated neon",
       "garish or candy colors",
       "cheap plastic look",
+      "glossy piano-black plastic",
+      "wide 45-degree chamfered bevels on edges",
+      "fully rounded pillowed edges (iPhone 6 look)",
+      "knife-sharp unfinished edges",
+      "mixed finishes within a set (one object glossier than another)",
+      "accent light from the right or from above (rim light comes from the left only)",
+      "purple glow, purple haze, or purple fill light (amethyst is a rim/edge light only)",
       "rubber or rubbery material",
       "matte flat finish that hides the metal",
       "painted or powder-coated look",
