@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
-import { SectionHeader, BracketLabel } from "@/components/ui";
+import Link from "next/link";
+import { SectionHeader, BracketLabel, Button } from "@/components/ui";
 import BrandCenterConfigurator from "@/components/BrandCenterConfigurator";
-import { SITE } from "@/lib/site";
+import { IconPattern } from "@/components/IconPattern";
+import { BRANDBOOK_VERSION, SLIDES } from "@/components/brandbook/slides";
 
 // Hidden internal tool — not part of the public IA. Kept out of search,
 // the nav, the footer, and the sitemap. Reachable only by direct link.
 export const metadata: Metadata = {
-  title: "Brand Center | Stratum",
+  title: "Brand Center",
   description: "Official Stratum logo files, colour palette and usage guidelines.",
   robots: { index: false, follow: false },
   alternates: { canonical: undefined },
@@ -30,39 +32,56 @@ export default function BrandCenterPage() {
 
       <section className="section bg-surface">
         <div className="container">
-          <div className="grid gap-10 lg:grid-cols-2" data-reveal>
-            <div className="flex flex-col gap-4">
-              <BracketLabel>Usage</BracketLabel>
-              <h2 className="display-3 text-ink-bright">A few ground rules.</h2>
-              <ul className="flex flex-col gap-3 text-ink-dim">
-                <li>— Use the files from this page. Don&apos;t redraw, retype or trace the mark.</li>
-                <li>— Keep the original proportions. No stretching, rotating, outlining or effects.</li>
-                <li>— White versions go on dark backgrounds; black versions on light ones.</li>
-                <li>— The amethyst accent stays amethyst. If it can&apos;t, use a monochrome version.</li>
-                <li>— Monochrome versions are for single-colour contexts: print, engraving, embossing.</li>
-                <li>— Give the mark room to breathe — clear space of at least the height of the A.</li>
-              </ul>
+          <div className="grid items-center gap-12 lg:grid-cols-2" data-reveal>
+            <div className="flex flex-col gap-5">
+              <BracketLabel>Brandbook</BracketLabel>
+              <h2 className="display-3 text-ink-bright">The whole system, in {SLIDES.length} slides.</h2>
+              <p className="text-ink-dim">
+                The logo files above are one chapter of a larger system. The brandbook is the
+                complete reference — who Stratum is, why the mark looks the way it does, the
+                colour palette on dark and on light, typography, voice and writing rules, and
+                the imagery language with its hard exclusions. Built for the internal team,
+                agencies and partners: every rule stated once, plainly.
+              </p>
+              <p className="text-ink-dim">
+                It runs right here in the browser as a full-screen presentation — arrow keys or
+                click to move through it, press <span className="text-ink">N</span> for the
+                presenter notes.
+              </p>
+              <div className="mt-2">
+                <Button href="/brand-center/brandbook">Start presentation</Button>
+              </div>
             </div>
-            <div className="flex flex-col gap-4">
-              <BracketLabel>Formats</BracketLabel>
-              <h2 className="display-3 text-ink-bright">SVG first.</h2>
-              <p className="text-ink-dim">
-                SVG is vector — it scales to any size and is the right choice for print,
-                decks and anything large. PNG (transparent, 400&nbsp;px tall) is for quick
-                digital use where vectors aren&apos;t supported.
-              </p>
-              <p className="text-ink-dim">
-                Typography, if you need it alongside the mark: Lora or Instrument Serif for
-                display headings, Manrope for body text.
-              </p>
-              <p className="text-ink-dim">
-                Missing a format or unsure which version to use? Write to{" "}
-                <a href={`mailto:${SITE.email}`} className="text-brand-light hover:underline">
-                  {SITE.email}
-                </a>
-                .
-              </p>
-            </div>
+            <Link
+              href="/brand-center/brandbook"
+              aria-label="Open the Stratum brandbook presentation"
+              className="group relative block aspect-video overflow-hidden rounded-md border border-line-soft transition-colors hover:border-brand-light/50"
+            >
+              <IconPattern className="absolute inset-0" />
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(120% 90% at 20% 90%, rgba(125,52,255,0.16), transparent 55%), linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.92))",
+                }}
+              />
+              <div className="absolute inset-0 flex flex-col justify-between p-8">
+                <BracketLabel>Brand guidelines</BracketLabel>
+                <div className="flex flex-col gap-3">
+                  <span className="font-display text-3xl leading-tight tracking-tight text-ink-bright md:text-4xl">
+                    Structure behind dependable technology
+                  </span>
+                  <span className="flex items-center gap-3 text-sm text-ink-dim">
+                    <span>{BRANDBOOK_VERSION}</span>
+                    <span className="h-1 w-1 rounded-full bg-white/30" />
+                    <span>{SLIDES.length} slides</span>
+                    <span className="ml-auto text-brand-light opacity-0 transition-opacity group-hover:opacity-100">
+                      Start →
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </Link>
           </div>
         </div>
       </section>

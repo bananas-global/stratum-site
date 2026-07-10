@@ -4,8 +4,9 @@
     {
       "name": "stratum-dev",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["dev"],
-      "port": 5242
+      "runtimeArgs": ["exec", "next", "dev"],
+      "port": 5242,
+      "autoPort": true
     }
   ]
 }

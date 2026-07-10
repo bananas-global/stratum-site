@@ -46,6 +46,37 @@ const nextConfig: NextConfig = {
       { source: "/news/:slug", destination: "/insights/:slug", permanent: true },
     ];
   },
+  // Dev-only source mapping for the feedback-collector picker: a Babel pre-pass
+  // that injects data-inspector-{relative-path,line,column} into JSX so captured
+  // elements carry file:line (React 19 removed the fiber `_debugSource` fallback,
+  // so without this the picker works but emits no file:line). Gated to `dev` — in
+  // prod SWC stays untouched and no source paths leak into public chunks.
+  // syntax-jsx only PARSES JSX; SWC still does the JSX→JS transform afterwards.
+  webpack: (config, { dev }) => {
+    if (dev) {
+      config.module.rules.unshift({
+        test: /\.(jsx|tsx)$/,
+        exclude: /node_modules/,
+        enforce: "pre",
+        use: [
+          {
+            loader: "babel-loader",
+            options: {
+              babelrc: false,
+              configFile: false,
+              sourceMaps: false,
+              presets: ["@babel/preset-typescript"],
+              plugins: [
+                "@babel/plugin-syntax-jsx",
+                "@react-dev-inspector/babel-plugin",
+              ],
+            },
+          },
+        ],
+      });
+    }
+    return config;
+  },
   // Baseline hardening. No CSP here: the layout ships inline scripts
   // (JSON-LD + the reveal fallback), so a CSP needs nonces/hashes — do that
   // deliberately, not as a header one-liner.

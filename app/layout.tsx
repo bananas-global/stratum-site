@@ -7,6 +7,7 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Analytics from "@/components/Analytics";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
+import FeedbackCollector from "@/components/FeedbackCollector";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -102,6 +103,7 @@ setTimeout(function () {
         <Footer />
         <Analytics />
         <VercelAnalytics />
+        {process.env.NODE_ENV === "development" && <FeedbackCollector />}
       </body>
     </html>
   );
