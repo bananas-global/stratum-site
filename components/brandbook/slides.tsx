@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import type { CSSProperties, ReactNode } from "react";
+import Link from "next/link";
 import { IconPattern } from "@/components/IconPattern";
 import imageSpec from "@/images-look-feel.json";
 
@@ -1198,7 +1199,7 @@ export const SLIDES: Slide[] = [
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 100, flex: 1, alignItems: "start" }}>
           <div style={{ display: "flex", flexDirection: "column" }}>
             {[
-              "Hover states — text and borders shift to amethyst",
+              "Hover states and highlights",
               "8 px brand dots on lists, cards, and chips",
               "Active rails, focus rings, and key numerals",
               "One separation light in imagery",
@@ -1569,17 +1570,17 @@ export const SLIDES: Slide[] = [
           >
             {(
               [
-                ["/brand/book/light-render-01.avif", "White anodized server with amethyst rim light"],
-                ["/brand/book/light-render-02.avif", "White anodized storage enclosure"],
-                ["/brand/book/light-render-03.avif", "White anodized enclosure with amethyst edge"],
-                ["/brand/book/light-render-04.avif", "White anodized router with amethyst rim light"],
-                ["/brand/book/light-render-05.avif", "White keyboard with amethyst rim light"],
-                ["/brand/book/light-render-06.avif", "White anodized enclosure, rear"],
+                ["/images/industries/automotive-dealerships.webp", "White anodized car, front, with amethyst rim light", true],
+                ["/images/industries/medical-dental.webp", "White anodized dental chair with amethyst rim light", false],
+                ["/images/industries/law-firms.webp", "White anodized office chairs with amethyst rim light", false],
+                ["/images/industries/construction-aec.webp", "White anodized crane boom with amethyst rim light", false],
+                ["/images/industries/manufacturing.webp", "White anodized robotic arm with amethyst rim light", false],
               ] as const
-            ).map(([src, alt]) => (
+            ).map(([src, alt, feature]) => (
               <div
                 key={src}
                 style={{
+                  gridColumn: feature ? "1 / 3" : undefined,
                   background: "#ffffff",
                   border: "1px solid rgba(20,20,28,0.06)",
                   borderRadius: 8,
@@ -1608,14 +1609,15 @@ export const SLIDES: Slide[] = [
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1.25fr", gap: 24, flex: 1, minHeight: 0 }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 14, minHeight: 0 }}>
             <span style={{ fontSize: 24, letterSpacing: 2, textTransform: "uppercase", fontWeight: 600, color: "rgba(255,255,255,0.4)" }}>
-              Pillar objects · on white
+              Pillar objects · on black
             </span>
             <div
               style={{
                 flex: 1,
                 minHeight: 0,
                 overflow: "hidden",
-                background: "#f0eef4",
+                background: "#000",
+                border: "1px solid rgba(255,255,255,0.06)",
                 borderRadius: 8,
                 padding: 24,
                 display: "grid",
@@ -1836,6 +1838,23 @@ export const SLIDES: Slide[] = [
               Seamless tiling of the icon glyph at very low contrast — near-black on near-black, never amethyst. For
               deck covers, dividers, and social art.
             </span>
+            <Link
+              href="/pattern-generator"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 12,
+                fontSize: 24,
+                fontWeight: 400,
+                color: "#b985ff",
+                textDecoration: "none",
+              }}
+            >
+              Open the pattern generator
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M4 12h16M14 6l6 6-6 6" />
+              </svg>
+            </Link>
           </div>
         </div>
         <SlideFooter num="25" />

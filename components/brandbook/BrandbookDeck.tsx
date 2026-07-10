@@ -11,8 +11,8 @@ import { SLIDES } from "./slides";
    Renders each 1920×1080 slide on a fixed stage scaled to fit the
    viewport (contain). Navigation: ← → (plus space / page keys /
    Home / End), click left/right edge, or the on-screen controls.
-   Esc returns to Brand Center; N toggles speaker notes. The current
-   slide is mirrored to the URL hash so a slide can be shared.
+   Esc returns to Brand Center. The current slide is mirrored to the
+   URL hash so a slide can be shared.
    ──────────────────────────────────────────────────────────────── */
 
 const STAGE_W = 1920;
@@ -33,7 +33,6 @@ export default function BrandbookDeck() {
   const router = useRouter();
   const [index, setIndex] = useState(0);
   const [scale, setScale] = useState(0);
-  const [showNotes, setShowNotes] = useState(false);
   const [chromeVisible, setChromeVisible] = useState(true);
   const idleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -95,10 +94,6 @@ export default function BrandbookDeck() {
           break;
         case "Escape":
           router.push("/brand-center");
-          break;
-        case "n":
-        case "N":
-          setShowNotes((v) => !v);
           break;
       }
     };
@@ -225,14 +220,6 @@ export default function BrandbookDeck() {
           </svg>
         </button>
       </div>
-
-      {/* Speaker notes (press N) */}
-      {showNotes && (
-        <div className="absolute inset-x-0 bottom-16 mx-auto max-w-3xl rounded-md border border-line bg-surface/90 px-6 py-4 text-sm leading-relaxed text-ink-dim backdrop-blur">
-          <span className="bracket-label mr-3 text-white/40">Notes</span>
-          {slide.notes}
-        </div>
-      )}
     </div>
   );
 }

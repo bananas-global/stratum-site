@@ -99,27 +99,27 @@ const NAMES: Record<string, string> = {
 const INDUSTRY_VISUALS: Record<string, { src: string; alt: string; label: string }> = {
   "automotive-dealerships": {
     src: "/images/industries/automotive-dealerships.webp",
-    alt: "Dark automotive dealership showroom and service bay with managed network infrastructure.",
+    alt: "White anodized car photographed head-on, lit by a single amethyst rim light.",
     label: "Dealership uptime",
   },
   "medical-dental": {
     src: "/images/industries/medical-dental.webp",
-    alt: "Dark modern dental clinic with secure workstation, imaging display, and network cabinet.",
+    alt: "White anodized dental chair rendered in pearl white with a single amethyst rim light.",
     label: "Patient trust",
   },
   "law-firms": {
     src: "/images/industries/law-firms.webp",
-    alt: "Refined law office workspace with secure document storage and server room beyond glass.",
+    alt: "Pair of white anodized mesh office chairs, rear view, with a single amethyst rim light.",
     label: "Continuity",
   },
   "construction-aec": {
     src: "/images/industries/construction-aec.webp",
-    alt: "Construction and AEC operations desk with plans, rugged tablet, laptop, and site view.",
+    alt: "White anodized crane booms and hook blocks with a single amethyst rim light.",
     label: "Office, site, field",
   },
   manufacturing: {
     src: "/images/industries/manufacturing.webp",
-    alt: "Modern manufacturing control room overlooking a production floor and network cabinet.",
+    alt: "White anodized industrial robotic arm with a single amethyst rim light.",
     label: "Operational stability",
   },
 };
