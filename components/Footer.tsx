@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { SITE, FOOTER, SOCIAL } from "@/lib/site";
+import { SITE, FOOTER, SOCIAL, KNOWLEDGE_BASE } from "@/lib/site";
 import FooterWordmark from "./FooterWordmark";
 
 const SOCIAL_ICONS: Record<string, React.ReactNode> = {
@@ -90,6 +90,15 @@ export default function Footer() {
             <Link href="/privacy" className="transition-colors hover:text-ink-bright">
               Privacy Policy
             </Link>
+            {/* Staff-facing knowledge base — nofollow so it stays out of search. */}
+            <a
+              href={KNOWLEDGE_BASE.href}
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              className="transition-colors hover:text-ink-bright"
+            >
+              {KNOWLEDGE_BASE.label}
+            </a>
             {SOCIAL.map((s) => (
               <a
                 key={s.href}

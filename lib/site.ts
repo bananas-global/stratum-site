@@ -49,6 +49,12 @@ export const FOOTER = {
   ],
 };
 
+/** Stratum's internal team knowledge base — staff-facing, not a marketing page. */
+export const KNOWLEDGE_BASE = {
+  label: "Knowledge Base",
+  href: "https://stratum-seven-eta.vercel.app/",
+};
+
 /** Organization-level JSON-LD shared via @id references across pages. */
 export const orgGraph = {
   "@type": "Organization",
