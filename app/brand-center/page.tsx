@@ -48,8 +48,15 @@ export default function BrandCenterPage() {
                 click to move through it, press <span className="text-ink">N</span> for the
                 presenter notes.
               </p>
-              <div className="mt-2">
+              <div className="mt-2 flex flex-wrap items-center gap-4">
                 <Button href="/brand-center/brandbook">Start presentation</Button>
+                <a
+                  href="/brand/Stratum-Brandbook.pdf"
+                  download
+                  className="btn btn-secondary"
+                >
+                  <span>Download PDF</span>
+                </a>
               </div>
             </div>
             <Link

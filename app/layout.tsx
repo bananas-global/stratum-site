@@ -103,7 +103,9 @@ setTimeout(function () {
         <Footer />
         <Analytics />
         <VercelAnalytics />
-        {process.env.NODE_ENV === "development" && <FeedbackCollector />}
+        {process.env.NODE_ENV === "development" && process.env.HIDE_DEV_WIDGETS !== "1" && (
+          <FeedbackCollector />
+        )}
       </body>
     </html>
   );
