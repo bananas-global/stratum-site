@@ -1,0 +1,26 @@
+# Stratum
+
+> Stratum (Stratum Technology) is a managed IT and cybersecurity company for growing businesses in the Lower Mainland, BC, Canada — headquartered in Abbotsford, serving the region since 2007. Structure, security, stability, simplicity, and stewardship: a structured, security-aware, dependable technology partner that acts as your designated IT department.
+
+Stratum works with small and mid-sized organizations that have outgrown break-fix IT but don't need an in-house department — the "missing middle." Services span managed IT support, cybersecurity, business systems, and hardware lifecycle management.
+
+Contact: hello@stratumtech.ca · 1 (855) 200-0076 · stratumtech.ca
+
+## Pages
+
+- [Home](https://stratumtech.ca/): What Stratum does and how engagements work
+- [Services](https://stratumtech.ca/services): The full service catalog — managed IT, cybersecurity, and business systems
+- [Hardware](https://stratumtech.ca/hardware): Hardware procurement and lifecycle management
+- [Industries](https://stratumtech.ca/industries): Who Stratum serves — automotive dealerships, medical & dental clinics, law firms, construction & AEC, manufacturing
+- [About](https://stratumtech.ca/about): Company history, values, and the team
+- [Insights](https://stratumtech.ca/insights): Practical, plain-language articles on managed IT, cybersecurity, and business systems for business leaders
+- [Contact](https://stratumtech.ca/contact): Talk to a human — no pitch, no jargon
+- [Privacy](https://stratumtech.ca/privacy): Privacy policy
+
+## Facts
+
+- Service area: Lower Mainland, BC — Abbotsford, Chilliwack, Langley, Surrey, Vancouver, and surrounding communities
+- HQ: Abbotsford, British Columbia, Canada
+- Operating since 2007 (as Stratum Systems; merged with Prism PC in 2012)
+- Core services: managed IT support, cybersecurity, business systems, hardware procurement
+- Formerly online at stratum.it; now at stratumtech.ca

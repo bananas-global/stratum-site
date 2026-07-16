@@ -6,7 +6,7 @@ import imageSpec from "@/images-look-feel.json";
 
 /* ────────────────────────────────────────────────────────────────
    Brandbook slides — ported from the Claude Design deck
-   ("Stratum Brandbook.dc.html", 26 slides, 1920×1080).
+   ("Stratum Brandbook.dc.html", 26 slides, 1920×1080) — motion slide added later.
 
    Every slide is authored in absolute pixels against the fixed
    1920×1080 stage that BrandbookDeck scales to the viewport, so
@@ -14,7 +14,7 @@ import imageSpec from "@/images-look-feel.json";
    right tool here. Fonts map to the site's next/font variables.
    ──────────────────────────────────────────────────────────────── */
 
-export const BRANDBOOK_VERSION = "Version 1.0 · July 2026";
+export const BRANDBOOK_VERSION = "Version 1.1 · July 2026";
 
 const SERIF = "var(--font-display)";
 const SANS = "var(--font-body)";
@@ -485,7 +485,7 @@ function numberedRow(num: string, text: ReactNode, opts: { light?: boolean; last
 }
 
 /* ════════════════════════════════════════════════════════════════
-   The 26 slides
+   The 27 slides
    ════════════════════════════════════════════════════════════════ */
 
 export const SLIDES: Slide[] = [
@@ -554,7 +554,7 @@ export const SLIDES: Slide[] = [
   /* ── 02 · Contents ──────────────────────────────────────────── */
   {
     label: "Contents",
-    notes: "Six chapters. Use this book as a quick lookup — every rule is stated once, plainly.",
+    notes: "Seven chapters. Use this book as a quick lookup — every rule is stated once, plainly.",
     content: (
       <div style={slideRoot({ background: "#f0eef4", color: "#333", gap: 64 })}>
         <SlideHeader light eyebrow="Contents" title="What this book covers" />
@@ -562,11 +562,12 @@ export const SLIDES: Slide[] = [
           {(
             [
               ["01", "Brand foundation", "Positioning & the 5S lens"],
-              ["04", "Typography", "Lora & Manrope"],
-              ["02", "Logo", "Variants, space, misuse"],
               ["05", "Voice", "Tone & writing rules"],
-              ["03", "Color", "Palette & the accent"],
+              ["02", "Logo", "Variants, space, misuse"],
               ["06", "Imagery & iconography", "Renders, icons, pattern"],
+              ["03", "Color", "Palette & the accent"],
+              ["07", "Motion", "Reveals, easing, restraint"],
+              ["04", "Typography", "Lora & Manrope"],
             ] as const
           ).map(([num, title, sub]) => (
             <div
@@ -1862,7 +1863,67 @@ export const SLIDES: Slide[] = [
     ),
   },
 
-  /* ── 26 · Closing ───────────────────────────────────────────── */
+  /* ── 26 · Motion ────────────────────────────────────────────── */
+  {
+    label: "Motion",
+    notes:
+      "Motion reveals structure — it never decorates. One reveal, one ease, sub-second durations, and prefers-reduced-motion always collapses everything to static.",
+    content: (
+      <div style={slideRoot({ background: "#0f0f0f", gap: 54 })}>
+        <SlideHeader eyebrow="07 · Motion" title="Motion" />
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.15fr", gap: 60, flex: 1 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+            <p style={{ margin: 0, fontSize: 27, fontWeight: 300, lineHeight: 1.6, color: "#adadad" }}>
+              Motion at Stratum <span style={{ color: "#e0e0e0" }}>reveals structure — it never decorates</span>.
+              Elements settle into place the way machined parts seat: one direction, one ease, and done. Nothing
+              bounces, nothing pulses, nothing loops for attention.
+            </p>
+            <p style={{ margin: 0, fontSize: 27, fontWeight: 300, lineHeight: 1.6, color: "#adadad" }}>
+              Everything runs on a single exponential ease-out —{" "}
+              <span style={{ color: "#e0e0e0" }}>cubic-bezier(0.16,&nbsp;1,&nbsp;0.3,&nbsp;1)</span> — fast out of the
+              gate, calm on arrival. Durations stay under a second; hovers under half.
+            </p>
+            <p style={{ margin: 0, fontSize: 27, fontWeight: 300, lineHeight: 1.6, color: "#adadad" }}>
+              <span style={{ color: "#e0e0e0" }}>prefers-reduced-motion is non-negotiable</span>: reveals render
+              visible, scrolling is native, video plays as a plain loop. The brand must read identically with motion
+              off.
+            </p>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+            {(
+              [
+                ["The reveal", "Fade in + rise 24 px · 0.8 s", "Staggered by ~0.1 s between siblings, triggered on scroll into view. The only entrance animation."],
+                ["Scroll", "Smooth glide · 1.2 s exponential", "Lenis smooth scroll site-wide. Hero media may scrub with scroll; content never hijacks it."],
+                ["Hover", "Color, border, transform · 320–400 ms", "Subtle translate or underline — no scale jumps, no shadows-as-glow, no color flashes."],
+              ] as const
+            ).map(([name, spec, body]) => (
+              <div
+                key={name}
+                style={{
+                  border: "1px solid rgba(255,255,255,0.10)",
+                  borderRadius: 8,
+                  padding: "28px 34px",
+                  background: "#000",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 10,
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 24 }}>
+                  <span style={{ fontFamily: SERIF, fontSize: 34, color: "#ffffff" }}>{name}</span>
+                  <span style={{ fontSize: 24, color: "#b985ff" }}>{spec}</span>
+                </div>
+                <span style={{ fontSize: 24, fontWeight: 300, lineHeight: 1.55, color: "#adadad" }}>{body}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <SlideFooter num="26" left="One ease, sub-second durations, static under reduced motion — web, decks, and video alike." />
+      </div>
+    ),
+  },
+
+  /* ── 27 · Closing ───────────────────────────────────────────── */
   {
     label: "Closing",
     notes:

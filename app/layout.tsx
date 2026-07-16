@@ -42,6 +42,7 @@ export const metadata: Metadata = {
   applicationName: "Stratum",
   authors: [{ name: "Stratum Technology" }],
   robots: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } as Metadata["robots"],
+  verification: { google: "r49hyXaJPQwrq0qObnFBp0LgTid1t_-VH5eT50NISbk" },
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
