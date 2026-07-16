@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const BASE = "https://stratumtech.ca";
+const BASE = "https://www.stratumtech.ca";
 
 /** Build standard page Metadata with canonical + OpenGraph/Twitter. */
 export function pageMeta({

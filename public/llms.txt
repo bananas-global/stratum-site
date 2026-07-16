@@ -8,14 +8,14 @@ Contact: hello@stratumtech.ca · 1 (855) 200-0076 · stratumtech.ca
 
 ## Pages
 
-- [Home](https://stratumtech.ca/): What Stratum does and how engagements work
-- [Services](https://stratumtech.ca/services): The full service catalog — managed IT, cybersecurity, and business systems
-- [Hardware](https://stratumtech.ca/hardware): Hardware procurement and lifecycle management
-- [Industries](https://stratumtech.ca/industries): Who Stratum serves — automotive dealerships, medical & dental clinics, law firms, construction & AEC, manufacturing
-- [About](https://stratumtech.ca/about): Company history, values, and the team
-- [Insights](https://stratumtech.ca/insights): Practical, plain-language articles on managed IT, cybersecurity, and business systems for business leaders
-- [Contact](https://stratumtech.ca/contact): Talk to a human — no pitch, no jargon
-- [Privacy](https://stratumtech.ca/privacy): Privacy policy
+- [Home](https://www.stratumtech.ca/): What Stratum does and how engagements work
+- [Services](https://www.stratumtech.ca/services): The full service catalog — managed IT, cybersecurity, and business systems
+- [Hardware](https://www.stratumtech.ca/hardware): Hardware procurement and lifecycle management
+- [Industries](https://www.stratumtech.ca/industries): Who Stratum serves — automotive dealerships, medical & dental clinics, law firms, construction & AEC, manufacturing
+- [About](https://www.stratumtech.ca/about): Company history, values, and the team
+- [Insights](https://www.stratumtech.ca/insights): Practical, plain-language articles on managed IT, cybersecurity, and business systems for business leaders
+- [Contact](https://www.stratumtech.ca/contact): Talk to a human — no pitch, no jargon
+- [Privacy](https://www.stratumtech.ca/privacy): Privacy policy
 
 ## Facts
 

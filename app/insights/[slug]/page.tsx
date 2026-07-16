@@ -36,14 +36,14 @@ export default async function InsightPostPage({ params }: { params: Promise<{ sl
   const date = formatPostDate(post.date);
   const ld = {
     "@type": "BlogPosting",
-    "@id": `https://stratumtech.ca/insights/${post.slug}#article`,
+    "@id": `https://www.stratumtech.ca/insights/${post.slug}#article`,
     headline: post.title,
     ...(post.date ? { datePublished: post.date } : {}),
-    ...(post.cover ? { image: `https://stratumtech.ca${post.cover.src}` } : {}),
+    ...(post.cover ? { image: `https://www.stratumtech.ca${post.cover.src}` } : {}),
     ...(post.excerpt ? { description: post.excerpt } : {}),
-    url: `https://stratumtech.ca/insights/${post.slug}`,
-    isPartOf: { "@id": "https://stratumtech.ca/insights#blog" },
-    publisher: { "@id": "https://stratumtech.ca/#organization" },
+    url: `https://www.stratumtech.ca/insights/${post.slug}`,
+    isPartOf: { "@id": "https://www.stratumtech.ca/insights#blog" },
+    publisher: { "@id": "https://www.stratumtech.ca/#organization" },
     inLanguage: "en-CA",
   };
 

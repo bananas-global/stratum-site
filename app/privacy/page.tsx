@@ -253,14 +253,14 @@ const SECTIONS: Section[] = [
 export default function PrivacyPage() {
   const ld = {
     "@type": "WebPage",
-    "@id": "https://stratumtech.ca/privacy#webpage",
-    url: "https://stratumtech.ca/privacy",
+    "@id": "https://www.stratumtech.ca/privacy#webpage",
+    url: "https://www.stratumtech.ca/privacy",
     name: "Privacy Policy — Stratum",
     description:
       "How Stratum collects, uses, discloses, and protects personal information under BC's Personal Information Protection Act (PIPA).",
     inLanguage: "en-CA",
-    isPartOf: { "@id": "https://stratumtech.ca/#website" },
-    publisher: { "@id": "https://stratumtech.ca/#organization" },
+    isPartOf: { "@id": "https://www.stratumtech.ca/#website" },
+    publisher: { "@id": "https://www.stratumtech.ca/#organization" },
   };
 
   return (

@@ -56,13 +56,13 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
   const ld = {
     "@type": "Service",
-    "@id": `https://stratumtech.ca/services/${svc.slug}#service`,
+    "@id": `https://www.stratumtech.ca/services/${svc.slug}#service`,
     name: svc.name,
     serviceType: svc.serviceType,
-    provider: { "@id": "https://stratumtech.ca/#organization" },
+    provider: { "@id": "https://www.stratumtech.ca/#organization" },
     areaServed: { "@type": "Country", name: "Canada" },
     description: svc.ldDescription,
-    url: `https://stratumtech.ca/services/${svc.slug}`,
+    url: `https://www.stratumtech.ca/services/${svc.slug}`,
   };
 
   return (

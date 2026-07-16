@@ -54,12 +54,12 @@ export default function InsightsPage() {
   const posts = getAllPosts();
   const ld = {
     "@type": "Blog",
-    "@id": "https://stratumtech.ca/insights#blog",
-    url: "https://stratumtech.ca/insights",
+    "@id": "https://www.stratumtech.ca/insights#blog",
+    url: "https://www.stratumtech.ca/insights",
     name: "Insights for business leaders",
     description:
       "Practical, plain-language content on managed IT, cybersecurity, and business systems for business leaders.",
-    publisher: { "@id": "https://stratumtech.ca/#organization" },
+    publisher: { "@id": "https://www.stratumtech.ca/#organization" },
     inLanguage: "en-CA",
   };
 

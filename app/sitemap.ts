@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { PHASE_1_SITEMAP_PATHS } from "@/lib/phase";
 import { getAllPosts } from "@/lib/insights";
 
-const BASE = "https://stratumtech.ca";
+const BASE = "https://www.stratumtech.ca";
 
 // Phase 1 pages only. Phase 2 routes stay in source but are intentionally
 // excluded until they are re-enabled in lib/phase.ts.

@@ -127,13 +127,13 @@ const INDUSTRY_VISUALS: Record<string, { src: string; alt: string; label: string
 export default function IndustriesIndex() {
   const ld = {
     "@type": "CollectionPage",
-    "@id": "https://stratumtech.ca/industries#webpage",
-    url: "https://stratumtech.ca/industries",
+    "@id": "https://www.stratumtech.ca/industries#webpage",
+    url: "https://www.stratumtech.ca/industries",
     name: "Industries We Serve",
     description: "The industries Stratum leads with — chosen for operational complexity and the real cost of unreliable IT.",
     inLanguage: "en-CA",
-    isPartOf: { "@id": "https://stratumtech.ca/#website" },
-    publisher: { "@id": "https://stratumtech.ca/#organization" },
+    isPartOf: { "@id": "https://www.stratumtech.ca/#website" },
+    publisher: { "@id": "https://www.stratumtech.ca/#organization" },
     mainEntity: {
       "@type": "ItemList",
       itemListElement: ORDER.map((slug, i) => ({

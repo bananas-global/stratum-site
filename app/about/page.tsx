@@ -19,26 +19,26 @@ export const metadata: Metadata = pageMeta({
 export default function AboutPage() {
   const ld = {
     "@type": "AboutPage",
-    "@id": "https://stratumtech.ca/about#webpage",
-    url: "https://stratumtech.ca/about",
+    "@id": "https://www.stratumtech.ca/about#webpage",
+    url: "https://www.stratumtech.ca/about",
     name: "About Stratum",
     description: "About Stratum — our story, values, operating style, and leadership team.",
     inLanguage: "en-CA",
-    isPartOf: { "@id": "https://stratumtech.ca/#website" },
-    publisher: { "@id": "https://stratumtech.ca/#organization" },
-    mainEntity: { "@id": "https://stratumtech.ca/#organization" },
+    isPartOf: { "@id": "https://www.stratumtech.ca/#website" },
+    publisher: { "@id": "https://www.stratumtech.ca/#organization" },
+    mainEntity: { "@id": "https://www.stratumtech.ca/#organization" },
   };
 
   // Person JSON-LD — suppressed while the team section is hidden (waiting on the rest of the team)
   const people: object[] = [];
   // const people = TEAM.map((person) => ({
   //   "@type": "Person",
-  //   "@id": `https://stratumtech.ca/about#${person.name.toLowerCase().replace(/\s+/g, "-")}`,
+  //   "@id": `https://www.stratumtech.ca/about#${person.name.toLowerCase().replace(/\s+/g, "-")}`,
   //   name: person.name,
   //   jobTitle: person.role,
-  //   image: `https://stratumtech.ca${person.photo}`,
+  //   image: `https://www.stratumtech.ca${person.photo}`,
   //   sameAs: [person.linkedin],
-  //   worksFor: { "@id": "https://stratumtech.ca/#organization" },
+  //   worksFor: { "@id": "https://www.stratumtech.ca/#organization" },
   // }));
 
   return (

@@ -28,16 +28,16 @@ const SUPPLY = [
 export default function HardwarePage() {
   const ld = {
     "@type": "Service",
-    "@id": "https://stratumtech.ca/hardware#service",
+    "@id": "https://www.stratumtech.ca/hardware#service",
     name: "Hardware & Procurement",
     serviceType: "IT hardware procurement, configuration, and deployment",
-    url: "https://stratumtech.ca/hardware",
+    url: "https://www.stratumtech.ca/hardware",
     description:
       "Custom-spec'd business hardware, configured and secured before deployment — a turnkey solution managed by one accountable technology partner.",
-    provider: { "@id": "https://stratumtech.ca/#organization" },
+    provider: { "@id": "https://www.stratumtech.ca/#organization" },
     areaServed: { "@type": "Country", name: "Canada" },
     inLanguage: "en-CA",
-    isPartOf: { "@id": "https://stratumtech.ca/#website" },
+    isPartOf: { "@id": "https://www.stratumtech.ca/#website" },
   };
 
   return (

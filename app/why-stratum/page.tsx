@@ -45,14 +45,14 @@ export default function WhyStratum() {
 
   const ld = {
     "@type": "WebPage",
-    "@id": "https://stratumtech.ca/why-stratum#webpage",
-    url: "https://stratumtech.ca/why-stratum",
+    "@id": "https://www.stratumtech.ca/why-stratum#webpage",
+    url: "https://www.stratumtech.ca/why-stratum",
     name: "Why Stratum",
     description:
       "Why Stratum exists, who we are built for, and how the 5S lens (Structure, Security, Stability, Simplicity, Stewardship) shapes how we work.",
     inLanguage: "en-CA",
-    isPartOf: { "@id": "https://stratumtech.ca/#website" },
-    publisher: { "@id": "https://stratumtech.ca/#organization" },
+    isPartOf: { "@id": "https://www.stratumtech.ca/#website" },
+    publisher: { "@id": "https://www.stratumtech.ca/#organization" },
   };
 
   return (

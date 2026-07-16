@@ -10,7 +10,7 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/api/",
     },
-    sitemap: "https://stratumtech.ca/sitemap.xml",
-    host: "https://stratumtech.ca",
+    sitemap: "https://www.stratumtech.ca/sitemap.xml",
+    host: "https://www.stratumtech.ca",
   };
 }

@@ -44,14 +44,14 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
 
   const ld = {
     "@type": "ProfessionalService",
-    "@id": `https://stratumtech.ca/industries/${ind.slug}#service`,
+    "@id": `https://www.stratumtech.ca/industries/${ind.slug}#service`,
     name: ind.ldName,
     serviceType: ind.serviceType,
-    provider: { "@id": "https://stratumtech.ca/#organization" },
+    provider: { "@id": "https://www.stratumtech.ca/#organization" },
     audience: { "@type": "BusinessAudience", audienceType: ind.audienceType },
     areaServed: [{ "@type": "AdministrativeArea", name: "Canada" }],
     description: ind.ldDescription,
-    url: `https://stratumtech.ca/industries/${ind.slug}`,
+    url: `https://www.stratumtech.ca/industries/${ind.slug}`,
   };
 
   return (

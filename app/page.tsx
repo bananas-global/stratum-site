@@ -26,12 +26,12 @@ export const metadata: Metadata = {
 
 const localBusiness = {
   "@type": "ProfessionalService",
-  "@id": "https://stratumtech.ca/#localbusiness",
+  "@id": "https://www.stratumtech.ca/#localbusiness",
   name: "Stratum",
-  url: "https://stratumtech.ca/",
+  url: "https://www.stratumtech.ca/",
   telephone: "+1-855-200-0076",
   priceRange: "$$",
-  image: "https://stratumtech.ca/og-image.png",
+  image: "https://www.stratumtech.ca/og-image.png",
   description: "Structured technology services for growing organizations.",
   address: { "@type": "PostalAddress", addressCountry: "CA" },
   areaServed: { "@type": "Country", name: "Canada" },

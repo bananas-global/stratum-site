@@ -1,8 +1,8 @@
 export const SITE = {
   name: "Stratum",
   legalName: "Stratum Technology",
-  domain: "https://stratumtech.ca",
-  url: "https://stratumtech.ca",
+  domain: "https://www.stratumtech.ca",
+  url: "https://www.stratumtech.ca",
   phoneDisplay: "1 (855) 200-0076",
   phoneHref: "tel:+18552000076",
   email: "hello@stratumtech.ca",
@@ -58,13 +58,13 @@ export const KNOWLEDGE_BASE = {
 /** Organization-level JSON-LD shared via @id references across pages. */
 export const orgGraph = {
   "@type": "Organization",
-  "@id": "https://stratumtech.ca/#organization",
+  "@id": "https://www.stratumtech.ca/#organization",
   name: "Stratum",
   legalName: "Stratum Technology",
-  url: "https://stratumtech.ca/",
+  url: "https://www.stratumtech.ca/",
   logo: {
     "@type": "ImageObject",
-    url: "https://stratumtech.ca/images/logo-512.png",
+    url: "https://www.stratumtech.ca/images/logo-512.png",
     width: 512,
     height: 512,
   },
@@ -86,11 +86,11 @@ export const orgGraph = {
 
 export const websiteGraph = {
   "@type": "WebSite",
-  "@id": "https://stratumtech.ca/#website",
-  url: "https://stratumtech.ca/",
+  "@id": "https://www.stratumtech.ca/#website",
+  url: "https://www.stratumtech.ca/",
   name: "Stratum",
   inLanguage: "en-CA",
-  publisher: { "@id": "https://stratumtech.ca/#organization" },
+  publisher: { "@id": "https://www.stratumtech.ca/#organization" },
 };
 
 /** Render a JSON-LD <script> payload. */

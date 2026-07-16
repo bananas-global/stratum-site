@@ -145,13 +145,13 @@ export default function ServicesIndex() {
   // (it reads window.location on mount), keeping this route fully static.
   const ld = {
     "@type": "CollectionPage",
-    "@id": "https://stratumtech.ca/services#webpage",
-    url: "https://stratumtech.ca/services",
+    "@id": "https://www.stratumtech.ca/services#webpage",
+    url: "https://www.stratumtech.ca/services",
     name: "Stratum Services",
     description: "Stratum's three service categories — Managed IT, Cybersecurity, and Business Systems.",
     inLanguage: "en-CA",
-    isPartOf: { "@id": "https://stratumtech.ca/#website" },
-    publisher: { "@id": "https://stratumtech.ca/#organization" },
+    isPartOf: { "@id": "https://www.stratumtech.ca/#website" },
+    publisher: { "@id": "https://www.stratumtech.ca/#organization" },
     mainEntity: {
       "@type": "ItemList",
       itemListElement: [
@@ -169,7 +169,7 @@ export default function ServicesIndex() {
         dangerouslySetInnerHTML={jsonLd([
           breadcrumb([{ name: "Home", path: "/" }, { name: "Services", path: "/services" }]),
           ld,
-          faqPageLd(FAQS, "https://stratumtech.ca/services#faq"),
+          faqPageLd(FAQS, "https://www.stratumtech.ca/services#faq"),
         ])}
       />
 

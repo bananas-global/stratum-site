@@ -67,14 +67,14 @@ const ASIDE = [
 export default function ContactPage() {
   const contactPage = {
     "@type": "ContactPage",
-    "@id": "https://stratumtech.ca/contact#webpage",
-    url: "https://stratumtech.ca/contact",
+    "@id": "https://www.stratumtech.ca/contact#webpage",
+    url: "https://www.stratumtech.ca/contact",
     name: "Contact Stratum",
     description: "Get in touch with Stratum — support, projects, or new business.",
     inLanguage: "en-CA",
-    isPartOf: { "@id": "https://stratumtech.ca/#website" },
-    publisher: { "@id": "https://stratumtech.ca/#organization" },
-    mainEntity: { "@id": "https://stratumtech.ca/#organization" },
+    isPartOf: { "@id": "https://www.stratumtech.ca/#website" },
+    publisher: { "@id": "https://www.stratumtech.ca/#organization" },
+    mainEntity: { "@id": "https://www.stratumtech.ca/#organization" },
   };
 
   return (
@@ -84,7 +84,7 @@ export default function ContactPage() {
         dangerouslySetInnerHTML={jsonLd([
           breadcrumb([{ name: "Home", path: "/" }, { name: "Contact", path: "/contact" }]),
           contactPage,
-          faqPageLd(FAQS, "https://stratumtech.ca/contact#faq"),
+          faqPageLd(FAQS, "https://www.stratumtech.ca/contact#faq"),
           orgGraph,
           websiteGraph,
         ])}
