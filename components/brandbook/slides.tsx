@@ -43,6 +43,41 @@ function slideRoot(overrides: CSSProperties = {}): CSSProperties {
   };
 }
 
+/* ── print-safe card shadow ────────────────────────────────────────
+   Chrome exports a blurred `box-shadow` as a PDF soft mask that Quartz
+   (macOS Preview / Quick Look) paints as a hard grey rectangle, so every
+   shadowed card in Stratum-Brandbook.pdf grows a grey box around it.
+   `filter: drop-shadow` is rasterized on export instead and survives
+   intact — but a filter on the card itself would rasterize its text too,
+   so the shadow rides on an empty underlay behind the card and the text
+   stays vector and selectable. Cards that clip their content
+   (`overflow: hidden`, which would also clip the underlay) take the
+   filter directly — they hold images, not text.
+   ──────────────────────────────────────────────────────────────────── */
+
+const SOFT_SHADOW = "drop-shadow(0 8px 28px rgba(18,18,28,0.05))";
+
+/** Styles the card must carry so its <SoftShadow /> sits behind it. */
+const softShadowHost: CSSProperties = { position: "relative", zIndex: 0 };
+
+function SoftShadow({ radius = 8 }: { radius?: number }) {
+  return (
+    <div
+      aria-hidden
+      style={{
+        position: "absolute",
+        // Inset 0 resolves against the padding box, leaving the card's
+        // hairline border visible above the underlay.
+        inset: 0,
+        borderRadius: radius,
+        background: "inherit",
+        zIndex: -1,
+        filter: SOFT_SHADOW,
+      }}
+    />
+  );
+}
+
 function Eyebrow({ children, light = false }: { children: ReactNode; light?: boolean }) {
   return (
     <div
@@ -286,7 +321,7 @@ function SwatchColumn({
 }: {
   title: string;
   titleColor: string;
-  swatches: Array<{ bg: string; label: string; text: string; border?: string; shadow?: string }>;
+  swatches: Array<{ bg: string; label: string; text: string; border?: string; shadow?: boolean }>;
 }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
@@ -313,9 +348,10 @@ function SwatchColumn({
             display: "flex",
             alignItems: "flex-end",
             padding: 22,
-            boxShadow: s.shadow,
+            ...(s.shadow ? softShadowHost : null),
           }}
         >
+          {s.shadow ? <SoftShadow /> : null}
           <span style={{ fontSize: 24, color: s.text }}>{s.label}</span>
         </div>
       ))}
@@ -580,9 +616,10 @@ export const SLIDES: Slide[] = [
                 background: "#ffffff",
                 border: "1px solid rgba(20,20,28,0.06)",
                 borderRadius: 8,
-                boxShadow: "0 8px 28px rgba(18,18,28,0.05)",
+                ...softShadowHost,
               }}
             >
+              <SoftShadow />
               <span style={{ fontFamily: SERIF, fontSize: 40, color: "#7c3aed" }}>{num}</span>
               <span style={{ fontSize: 34, color: "#111111" }}>{title}</span>
               <span style={{ marginLeft: "auto", fontSize: 26, color: "#55555f", fontWeight: 300 }}>{sub}</span>
@@ -1153,7 +1190,7 @@ export const SLIDES: Slide[] = [
             titleColor="rgba(20,20,28,0.45)"
             swatches={[
               { bg: "#f0eef4", label: "Canvas · #F0EEF4", text: "#2e2e36", border: "rgba(20,20,28,0.14)" },
-              { bg: "#ffffff", label: "Card · #FFFFFF", text: "#2e2e36", border: "rgba(20,20,28,0.10)", shadow: "0 8px 28px rgba(18,18,28,0.05)" },
+              { bg: "#ffffff", label: "Card · #FFFFFF", text: "#2e2e36", border: "rgba(20,20,28,0.10)", shadow: true },
               { bg: "#e6e2ee", label: "Sunken · #E6E2EE", text: "#2e2e36", border: "rgba(20,20,28,0.10)" },
             ]}
           />
@@ -1586,7 +1623,9 @@ export const SLIDES: Slide[] = [
                   border: "1px solid rgba(20,20,28,0.06)",
                   borderRadius: 8,
                   overflow: "hidden",
-                  boxShadow: "0 8px 28px rgba(18,18,28,0.05)",
+                  // Clips its content, so the shadow can't ride on an
+                  // underlay — this card holds an image, no text to lose.
+                  filter: SOFT_SHADOW,
                 }}
               >
                 <img src={src} alt={alt} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
