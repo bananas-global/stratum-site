@@ -5,8 +5,8 @@ import BrandCenterConfigurator from "@/components/BrandCenterConfigurator";
 import { IconPattern } from "@/components/IconPattern";
 import { BRANDBOOK_VERSION, SLIDES } from "@/components/brandbook/slides";
 
-// Hidden internal tool — not part of the public IA. Kept out of search,
-// the nav, the footer, and the sitemap. Reachable only by direct link.
+// Brand assets for the team, agencies and partners — linked from the footer,
+// but kept out of search, the nav and the sitemap.
 export const metadata: Metadata = {
   title: "Brand Center",
   description: "Official Stratum logo files, colour palette and usage guidelines.",
@@ -87,6 +87,58 @@ export default function BrandCenterPage() {
                     </span>
                   </span>
                 </div>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="section bg-bg">
+        <div className="container">
+          <div className="grid items-center gap-12 lg:grid-cols-2" data-reveal>
+            {/* Text leads in the DOM (so it also leads when the grid stacks);
+                the tile takes the left column from lg up. */}
+            <div className="flex flex-col gap-5">
+              <BracketLabel>Pattern generator</BracketLabel>
+              <h2 className="display-3 text-ink-bright">The icon, tiled to any canvas.</h2>
+              <p className="text-ink-dim">
+                The mark&apos;s geometry tessellates — the icon repeats across the plane with no
+                seam and no visible repeat. The generator builds that field at whatever size you
+                need: set the canvas, the motif scale, the line colour and the background
+                gradient, then download a PNG.
+              </p>
+              <p className="text-ink-dim">
+                Use it for deck backgrounds, document covers and social art — the same pattern
+                that backs the brandbook cover above. Keep it quiet: near-black ground, one
+                accent at most, and never behind body copy.
+              </p>
+              <div className="mt-2">
+                <Button href="/pattern-generator">Open pattern generator</Button>
+              </div>
+            </div>
+            <Link
+              href="/pattern-generator"
+              aria-label="Open the Stratum pattern generator"
+              className="group relative block aspect-video overflow-hidden rounded-md border border-line-soft transition-colors hover:border-brand-light/50 lg:order-first"
+            >
+              <IconPattern className="absolute inset-0" scale={0.28} />
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(120% 90% at 80% 90%, rgba(125,52,255,0.16), transparent 55%), linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.85))",
+                }}
+              />
+              <div className="absolute inset-0 flex flex-col justify-between p-8">
+                <BracketLabel>Pattern</BracketLabel>
+                <span className="flex items-center gap-3 text-sm text-ink-dim">
+                  <span>Seamless tiling</span>
+                  <span className="h-1 w-1 rounded-full bg-white/30" />
+                  <span>PNG up to 6000 px</span>
+                  <span className="ml-auto text-brand-light opacity-0 transition-opacity group-hover:opacity-100">
+                    Open →
+                  </span>
+                </span>
               </div>
             </Link>
           </div>

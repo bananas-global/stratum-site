@@ -90,6 +90,15 @@ export default function Footer() {
             <Link href="/privacy" className="transition-colors hover:text-ink-bright">
               Privacy Policy
             </Link>
+            {/* Brand assets for the team, agencies and partners — the page is
+                noindexed, so nofollow keeps the link out of search too. */}
+            <Link
+              href="/brand-center"
+              rel="nofollow"
+              className="transition-colors hover:text-ink-bright"
+            >
+              Brand Center
+            </Link>
             {/* Staff-facing knowledge base — nofollow so it stays out of search. */}
             <a
               href={KNOWLEDGE_BASE.href}
