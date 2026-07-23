@@ -10,34 +10,16 @@ import { pageMeta, breadcrumb } from "@/lib/seo";
 export const metadata: Metadata = pageMeta({
   title: "Contact Stratum — Get in touch",
   description:
-    "Talk to Stratum about managed IT, cybersecurity, or a project. Choose the right path — support, projects, or new business — and we'll get back to you the same business day.",
+    "Talk to Stratum about managed IT, cybersecurity, or a project — support, projects, or new business. Send a message or call, and the right person will follow up.",
   path: "/contact",
   ogTitle: "Contact Stratum — Get in touch",
   ogDescription: "Talk to Stratum about managed IT, cybersecurity, or a project.",
 });
 
-const PATHS = [
-  {
-    title: "Existing client support",
-    body: "Already a Stratum client and need help? Use the support channel for the fastest response.",
-    email: "support@stratumtech.ca",
-  },
-  {
-    title: "Projects & implementations",
-    body: "A defined project — migration, implementation, or systems work — for current or new clients.",
-    email: "projects@stratumtech.ca",
-  },
-  {
-    title: "New business",
-    body: "Considering Stratum as a managed technology partner? Start here for a structured conversation.",
-    email: "hello@stratumtech.ca",
-  },
-];
-
 const FAQS: FAQItem[] = [
   {
     q: "How quickly will Stratum respond to my inquiry?",
-    a: "New inquiries get a response the same business day. If you're an existing client with a support issue, use support@stratumtech.ca — response times follow your service agreement.",
+    a: "New inquiries go straight to the team and are answered promptly — usually faster than you'd expect. If you're an existing client with a support issue, use support@stratumtech.ca — response times follow your service agreement.",
   },
   {
     q: "Is the initial conversation free?",
@@ -59,9 +41,7 @@ const FAQS: FAQItem[] = [
 
 const ASIDE = [
   { title: "Phone", body: "Prefer to talk? Call directly.", link: { label: SITE.phoneDisplay, href: SITE.phoneHref } },
-  { title: "Email", body: "General inquiries:", link: { label: "hello@stratumtech.ca", href: "mailto:hello@stratumtech.ca" } },
   { title: "How we engage", body: "Structured support, continuity, and project work for growing organizations — reach out to start a conversation." },
-  { title: "Response expectations", body: "New inquiries: same business day. Existing client support: per your service agreement." },
 ];
 
 export default function ContactPage() {
@@ -94,33 +74,15 @@ export default function ContactPage() {
         breadcrumb={[{ label: "Home", href: "/" }, { label: "Contact" }]}
         eyebrow="Contact"
         title="Get in touch with Stratum."
-        lede="Pick the path that fits — support, projects, or new business — and we will respond the same business day."
+        lede="Support, projects, or new business — tell us what you need and the right person will get back to you."
         backgroundPattern
       />
-
-      {/* Inquiry paths */}
-      <section className="section-sm bg-surface">
-        <div className="container flex flex-col gap-10">
-          <SectionHeader title="Three ways to reach us — choose what fits." />
-          <div data-reveal className="grid gap-4 md:grid-cols-3">
-            {PATHS.map((p) => (
-              <div key={p.title} className="card flex flex-col gap-3">
-                <h3 className="font-display text-[1.125rem] leading-[1.5rem] text-ink-bright">{p.title}</h3>
-                <p className="text-sm leading-relaxed text-ink-dim">{p.body}</p>
-                <a href={`mailto:${p.email}`} className="link-arrow mt-2 text-sm">
-                  <span>{p.email}</span>
-                </a>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Form + aside */}
       <section className="section bg-bg">
         <div className="container grid gap-12 lg:grid-cols-[1.3fr_0.7fr]">
           <div data-reveal className="flex flex-col gap-6">
-            <SectionHeader title="Tell us a bit about what you need." lede="We will get back to you the same business day. Plain answers, no pitch deck." />
+            <SectionHeader title="Tell us a bit about what you need." lede="The more context you share, the better the first conversation. Plain answers, no pitch deck." />
             <ContactForm />
           </div>
           <aside data-reveal className="flex flex-col gap-4">

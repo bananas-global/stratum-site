@@ -113,7 +113,7 @@ export default function ContactForm() {
       <p aria-live="polite" className="min-h-5 text-sm">
         {status === "sent" && (
           <span className="text-brand-light">
-            Your message is on its way. We typically respond within one business day.
+            Your message is on its way. The right person will be in touch shortly.
           </span>
         )}
         {status === "error" && (
