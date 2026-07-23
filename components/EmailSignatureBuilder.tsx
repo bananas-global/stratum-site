@@ -10,7 +10,9 @@ import type { SignatureCta } from "@/lib/signature-cta";
    copy a ready-to-paste rich HTML block to the clipboard.
    ──────────────────────────────────────────────────────────────── */
 
-const LOGO_PATH = "/images/logo-email.png";
+// Flush-cropped wordmark (no baked-in padding) so the signature never needs
+// negative margins — Gmail and Outlook strip those.
+const LOGO_PATH = "/images/logo-email-flush.png";
 // In the browser preview a relative path loads on localhost and in production.
 // The copied/exported signature needs an absolute URL so email clients can
 // fetch the logo from anywhere.
@@ -59,10 +61,20 @@ function ctaBanner(cta: SignatureCta | undefined): string {
     cta.url && cta.linkText
       ? ` <a href="${esc(cta.url)}" style="color:${brand};font-weight:bold;text-decoration:none;white-space:nowrap;">${esc(cta.linkText)} &rarr;</a>`
       : "";
-  return `<div style="margin-top:14px;padding:8px 12px;background:#f4efff;border-left:3px solid ${brand};font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.45;color:${ink};">${headline}${link}</div>`;
+  return `<tr>
+        <td style="padding:14px 0 0;">
+          <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;"><tr>
+            <td style="background-color:#f4efff;border-left:3px solid ${brand};padding:8px 12px;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.45;color:${ink};">${headline}${link}</td>
+          </tr></table>
+        </td>
+      </tr>`;
 }
 
-/** Build the table-based, inline-styled signature for email clients. */
+/** Build the table-based, inline-styled signature for email clients.
+    Structure rules for cross-client survival: every offset is padding on a
+    <td> (Gmail/Outlook strip margins and are unreliable with div padding),
+    and the whole signature sits on an explicit white card so it renders
+    identically on light and dark reading themes. */
 function buildSignature(f: Fields, logoUrl: string, cta?: SignatureCta): string {
   const name = esc(f.fullName.trim()) || "Your Name";
   const title = esc(f.jobTitle.trim());
@@ -91,19 +103,27 @@ function buildSignature(f: Fields, logoUrl: string, cta?: SignatureCta): string 
     .filter(Boolean)
     .join("");
 
-  return `<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;background:#ffffff;">
+  return `<table cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="border-collapse:separate;background-color:#ffffff;border-radius:12px;">
   <tr>
-    <td style="padding:0;vertical-align:top;">
-      <div style="font-family:Arial,Helvetica,sans-serif;font-size:16px;font-weight:bold;color:${ink};line-height:1.2;">${name}</div>
-      ${title ? `<div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:${dim};padding-top:2px;">${title}</div>` : ``}
-      <div style="padding-top:14px;">
-        <a href="https://${esc(site)}" style="text-decoration:none;border:0;outline:none;">
-          <img src="${logoUrl}" alt="Stratum — ${esc(site)}" width="150" height="58" style="display:block;width:150px;height:auto;border:0;margin-left:-14px;" />
-        </a>
-      </div>
-      <div style="border-top:1px solid rgba(20,20,26,0.1);font-size:0;line-height:0;height:0;margin:14px 0;">&nbsp;</div>
-      <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">${contactRows}</table>
-      ${ctaBanner(cta)}
+    <td style="padding:16px 20px;vertical-align:top;">
+      <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+        <tr><td style="padding:0;font-family:Arial,Helvetica,sans-serif;font-size:16px;font-weight:bold;color:${ink};line-height:1.2;">${name}</td></tr>
+        ${title ? `<tr><td style="padding:2px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:${dim};">${title}</td></tr>` : ``}
+        <tr>
+          <td style="padding:14px 0 0;">
+            <a href="https://${esc(site)}" style="text-decoration:none;border:0;outline:none;">
+              <img src="${logoUrl}" alt="Stratum — ${esc(site)}" width="124" height="32" style="display:block;width:124px;height:auto;border:0;" />
+            </a>
+          </td>
+        </tr>
+        <tr><td style="padding:14px 0 0;font-size:0;line-height:0;"><table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;"><tr><td style="border-top:1px solid #e6e6ea;font-size:0;line-height:0;">&nbsp;</td></tr></table></td></tr>
+        <tr>
+          <td style="padding:14px 0 0;">
+            <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">${contactRows}</table>
+          </td>
+        </tr>
+        ${ctaBanner(cta)}
+      </table>
     </td>
   </tr>
 </table>`;
@@ -142,6 +162,9 @@ export default function EmailSignatureBuilder({ ctas = [] }: { ctas?: SignatureC
   const [f, setF] = useState<Fields>(DEFAULTS);
   const [copied, setCopied] = useState<"" | "rich" | "source">("");
   const [tab, setTab] = useState<"preview" | "html">("preview");
+  // Simulates the reading theme of the recipient's email client, so the
+  // white signature card can be checked against both light and dark mode.
+  const [previewBg, setPreviewBg] = useState<"light" | "dark">("light");
   // Which active CTA to stamp in. Default to the first for stable SSR/hydration;
   // when several are active we rotate to a random one on mount, so staff copying
   // at different times naturally spread different campaigns across their mail.
@@ -258,29 +281,45 @@ export default function EmailSignatureBuilder({ ctas = [] }: { ctas?: SignatureC
       {/* ── Preview + actions ──────────────────────────────── */}
       <div className="flex flex-col gap-6">
         {/* Tabs */}
-        <div role="tablist" className="flex w-fit gap-1 rounded-md border border-line p-1">
-          <button
-            type="button"
-            role="tab"
-            aria-selected={tab === "preview"}
-            onClick={() => setTab("preview")}
-            className={TAB(tab === "preview")}
-          >
-            Preview
-          </button>
-          <button
-            type="button"
-            role="tab"
-            aria-selected={tab === "html"}
-            onClick={() => setTab("html")}
-            className={TAB(tab === "html")}
-          >
-            Show HTML
-          </button>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div role="tablist" className="flex w-fit gap-1 rounded-md border border-line p-1">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={tab === "preview"}
+              onClick={() => setTab("preview")}
+              className={TAB(tab === "preview")}
+            >
+              Preview
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={tab === "html"}
+              onClick={() => setTab("html")}
+              className={TAB(tab === "html")}
+            >
+              Show HTML
+            </button>
+          </div>
+          {tab === "preview" && (
+            <div className="flex w-fit gap-1 rounded-md border border-line p-1" aria-label="Preview background">
+              <button type="button" onClick={() => setPreviewBg("light")} className={TAB(previewBg === "light")}>
+                Light
+              </button>
+              <button type="button" onClick={() => setPreviewBg("dark")} className={TAB(previewBg === "dark")}>
+                Dark
+              </button>
+            </div>
+          )}
         </div>
 
         {tab === "preview" ? (
-          <div className="overflow-x-auto rounded-md border border-line bg-white p-6 sm:p-8">
+          <div
+            className={`overflow-x-auto rounded-md border border-line p-6 sm:p-8 ${
+              previewBg === "light" ? "bg-white" : "bg-[#1b1b1f]"
+            }`}
+          >
             <div dangerouslySetInnerHTML={{ __html: previewHtml }} />
           </div>
         ) : (
