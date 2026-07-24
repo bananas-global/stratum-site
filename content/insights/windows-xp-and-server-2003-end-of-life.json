@@ -1,0 +1,12 @@
+{
+  "slug": "windows-xp-and-server-2003-end-of-life",
+  "title": "Windows XP and Server 2003 End-of-Life",
+  "date": "2014-02-21",
+  "excerpt": "",
+  "originalSlug": "windows-xp-and-server-2003-end-of-life",
+  "sourceUrl": "https://www.stratum.it/news/windows-xp-and-server-2003-end-of-life",
+  "cover": null,
+  "readingMinutes": 1,
+  "markdown": "\nAdvisory: Microsoft is ending support for Windows XP in April of this year, and for Windows Server 2003 in July of 2015.\n\n\n### What does “ending support” mean?\n\n\nMicrosoft will no longer be releasing patches and security fixes for these operating systems. Modern operating systems are complex pieces of software. Flaws and vulnerabilities are regularly discovered, especially in wide-spread operating systems. Normally, these flaws are “patched” and fixed via Windows Update functionality. End of support means that if a critical flaw is found, no new patches or updates will be released for these operating systems, and your network could be at risk.\n\n\n### Why is this happening?\n\n\nAll software packages have a natural life cycle. Windows XP has been around for over 10 years, and 3 new versions of Windows have been released since. Advancements in performance and functionality prevent XP from being a viable operating system any longer. The same is true for Windows Server 2003.\n\n\nMicrosoft has a standardized life cycle for its desktop operating sytems:\n\n\n(Source: [Windows lifecycle fact sheet](http://windows.microsoft.com/en-US/windows/products/lifecycle))\n\n\n### What should I do?\n\n\nYour best choice is to plan an upgrade of any systems that are running these older operating systems. In some cases, you may only need to upgrade the operating system, and leave the hardware as is. If we haven’t already approached you about any systems that are in need of an upgrade, please contact us and we will be happy to discuss your options.\n\n",
+  "images": {}
+}

@@ -35,7 +35,7 @@ pnpm lint     # ESLint (flat config, eslint-config-next)
 - **`next.config.ts`** — AVIF-first image formats (falls back to WebP) and baseline security headers (nosniff, `X-Frame-Options: DENY`, Referrer-Policy, Permissions-Policy). Deliberately no CSP: the layout ships inline scripts (JSON-LD + the reveal fallback), so a CSP needs nonces/hashes — add one deliberately, not as a header one-liner.
 
 ### Insights pipeline (Notion → static)
-`scripts/notion-sync.mjs` runs before dev/build: it pulls published posts from the "Stratum News" Notion database into `content/insights/*.json` and downloads every image to `public/insights/` (both gitignored — regenerated each build), so the static build is self-contained and immune to Notion's expiring signed URLs. It also syncs the email-signature CTA line. Pages read the baked content via `lib/insights.ts`, which returns empty when content is absent so builds never require secrets.
+`scripts/notion-sync.mjs` runs before dev/build: it pulls published posts from the "Stratum News" Notion database into `content/insights/*.json` and downloads every image to `public/insights/` (both committed — since July 2026 the baked content is checked in so the repo is self-contained without `NOTION_TOKEN`; the sync refreshes it each build, so commit the diff when posts change), keeping the static build immune to Notion's expiring signed URLs. It also syncs the email-signature CTA line. Pages read the baked content via `lib/insights.ts`, which returns empty when content is absent so builds never require secrets.
 
 ### Styling — Tailwind v4 + tokens
 - `app/globals.css` holds an `@theme` token block (colors `--color-bg/surface/ink*/brand*/line*`, `--font-display/body`, radii, container widths) and custom classes.

@@ -33,6 +33,7 @@ next-env.d.ts
 # ShipStudio metadata
 .shipstudio/
 
-# Notion-baked insights content (regenerated each build by scripts/notion-sync.mjs)
-/content/insights/
-/public/insights/
+# Notion-baked insights content (content/insights/, public/insights/) is
+# committed on purpose: the repo stays self-contained — a clone builds the full
+# site without NOTION_TOKEN. scripts/notion-sync.mjs refreshes it each build;
+# commit the refreshed files when posts change.
