@@ -29,6 +29,13 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       { source: "/home", destination: "/", permanent: true },
+      // The signature builder moved under the gated /internal section.
+      // Temporary (307) — staff bookmarks, not an SEO signal worth burning.
+      {
+        source: "/email-signature",
+        destination: "/internal/email-signature",
+        permanent: false,
+      },
       { source: "/about-1", destination: "/about", permanent: true },
       { source: "/managed-it-services", destination: "/services", permanent: true },
       { source: "/cybersecurity-services", destination: "/services", permanent: true },
