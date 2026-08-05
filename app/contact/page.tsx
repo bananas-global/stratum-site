@@ -23,7 +23,7 @@ export const metadata: Metadata = pageMeta({
 const FAQS: FAQItem[] = [
   {
     q: "How quickly will Stratum respond to my inquiry?",
-    a: "New inquiries go straight to the team and are answered promptly — usually faster than you'd expect. If you're an existing client with a support issue, use support@stratumtech.ca — response times follow your service agreement.",
+    a: "New inquiries go straight to the team and are answered promptly — usually faster than you'd expect. If you're an existing client with a support issue, use service@stratumtech.ca — response times follow your service agreement.",
   },
   {
     q: "Is the initial conversation free?",
@@ -39,7 +39,7 @@ const FAQS: FAQItem[] = [
   },
   {
     q: "I'm already a Stratum client — where do I get support?",
-    a: "Email support@stratumtech.ca or call the service line. Support requests through the client channel are dispatched to our Client Support team and handled per your service agreement.",
+    a: "Email service@stratumtech.ca or call the service line. Support requests through the client channel are dispatched to our Client Support team and handled per your service agreement.",
   },
 ];
 

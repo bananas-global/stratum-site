@@ -9,11 +9,13 @@ import { NextResponse } from "next/server";
  * CONTACT_FROM_EMAIL off the onboarding address.
  *
  *   RESEND_API_KEY      — injected by the Vercel Resend integration
- *   CONTACT_TO_EMAIL    — where submissions land
+ *   CONTACT_TO_EMAIL    — where submissions land; required, no default (the
+ *                         recipient is deliberately not published in the repo
+ *                         or on the site)
  *   CONTACT_FROM_EMAIL  — must be on a Resend-verified domain in production;
  *                         the default only delivers to the Resend account owner
  */
-const TO_EMAIL = process.env.CONTACT_TO_EMAIL || "hello@stratumtech.ca";
+const TO_EMAIL = process.env.CONTACT_TO_EMAIL;
 const FROM_EMAIL =
   process.env.CONTACT_FROM_EMAIL || "Stratum Website <onboarding@resend.dev>";
 
@@ -107,8 +109,10 @@ export async function POST(req: Request) {
   }
 
   const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    console.error("[contact] RESEND_API_KEY is not set — submission dropped.");
+  if (!apiKey || !TO_EMAIL) {
+    console.error(
+      `[contact] ${!apiKey ? "RESEND_API_KEY" : "CONTACT_TO_EMAIL"} is not set — submission dropped.`,
+    );
     return NextResponse.json(
       { error: "The contact form is not available right now." },
       { status: 503 },

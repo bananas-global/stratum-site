@@ -228,10 +228,11 @@ const SECTIONS: Section[] = [
         </p>
         <ul>
           <li>
-            Email:{" "}
-            <a href={`mailto:${SITE.email}`} className="text-brand-light underline-offset-4 hover:underline">
-              {SITE.email}
-            </a>
+            Contact form:{" "}
+            <a href={SITE.contactPath} className="text-brand-light underline-offset-4 hover:underline">
+              stratumtech.ca/contact
+            </a>{" "}
+            — mark your message for the Privacy Officer
           </li>
           <li>
             Phone:{" "}

@@ -118,10 +118,10 @@ export default function ContactForm() {
         )}
         {status === "error" && (
           <span className="text-ink-dim">
-            Something went wrong sending your message. Please try again, or email
+            Something went wrong sending your message. Please try again, or call
             us directly at{" "}
-            <a href={`mailto:${SITE.email}`} className="text-brand-light underline">
-              {SITE.email}
+            <a href={SITE.phoneHref} className="text-brand-light underline">
+              {SITE.phoneDisplay}
             </a>
             .
           </span>

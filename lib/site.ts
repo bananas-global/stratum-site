@@ -5,7 +5,10 @@ export const SITE = {
   url: "https://www.stratumtech.ca",
   phoneDisplay: "1 (855) 200-0076",
   phoneHref: "tel:+18552000076",
-  email: "hello@stratumtech.ca",
+  // No public general-inquiry address: general contact goes through the
+  // HubSpot form on /contact so leads land in the CRM. Only the phone number
+  // and the form are published.
+  contactPath: "/contact",
   servingSince: "2007",
   tagline:
     "Structure, security, stability, simplicity, and stewardship for growing organizations.",

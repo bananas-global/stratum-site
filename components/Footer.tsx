@@ -46,12 +46,12 @@ function FooterContactCol() {
       </h3>
       <ul className="flex flex-col gap-2.5 text-sm text-ink-dim">
         <li>
-          <a
-            href={`mailto:${SITE.email}`}
+          <Link
+            href={SITE.contactPath}
             className="transition-colors hover:text-ink-bright"
           >
-            {SITE.email}
-          </a>
+            Send us a message
+          </Link>
         </li>
         <li>
           <a href={SITE.phoneHref} className="transition-colors hover:text-ink-bright">
