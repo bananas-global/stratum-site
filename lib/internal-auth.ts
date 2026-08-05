@@ -43,7 +43,10 @@ export function isInternalAuthConfigured() {
 export function getAllowlist() {
   const entries = (process.env.INTERNAL_ALLOWED_EMAILS || "stratumtech.ca")
     .split(",")
-    .map((e) => e.trim().toLowerCase())
+    // Strip stray wrapping quotes: pasting `"a.com,b@c.com"` into a dashboard
+    // env field is an easy mistake, and it would otherwise silently break every
+    // match with an invisible leading/trailing quote character.
+    .map((e) => e.trim().replace(/^["']|["']$/g, "").trim().toLowerCase())
     .filter(Boolean);
 
   const domains: string[] = [];

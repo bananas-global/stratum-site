@@ -80,13 +80,18 @@ export default function InternalSignInForm({
           </span>
         </div>
       </div>
-      {/* Honeypot — offscreen, never focusable, ignored by screen readers. */}
+      {/* Honeypot — offscreen, never focusable, ignored by screen readers. The
+          data-*-ignore attributes keep 1Password/LastPass from autofilling it
+          and locking a real person out of their own sign-in. */}
       <input
         type="text"
         name="website"
         tabIndex={-1}
         aria-hidden="true"
         autoComplete="off"
+        data-1p-ignore
+        data-lpignore="true"
+        data-form-type="other"
         className="absolute left-[-9999px]"
       />
       <input type="hidden" name="next" value={next} />

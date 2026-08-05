@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import {
   SESSION_COOKIE,
   createLinkToken,
+  getAllowlist,
   isAllowedEmail,
   isInternalAuthConfigured,
   resolveEmail,
@@ -59,8 +60,12 @@ export async function requestLink(
   }
 
   // Honeypot: a hidden field real people never fill. Claim success so bots
-  // learn nothing from being filtered.
-  if (formData.get("website")) return { sent: true };
+  // learn nothing from being filtered — but say so in the server log, or a
+  // password manager autofilling it looks identical to "email never arrived".
+  if (formData.get("website")) {
+    console.warn("[internal-auth] honeypot tripped — no link sent.");
+    return { sent: true };
+  }
 
   // Server Actions already reject cross-origin POSTs by comparing Origin and
   // Host, so there is no same-origin check to add here by hand.
@@ -75,7 +80,18 @@ export async function requestLink(
   if (!email) {
     return { error: "Enter the part before the @ — letters, numbers, dots." };
   }
-  if (!isAllowedEmail(email) || rateLimited(email)) {
+  // Silent to the visitor, explicit in the log — otherwise every rejection is
+  // indistinguishable from a mail delivery problem when something goes wrong.
+  if (!isAllowedEmail(email)) {
+    const { domains, addresses } = getAllowlist();
+    console.warn(
+      `[internal-auth] ${email} not on allowlist — no link sent. ` +
+        `Allowed domains: ${JSON.stringify(domains)}; addresses: ${JSON.stringify(addresses)}`,
+    );
+    return { sent: true };
+  }
+  if (rateLimited(email)) {
+    console.warn(`[internal-auth] rate limit hit for ${email} — no link sent.`);
     return { sent: true };
   }
 

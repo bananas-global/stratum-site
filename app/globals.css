@@ -390,8 +390,71 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-ink-bright);
   font-weight: 500;
 }
+
 }
 /* end @layer components */
+
+/* HubSpot embedded form (contact page). HubSpot ships its own markup and its
+   own light-theme CSS, which is unreadable on our near-black surfaces — this is
+   the minimum needed to make the fields legible, not an attempt to match the
+   design system.
+
+   Deliberately OUTSIDE @layer components: HubSpot's stylesheet is unlayered, and
+   unlayered rules beat layered ones no matter the specificity — inside the layer
+   these were silently dropped on every property HubSpot also sets. Scoped by ID
+   for the same reason, to outrank its `.hs-custom-style > div input…` selectors.
+   Those inner selectors are HubSpot's, so a change on their end can break these;
+   the fallback is an ugly-but-usable form, never an invisible one. */
+#hubspot-contact-form {
+  color: var(--color-ink-dim);
+  font-size: 0.9375rem;
+}
+#hubspot-contact-form label,
+#hubspot-contact-form legend {
+  color: var(--color-ink-dim);
+  font-size: 0.8125rem;
+}
+#hubspot-contact-form input[type="text"],
+#hubspot-contact-form input[type="email"],
+#hubspot-contact-form input[type="tel"],
+#hubspot-contact-form input[type="number"],
+#hubspot-contact-form select,
+#hubspot-contact-form textarea {
+  width: 100%;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 0.375rem;
+  color: var(--color-ink-bright);
+  padding: 0.625rem 0.75rem;
+  margin-top: 0.25rem;
+  /* HubSpot ships `min-height: 27px` on text inputs, which leaves them squat
+     next to the 45px select — this brings the whole set to one height. */
+  min-height: 2.75rem;
+}
+#hubspot-contact-form input:focus,
+#hubspot-contact-form select:focus,
+#hubspot-contact-form textarea:focus {
+  outline: none;
+  border-color: var(--color-brand);
+}
+#hubspot-contact-form .hs-form-field {
+  margin-bottom: 1rem;
+}
+#hubspot-contact-form input[type="submit"] {
+  background: var(--color-brand);
+  border: 0;
+  border-radius: 0.375rem;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+}
+#hubspot-contact-form .hs-error-msg,
+#hubspot-contact-form .hs-error-msgs {
+  color: #ff6b6b;
+  font-size: 0.8125rem;
+  list-style: none;
+}
 
 /* ── Heading color (outside @layer — must beat Tailwind text-ink-bright).
    Previously a background-clip:text gradient sheen, but that clips any

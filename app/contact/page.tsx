@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/sections";
 import { SectionHeader } from "@/components/ui";
 import CTABand from "@/components/CTABand";
-import ContactForm from "@/components/ContactForm";
+import HubSpotForm from "@/components/HubSpotForm";
+// Our own form, replaced by the HubSpot embed so leads land in the CRM. Left in
+// the repo (components/ContactForm.tsx + app/api/contact/route.ts are untouched)
+// so swapping the two lines below reverts to Resend-emailed submissions.
+// import ContactForm from "@/components/ContactForm";
 import FAQ, { faqPageLd, type FAQItem } from "@/components/FAQ";
 import { SITE, jsonLd, orgGraph, websiteGraph } from "@/lib/site";
 import { pageMeta, breadcrumb } from "@/lib/seo";
@@ -83,7 +87,8 @@ export default function ContactPage() {
         <div className="container grid gap-12 lg:grid-cols-[1.3fr_0.7fr]">
           <div data-reveal className="flex flex-col gap-6">
             <SectionHeader title="Tell us a bit about what you need." lede="The more context you share, the better the first conversation. Plain answers, no pitch deck." />
-            <ContactForm />
+            <HubSpotForm />
+            {/* <ContactForm /> */}
           </div>
           <aside data-reveal className="flex flex-col gap-4">
             {ASIDE.map((a) => (
