@@ -84,15 +84,13 @@ export default function BadgePreview({
   // Sizes text against real Manrope metrics rather than the fallback face.
   useBadgeFontsLoaded();
   const slots = resolveTextSlots(person);
-  const natural = person.photo
-    ? { w: person.photo.naturalWidth, h: person.photo.naturalHeight }
-    : null;
-  const draw = natural ? photoDrawRect(natural, person.crop) : null;
-  const interactive = Boolean(onCropChange && natural);
+  const photo = person.photo;
+  const draw = photo ? photoDrawRect(photo, person.crop) : null;
+  const interactive = Boolean(onCropChange && photo);
 
   const applyCrop = (next: PhotoCrop) => {
-    if (!onCropChange || !natural) return;
-    onCropChange(clampCrop(natural, next));
+    if (!onCropChange || !photo) return;
+    onCropChange(clampCrop(photo, next));
   };
 
   const onPointerDown = (event: React.PointerEvent<SVGRectElement>) => {
@@ -169,10 +167,10 @@ export default function BadgePreview({
           badges doesn't cross-wire their clip paths. */}
       <g dangerouslySetInnerHTML={{ __html: artworkMarkup(uid) }} />
 
-      {draw && person.photo ? (
+      {draw && photo ? (
         <g clipPath={`url(#${clipId})`}>
           <image
-            href={person.photo.dataUrl}
+            href={photo.dataUrl}
             x={draw.x}
             y={draw.y}
             width={draw.w}

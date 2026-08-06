@@ -13,9 +13,9 @@
      it has to meet is documented in that file.
    ▸ To move the photo or the text: edit BADGE.photo (band / clip /
      head guide) and BADGE.text. Nothing else needs touching.
-   ▸ To change the trim size, bleed, sheet or crop marks: edit
-     BADGE.trim / BADGE.bleed / BADGE.sheet / BADGE.cropMarks. The
-     per-page count is derived from those, never hardcoded.
+   ▸ To change the trim size, bleed, page margin or crop marks: edit
+     BADGE.trim / BADGE.bleed / BADGE.page / BADGE.cropMarks. The page
+     size is derived from those, never hardcoded.
 
    Origin note: every coordinate in this file is measured from the
    top-left of the *bleed box*, not the trim box. So the trim edge
@@ -38,11 +38,32 @@ export type Rect = { x: number; y: number; w: number; h: number };
 
 export type BadgeFieldKey = "fullName" | "jobTitle" | "email" | "phone";
 
+/** Where the sitter actually is inside a photo, as fractions of the image so
+    the numbers survive any resize. Measured from a cut-out's alpha channel by
+    measureSubject() in badge-cutout.ts — absent for photos that still have
+    their background, or when the head could not be isolated confidently. */
+export type SubjectMetrics = {
+  /** Bounding box of everything opaque. */
+  bounds: { x: number; y: number; w: number; h: number };
+  /** Crown of the head, as a fraction of image height. */
+  headTop: number;
+  /** Centre of the head, as a fraction of image width. */
+  headCentreX: number;
+  /** Head width, as a fraction of image width. */
+  headWidth: number;
+};
+
 /** An uploaded photo, held as an in-memory data URL for the tab's lifetime. */
 export type BadgePhoto = {
+  /** What actually gets drawn: the cut-out once there is one, else the upload. */
   dataUrl: string;
   naturalWidth: number;
   naturalHeight: number;
+  /** The untouched upload, kept so background removal can be undone without
+      re-reading the file. Only set once a cut-out has been made. */
+  originalDataUrl?: string;
+  /** Set alongside a cut-out; drives exact head placement. */
+  subject?: SubjectMetrics;
 };
 
 /** Zoom is a multiplier on cover-fit; offsets are fractions of the frame. */
@@ -132,7 +153,14 @@ export const BADGE = {
         Only a starting guess — the head guide is there to correct it against,
         and these two numbers are the ones to retune if uploads consistently
         land off. */
-    autoFit: { headHeightFraction: 0.42, headCentreFraction: 0.3 },
+    autoFit: {
+      headHeightFraction: 0.42,
+      headCentreFraction: 0.3,
+      /** Share of the capsule's width a measured head is scaled to fill. Only
+          applies to the exact, cut-out-driven path. Drop below 1 to leave the
+          head a little air inside the guide. */
+      headFill: 1,
+    },
 
     /** Faint capsule drawn where the photo will go, while there is none. */
     emptyFill: "#17171B",
@@ -203,21 +231,13 @@ export const BADGE = {
     },
   ] satisfies TextSlot[] as TextSlot[],
 
-  /** Trim marks sit in the gutter, offset so they never touch the artwork. */
+  /** Trim marks sit outside the trim, offset so they never touch the artwork. */
   cropMarks: { length: 3, offset: 1.2, width: 0.15, color: "#000000" },
 
-  /** A4 portrait imposition. `perPage` is derived in computeSheetGeometry(). */
-  sheet: {
-    page: { w: 210, h: 297 },
-    /** Extra space *between* bleed boxes, on top of the 2×bleed they already
-        contribute. Gives the crop marks somewhere to live. */
-    gutter: 4,
-    /** Smallest acceptable page margin; the grid is centred within it. */
-    minMargin: 5,
-  },
-
-  /** Single-badge export: page = bleed box + room for the marks. */
-  single: { markMargin: 6 },
+  /** Every page holds exactly one badge at its real size: the bleed box plus
+      room around it for the trim marks. No A4 imposition — an earlier version
+      tiled 3×3 on A4, and it is in the history if that is ever wanted back. */
+  page: { markMargin: 6 },
 };
 
 /* ── Derived geometry ────────────────────────────────────────────── */
@@ -253,10 +273,10 @@ export const SAFE_BOX: Rect = {
       viewBox alone. That is what lets the same file drop into an
       SVG whose user units are millimetres, whatever scale the
       designer exported at.
-   2. ids are suffixed per instance. A badge sheet puts nine copies
-      of this artwork in one document, and duplicate ids would make
-      every clip-path reference resolve to whichever copy the
-      browser happened to parse first. */
+   2. ids are suffixed per instance. The roster puts many copies of
+      this artwork in one document, and duplicate ids would make every
+      clip-path reference resolve to whichever copy the browser
+      happened to parse first. */
 
 function escapeForRegex(value: string) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -285,53 +305,16 @@ export function artworkMarkup(uid: string): string {
   return svg;
 }
 
-export type SheetGeometry = {
-  cols: number;
-  rows: number;
-  perPage: number;
-  marginX: number;
-  marginY: number;
-  gutter: number;
-  page: { w: number; h: number };
-};
-
-/** How many bleed boxes fit on the sheet, and where the grid starts.
-    Derived from the trim/bleed/gutter above — change those and the
-    imposition follows, including the per-page count. */
-export function computeSheetGeometry(): SheetGeometry {
-  const { page, gutter, minMargin } = BADGE.sheet;
-  const fit = (available: number, cell: number) =>
-    Math.max(1, Math.floor((available - 2 * minMargin + gutter) / (cell + gutter)));
-
-  const cols = fit(page.w, BLEED_BOX.w);
-  const rows = fit(page.h, BLEED_BOX.h);
-  const gridW = cols * BLEED_BOX.w + (cols - 1) * gutter;
-  const gridH = rows * BLEED_BOX.h + (rows - 1) * gutter;
-
-  return {
-    cols,
-    rows,
-    perPage: cols * rows,
-    marginX: (page.w - gridW) / 2,
-    marginY: (page.h - gridH) / 2,
-    gutter,
-    page,
-  };
-}
-
-/** Top-left of the bleed box for the nth slot on a page (row-major). */
-export function sheetCellOrigin(geom: SheetGeometry, indexOnPage: number) {
-  const col = indexOnPage % geom.cols;
-  const row = Math.floor(indexOnPage / geom.cols);
-  return {
-    x: geom.marginX + col * (BLEED_BOX.w + geom.gutter),
-    y: geom.marginY + row * (BLEED_BOX.h + geom.gutter),
-  };
-}
-
-export function singlePageSize() {
-  const m = BADGE.single.markMargin;
+/** The page a badge is printed on: its bleed box plus the mark margin on all
+    four sides. Every page in every export is this size. */
+export function pageSize() {
+  const m = BADGE.page.markMargin;
   return { w: BLEED_BOX.w + m * 2, h: BLEED_BOX.h + m * 2 };
+}
+
+/** Top-left of the bleed box on a page — the mark margin, on both axes. */
+export function pageOrigin() {
+  return { x: BADGE.page.markMargin, y: BADGE.page.markMargin };
 }
 
 export type Line = { x1: number; y1: number; x2: number; y2: number };
@@ -379,15 +362,38 @@ function headCentre() {
   return { x: head.x + head.w / 2, y: head.y + head.h / 2 };
 }
 
-/** Opening placement for zoom 1 / no offset: the head heuristic from
-    BADGE.photo.autoFit, mapped onto the head guide. */
-function autoFitRect(natural: { w: number; h: number }): Rect {
+/** Opening placement for zoom 1 / no offset.
+
+    With a cut-out we know where the head is, so the photo is scaled and moved
+    to drop the head straight into the guide — the crown on the capsule's top
+    edge, the head's width filling the capsule's width. That is exact, not a
+    guess, and usually needs no adjustment at all.
+
+    Without one (background still present, or the head could not be isolated)
+    it falls back to the BADGE.photo.autoFit heuristic: assume a
+    head-and-shoulders portrait and hope. The head guide is what the user
+    corrects against in that case. */
+function autoFitRect(photo: BadgePhoto): Rect {
   const { head, autoFit } = BADGE.photo;
   const centre = headCentre();
+  const aspect = photo.naturalWidth / photo.naturalHeight;
+  const subject = photo.subject;
+
+  if (subject && subject.headWidth > 0) {
+    const w = (head.w * autoFit.headFill) / subject.headWidth;
+    const h = w / aspect;
+    return {
+      x: centre.x - subject.headCentreX * w,
+      y: head.y - subject.headTop * h,
+      w,
+      h,
+    };
+  }
+
   // If the head is `headHeightFraction` of the photo, the whole photo has to
   // be this tall for that head to fill the guide.
   const h = head.h / autoFit.headHeightFraction;
-  const w = h * (natural.w / natural.h);
+  const w = h * aspect;
   return {
     x: centre.x - w / 2,
     y: centre.y - h * autoFit.headCentreFraction,
@@ -397,8 +403,8 @@ function autoFitRect(natural: { w: number; h: number }): Rect {
 }
 
 /** The drawn rect before clamping. */
-function rawDrawRect(natural: { w: number; h: number }, crop: PhotoCrop): Rect {
-  const base = autoFitRect(natural);
+function rawDrawRect(photo: BadgePhoto, crop: PhotoCrop): Rect {
+  const base = autoFitRect(photo);
   const a = headCentre();
   const z = crop.zoom;
   return {
@@ -414,12 +420,9 @@ function rawDrawRect(natural: { w: number; h: number }, crop: PhotoCrop): Rect {
     of this placement model is that the sitter may hang off any edge. */
 const MIN_ON_BAND = 8;
 
-export function clampCrop(
-  natural: { w: number; h: number },
-  crop: PhotoCrop,
-): PhotoCrop {
+export function clampCrop(photo: BadgePhoto, crop: PhotoCrop): PhotoCrop {
   const zoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, crop.zoom));
-  const r = rawDrawRect(natural, { ...crop, zoom });
+  const r = rawDrawRect(photo, { ...crop, zoom });
   const clip = BADGE.photo.clip;
   const overlap = (span: number) => Math.min(MIN_ON_BAND, span);
 
@@ -441,25 +444,20 @@ export function clampCrop(
 }
 
 /** Where the whole image lands, in mm. BADGE.photo.clip crops it. */
-export function photoDrawRect(
-  natural: { w: number; h: number },
-  crop: PhotoCrop,
-): Rect {
-  return rawDrawRect(natural, clampCrop(natural, crop));
+export function photoDrawRect(photo: BadgePhoto, crop: PhotoCrop): Rect {
+  return rawDrawRect(photo, clampCrop(photo, crop));
 }
 
 /** Mechanical framing problems, phrased as what is actually measured.
 
     These check the photo's *rectangle* against the band and the head guide.
-    They deliberately do not claim anything about the head itself: without
-    face detection there is no way to know where the head sits inside the
-    uploaded pixels, so whether the head fills the capsule is something only
-    the on-screen green guide can tell you. Advisory — nothing is blocked. */
-export function photoFitWarnings(
-  natural: { w: number; h: number },
-  crop: PhotoCrop,
-): string[] {
-  const r = photoDrawRect(natural, crop);
+    For a photo that still has its background they cannot say anything about
+    the head itself — there is no way to know where it sits inside the pixels,
+    so the on-screen green guide is the only check. Once the background has
+    been removed the head position is measured, and the placement is exact
+    rather than something to verify. Advisory — nothing is blocked. */
+export function photoFitWarnings(photo: BadgePhoto, crop: PhotoCrop): string[] {
+  const r = photoDrawRect(photo, crop);
   const clip = BADGE.photo.clip;
   const { head } = BADGE.photo;
   const out: string[] = [];

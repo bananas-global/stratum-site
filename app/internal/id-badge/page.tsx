@@ -26,7 +26,7 @@ export default async function IdBadgePage() {
       <div className="container flex flex-col gap-10">
         <SectionHeader
           title="Build ID badges."
-          lede="Add the team, frame each photo, and export print-ready PDFs — one badge at a time or several imposed on an A4 sheet with bleed and trim marks."
+          lede="Add the team, frame each photo, and export print-ready PDFs — one badge per page at its real size, with bleed and trim marks."
         />
         <div data-reveal>
           <IdBadgeBuilder />

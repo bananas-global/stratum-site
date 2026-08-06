@@ -2,11 +2,14 @@
    badge-pdf.ts — print-ready PDF export for the ID badge generator.
 
    Built with jsPDF in `unit: "mm"`, so the numbers in badge-layout.ts
-   go straight into the document: the page really is 210×297 mm and a
-   badge really is 54×86 mm at trim. Nothing here is a screenshot —
-   the artwork goes in as vector via svg2pdf, the copy as embedded
-   Helvetica text (selectable, resolution-independent), and only the
-   photograph is a raster, baked at BADGE.photo.export.dpi.
+   go straight into the document: a badge really is 54×86 mm at trim, on
+   a page sized to hold its bleed and its trim marks. One badge per
+   page, however many are exported.
+
+   Nothing here is a screenshot — the artwork goes in as vector via
+   svg2pdf, the copy as embedded Manrope text (selectable,
+   resolution-independent), and only the photograph is a raster, baked
+   at BADGE.photo.export.dpi.
 
    Runs entirely in the browser. No upload, no server round-trip, so
    no photo or personal detail ever leaves the tab — see the privacy
@@ -24,13 +27,12 @@ import {
   BLEED_BOX,
   TRIM_BOX,
   type BadgePerson,
-  computeSheetGeometry,
   cropMarkLines,
   hexToRgb,
+  pageOrigin,
+  pageSize,
   photoDrawRect,
   resolveTextSlots,
-  sheetCellOrigin,
-  singlePageSize,
   type Rect,
 } from "./badge-layout";
 import { ensureBadgeFonts, resolvePdfFont } from "./badge-fonts";
@@ -158,8 +160,7 @@ async function bakePhoto(person: BadgePerson): Promise<BakedPhoto | null> {
   }
 
   const img = await loadImage(person.photo.dataUrl);
-  const natural = { w: person.photo.naturalWidth, h: person.photo.naturalHeight };
-  const draw = photoDrawRect(natural, person.crop);
+  const draw = photoDrawRect(person.photo, person.crop);
 
   ctx.drawImage(
     img,
@@ -237,53 +238,25 @@ function stampMetadata(doc: JsPdf) {
 
 /* ── Public API ──────────────────────────────────────────────────── */
 
-/** One badge, on a page just big enough to hold its bleed plus trim marks. */
-export async function buildSingleBadgePdf(person: BadgePerson): Promise<Blob> {
-  const { JsPDF, svg2pdf } = await loadToolkit();
-  const page = singlePageSize();
-  const doc = new JsPDF({
-    unit: "mm",
-    format: [page.w, page.h],
-    orientation: "portrait",
-    compress: true,
-  });
-  stampMetadata(doc);
-  const fontName = await resolvePdfFont(doc);
-
-  const host = createSvgHost();
-  try {
-    const origin = { x: BADGE.single.markMargin, y: BADGE.single.markMargin };
-    await drawBadge(doc, svg2pdf, host, person, origin, fontName);
-    drawCropMarks(doc, {
-      x: origin.x + TRIM_BOX.x,
-      y: origin.y + TRIM_BOX.y,
-      w: TRIM_BOX.w,
-      h: TRIM_BOX.h,
-    });
-  } finally {
-    host.remove();
-  }
-
-  return doc.output("blob");
-}
-
-/** Several badges imposed on A4 portrait, paginating as needed. */
-export async function buildBadgeSheetPdf(people: BadgePerson[]): Promise<Blob> {
+/** One badge per page, each page the badge's real size plus room for its trim
+    marks. Pass a single person for a one-page file — there is no separate
+    single-badge path, because one badge is just the shortest batch. */
+export async function buildBadgesPdf(people: BadgePerson[]): Promise<Blob> {
   if (people.length === 0) throw new Error("Nothing selected to export.");
 
   const { JsPDF, svg2pdf } = await loadToolkit();
-  const geom = computeSheetGeometry();
-  const doc = new JsPDF({ unit: "mm", format: "a4", orientation: "portrait", compress: true });
+  const page = pageSize();
+  const format: [number, number] = [page.w, page.h];
+  const doc = new JsPDF({ unit: "mm", format, orientation: "portrait", compress: true });
   stampMetadata(doc);
   const fontName = await resolvePdfFont(doc);
 
   const host = createSvgHost();
   try {
+    const origin = pageOrigin();
     for (let i = 0; i < people.length; i += 1) {
-      const indexOnPage = i % geom.perPage;
-      if (i > 0 && indexOnPage === 0) doc.addPage("a4", "portrait");
+      if (i > 0) doc.addPage(format, "portrait");
 
-      const origin = sheetCellOrigin(geom, indexOnPage);
       await drawBadge(doc, svg2pdf, host, people[i], origin, fontName);
       drawCropMarks(doc, {
         x: origin.x + TRIM_BOX.x,

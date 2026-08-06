@@ -8,14 +8,19 @@ import {
   MAX_ZOOM,
   MIN_ZOOM,
   clampCrop,
-  computeSheetGeometry,
   isPersonPrintable,
   personSlug,
   photoFitWarnings,
   type BadgePerson,
   type PhotoCrop,
 } from "@/lib/badge-layout";
-import { buildBadgeSheetPdf, buildSingleBadgePdf, downloadPdf } from "@/lib/badge-pdf";
+import { buildBadgesPdf, downloadPdf } from "@/lib/badge-pdf";
+import {
+  applyMatte,
+  disposeCutoutWorker,
+  matteFromBlob,
+  type CutoutStatus,
+} from "@/lib/badge-cutout";
 
 /* ────────────────────────────────────────────────────────────────
    IdBadgeBuilder — internal ID badge generator.
@@ -95,18 +100,17 @@ export default function IdBadgeBuilder() {
   const [activeId, setActiveId] = useState("seed-1");
   const [selected, setSelected] = useState<Set<string>>(() => new Set(["seed-1"]));
   const [showGuides, setShowGuides] = useState(true);
-  const [busy, setBusy] = useState<"" | "single" | "sheet">("");
+  const [busy, setBusy] = useState<"" | "single" | "batch">("");
+  const [cutout, setCutout] = useState<CutoutStatus | null>(null);
   const [error, setError] = useState("");
   const fileInput = useRef<HTMLInputElement | null>(null);
 
   const active = people.find((p) => p.id === activeId) ?? people[0];
-  const sheet = useMemo(() => computeSheetGeometry(), []);
 
   const printable = useMemo(
     () => people.filter((p) => selected.has(p.id) && isPersonPrintable(p)),
     [people, selected],
   );
-  const pageCount = Math.max(1, Math.ceil(printable.length / sheet.perPage));
 
   /* ── Roster editing ───────────────────────────────────────────── */
 
@@ -206,23 +210,81 @@ export default function IdBadgeBuilder() {
 
   const setZoom = (zoom: number) => {
     if (!active?.photo) return;
-    setCrop(
-      clampCrop(
-        { w: active.photo.naturalWidth, h: active.photo.naturalHeight },
-        { ...active.crop, zoom },
-      ),
-    );
+    setCrop(clampCrop(active.photo, { ...active.crop, zoom }));
   };
+
+  /* ── Background removal ───────────────────────────────────────
+     Matting runs in a worker (see lib/badge-cutout). Resetting the crop
+     afterwards is the point of the whole exercise: with the background gone
+     the head's position is measured rather than guessed, so the automatic
+     placement drops it straight onto the guide. */
+
+  const removePhotoBackground = async () => {
+    const photo = active?.photo;
+    if (!photo || !active) return;
+
+    setCutout({ type: "downloading" });
+    setError("");
+    try {
+      // Re-derive the bytes from the data URL we already hold, so there is no
+      // need to keep the original File around just for this.
+      const blob = await fetch(photo.dataUrl).then((r) => r.blob());
+      const matte = await matteFromBlob(blob, setCutout);
+      const image = await loadImage(photo.dataUrl);
+      const { dataUrl, subject } = applyMatte(image, matte);
+
+      patch(active.id, {
+        photo: {
+          ...photo,
+          dataUrl,
+          originalDataUrl: photo.originalDataUrl ?? photo.dataUrl,
+          subject: subject ?? undefined,
+        },
+        crop: DEFAULT_CROP,
+      });
+      if (!subject) {
+        setError(
+          "Background removed, but the head couldn't be located automatically — line it up with the green guide.",
+        );
+      }
+    } catch (cause) {
+      setError(
+        cause instanceof Error
+          ? `Background removal failed: ${cause.message}`
+          : "Background removal failed.",
+      );
+    } finally {
+      setCutout(null);
+    }
+  };
+
+  const restoreOriginal = () => {
+    const photo = active?.photo;
+    if (!photo?.originalDataUrl || !active) return;
+    patch(active.id, {
+      photo: {
+        dataUrl: photo.originalDataUrl,
+        naturalWidth: photo.naturalWidth,
+        naturalHeight: photo.naturalHeight,
+      },
+      crop: DEFAULT_CROP,
+    });
+    setError("");
+  };
+
+  // The loaded model holds tens of megabytes; let it go with the page.
+  useEffect(() => disposeCutoutWorker, []);
+
+  const cutoutLabel =
+    cutout?.type === "downloading"
+      ? `Loading remover${typeof cutout.progress === "number" ? ` ${cutout.progress}%` : "…"}`
+      : cutout?.type === "matting"
+        ? "Removing background…"
+        : null;
 
   /* Framing hints for the active badge. Advisory only — the sitter is allowed
      to run off the card, so nothing here blocks an export. */
-  const fitWarnings =
-    active?.photo
-      ? photoFitWarnings(
-          { w: active.photo.naturalWidth, h: active.photo.naturalHeight },
-          active.crop,
-        )
-      : [];
+  const fitWarnings = active?.photo ? photoFitWarnings(active.photo, active.crop) : [];
 
   /* ── Export ───────────────────────────────────────────────────── */
 
@@ -234,7 +296,7 @@ export default function IdBadgeBuilder() {
     setBusy("single");
     setError("");
     try {
-      const blob = await buildSingleBadgePdf(person);
+      const blob = await buildBadgesPdf([person]);
       downloadPdf(blob, `stratum-badge-${personSlug(person)}.pdf`);
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "The PDF couldn't be generated.");
@@ -248,11 +310,11 @@ export default function IdBadgeBuilder() {
       setError("Select at least one badge that has a name on it.");
       return;
     }
-    setBusy("sheet");
+    setBusy("batch");
     setError("");
     try {
-      const blob = await buildBadgeSheetPdf(printable);
-      downloadPdf(blob, "stratum-badges-a4.pdf");
+      const blob = await buildBadgesPdf(printable);
+      downloadPdf(blob, "stratum-badges.pdf");
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "The PDF couldn't be generated.");
     } finally {
@@ -279,8 +341,9 @@ export default function IdBadgeBuilder() {
         <LockIcon />
         <span>
           Nothing here is saved. Names, photos and crops stay in this browser tab only, are
-          never uploaded, and are gone the moment you reload or close the page. PDFs are
-          generated locally on your machine.
+          never uploaded, and are gone the moment you reload or close the page. PDFs and
+          background removal both run locally on your machine — the only thing fetched from
+          the internet is the remover itself, the first time you use it.
         </span>
       </p>
 
@@ -350,6 +413,41 @@ export default function IdBadgeBuilder() {
                 </button>
               </div>
             </div>
+
+            {/* Background removal. Only offered once there is a photo, and
+                swapped for an undo once a cut-out exists. */}
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                className={GHOST_BTN}
+                disabled={!active.photo || cutout !== null}
+                onClick={removePhotoBackground}
+              >
+                {cutoutLabel ?? (active.photo?.subject ? "Redo cut-out" : "Remove background")}
+              </button>
+              {active.photo?.originalDataUrl && (
+                <button
+                  type="button"
+                  className={GHOST_BTN}
+                  disabled={cutout !== null}
+                  onClick={restoreOriginal}
+                >
+                  Undo
+                </button>
+              )}
+              {active.photo?.originalDataUrl && !cutout && (
+                <span className="text-xs text-ink-faint">
+                  {active.photo.subject
+                    ? "Background removed, head placed automatically."
+                    : "Background removed."}
+                </span>
+              )}
+            </div>
+            {cutout?.type === "downloading" && (
+              <p className="text-xs text-ink-faint">
+                First use downloads the remover (~12 MB). It&rsquo;s cached afterwards.
+              </p>
+            )}
             <input
               ref={fileInput}
               type="file"
@@ -437,9 +535,8 @@ export default function IdBadgeBuilder() {
           <div className="flex flex-col gap-1">
             <h3 className="text-lg text-ink-bright">Collaborators</h3>
             <p className="text-xs text-ink-faint">
-              {people.length} on the roster · {printable.length} selected for the sheet ·{" "}
-              {sheet.cols}×{sheet.rows} = {sheet.perPage} per A4 page
-              {printable.length > 0 && ` · ${pageCount} page${pageCount > 1 ? "s" : ""}`}
+              {people.length} on the roster · {printable.length} selected · one badge per
+              page at {BADGE.trim.w}×{BADGE.trim.h} mm
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -455,7 +552,7 @@ export default function IdBadgeBuilder() {
               disabled={busy !== "" || printable.length === 0}
               onClick={exportSheet}
             >
-              {busy === "sheet" ? "Generating…" : `Export A4 sheet (${printable.length})`}
+              {busy === "batch" ? "Generating…" : `Export selected (${printable.length})`}
             </button>
           </div>
         </div>
@@ -477,7 +574,7 @@ export default function IdBadgeBuilder() {
                     onChange={() => toggleSelected(person.id)}
                     className="accent-brand"
                   />
-                  Include in sheet
+                  Include in export
                 </label>
 
                 <button
@@ -541,6 +638,15 @@ function readAsDataUrl(file: File): Promise<string> {
     reader.onload = () => resolve(String(reader.result));
     reader.onerror = () => reject(new Error("read failed"));
     reader.readAsDataURL(file);
+  });
+}
+
+function loadImage(dataUrl: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error("decode failed"));
+    img.src = dataUrl;
   });
 }
 
