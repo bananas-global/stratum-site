@@ -22,6 +22,12 @@ const TOOLS = [
     description:
       "Generate your Stratum email signature — logo and brand colours baked in.",
   },
+  {
+    href: "/internal/id-badge",
+    title: "ID badge generator",
+    description:
+      "Build staff ID badges and export them print-ready — single cards or an A4 sheet.",
+  },
 ];
 
 export default async function InternalIndexPage() {
