@@ -1,6 +1,32 @@
 @import "tailwindcss";
 
 /* ─────────────────────────────────────────────────────────────
+   Manrope for the internal ID badge generator (/internal/id-badge).
+   Self-hosted rather than via next/font because the badge PDF has
+   to embed the very same file — jsPDF cannot embed next/font's
+   woff2, and its family name is build-hashed. See lib/badge-fonts.ts.
+   Named "Manrope Badge" so it never collides with the next/font
+   faces the rest of the site uses. Browsers only fetch these when
+   something actually asks for the family, so other pages pay nothing.
+   `block` keeps the badge preview from painting a fallback face that
+   would misreport text widths.
+   ───────────────────────────────────────────────────────────── */
+@font-face {
+  font-family: "Manrope Badge";
+  src: url("/fonts/Manrope-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "Manrope Badge";
+  src: url("/fonts/Manrope-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+}
+
+/* ─────────────────────────────────────────────────────────────
    STRATUM DESIGN SYSTEM — dark, cinematic, gem-lit
    Ported from the Webflow WIP visual language.
    ───────────────────────────────────────────────────────────── */
