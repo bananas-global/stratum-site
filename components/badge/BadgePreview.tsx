@@ -4,7 +4,6 @@ import { useEffect, useId, useRef, useState } from "react";
 import { ensureBadgeFonts } from "@/lib/badge-fonts";
 import {
   BADGE,
-  artworkMarkup,
   BLEED_BOX,
   clearTextMeasureCache,
   SAFE_BOX,
@@ -80,7 +79,7 @@ export default function BadgePreview({
     mmPerPx: number;
   } | null>(null);
 
-  const { band, clip, head, emptyFill } = BADGE.photo;
+  const { band, clip, guide, emptyFill } = BADGE.photo;
   // Sizes text against real Manrope metrics rather than the fallback face.
   useBadgeFontsLoaded();
   const slots = resolveTextSlots(person);
@@ -163,9 +162,17 @@ export default function BadgePreview({
         </clipPath>
       </defs>
 
-      {/* Official artwork, ids scoped to this instance so a roster full of
-          badges doesn't cross-wire their clip paths. */}
-      <g dangerouslySetInnerHTML={{ __html: artworkMarkup(uid) }} />
+      {/* Full-bleed Figma background. The fallback keeps the card usable if
+          the local asset ever fails to load. */}
+      <rect width={BLEED_BOX.w} height={BLEED_BOX.h} fill="#0C0C0C" />
+      <image
+        href={BADGE.background.src}
+        x={0}
+        y={0}
+        width={BLEED_BOX.w}
+        height={BLEED_BOX.h}
+        preserveAspectRatio="xMidYMid slice"
+      />
 
       {draw && photo ? (
         <g clipPath={`url(#${clipId})`}>
@@ -184,15 +191,34 @@ export default function BadgePreview({
         // Nothing uploaded: mark where the head belongs, nothing more. A grey
         // placeholder box would print if it ever leaked into an export.
         <rect
-          x={head.x}
-          y={head.y}
-          width={head.w}
-          height={head.h}
-          rx={head.w / 2}
-          ry={head.w / 2}
+          x={guide.x}
+          y={guide.y}
+          width={guide.w}
+          height={guide.h}
+          rx={guide.w / 2}
+          ry={guide.w / 2}
           fill={emptyFill}
         />
       )}
+
+      {/* The information panel covers the lower background and creates a
+          precise edge for the portrait to meet. */}
+      <rect
+        x={0}
+        y={BADGE.panel.y}
+        width={BLEED_BOX.w}
+        height={BLEED_BOX.h - BADGE.panel.y}
+        fill={BADGE.panel.fill}
+      />
+      <line
+        x1={0}
+        y1={BADGE.panel.y}
+        x2={BLEED_BOX.w}
+        y2={BADGE.panel.y}
+        stroke={BADGE.panel.separator}
+        strokeOpacity={BADGE.panel.separatorOpacity}
+        strokeWidth={BADGE.panel.separatorWidth}
+      />
 
       {slots.map((slot) => (
         <text
@@ -203,6 +229,7 @@ export default function BadgePreview({
           fontSize={slot.sizeMm}
           fontWeight={slot.weight === "bold" ? 700 : 400}
           fill={slot.color}
+          fillOpacity={slot.opacity}
           letterSpacing={slot.tracking || undefined}
           textAnchor={
             slot.align === "center" ? "middle" : slot.align === "right" ? "end" : "start"
@@ -212,6 +239,15 @@ export default function BadgePreview({
           {slot.text}
         </text>
       ))}
+
+      <image
+        href={BADGE.logo.previewSrc}
+        x={BADGE.logo.x}
+        y={BADGE.logo.y}
+        width={BADGE.logo.w}
+        height={BADGE.logo.h}
+        preserveAspectRatio="xMidYMid meet"
+      />
 
       {showGuides && (
         <g fill="none" pointerEvents="none">
@@ -247,12 +283,12 @@ export default function BadgePreview({
           {/* Head target. Line up the sitter's head with this; the body is
               meant to carry on past it. */}
           <rect
-            x={head.x}
-            y={head.y}
-            width={head.w}
-            height={head.h}
-            rx={head.w / 2}
-            ry={head.w / 2}
+            x={guide.x}
+            y={guide.y}
+            width={guide.w}
+            height={guide.h}
+            rx={guide.w / 2}
+            ry={guide.w / 2}
             stroke="#71FF92"
             strokeOpacity={0.55}
             strokeWidth={0.3}

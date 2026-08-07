@@ -6,24 +6,21 @@
    a page sized to hold its bleed and its trim marks. One badge per
    page, however many are exported.
 
-   Nothing here is a screenshot — the artwork goes in as vector via
-   svg2pdf, the copy as embedded Manrope text (selectable,
-   resolution-independent), and only the photograph is a raster, baked
-   at BADGE.photo.export.dpi.
+   Nothing here is a screenshot — the fixed Figma background and uploaded
+   portrait are baked at print resolution, while the copy stays embedded
+   Manrope text (selectable and resolution-independent).
 
    Runs entirely in the browser. No upload, no server round-trip, so
    no photo or personal detail ever leaves the tab — see the privacy
    note in IdBadgeBuilder.
 
-   jsPDF and svg2pdf are imported dynamically: together they are a
-   few hundred KB, and nobody should pay for them just to open the
-   page. They load on the first export.
+   jsPDF is imported dynamically, so nobody pays for it just to open the
+   page. It loads on the first export.
    ──────────────────────────────────────────────────────────────── */
 
 import {
   BADGE,
   BADGE_BACKGROUND_FALLBACK,
-  artworkMarkup,
   BLEED_BOX,
   TRIM_BOX,
   type BadgePerson,
@@ -38,82 +35,17 @@ import {
 import { ensureBadgeFonts, resolvePdfFont } from "./badge-fonts";
 
 type JsPdf = import("jspdf").jsPDF;
-type Svg2Pdf = typeof import("svg2pdf.js").svg2pdf;
 
 /* ── Toolkit loading ─────────────────────────────────────────────── */
 
 async function loadToolkit() {
-  const [jspdf, svg2pdfMod] = await Promise.all([
+  const [jspdf] = await Promise.all([
     import("jspdf"),
-    import("svg2pdf.js"),
     // Text is sized by measuring Manrope on a canvas; measuring before the
     // face is loaded would size against the fallback and shift every line.
     ensureBadgeFonts(),
   ]);
-  return { JsPDF: jspdf.jsPDF, svg2pdf: svg2pdfMod.svg2pdf };
-}
-
-/* ── Background artwork ──────────────────────────────────────────
-   svg2pdf wants a live SVGSVGElement, and it reads geometry off the
-   node, so the node has to be laid out — a detached element or one
-   inside `display:none` measures as zero. We park a host off-screen
-   for the duration of the export and tear it down afterwards. */
-
-function createSvgHost(): HTMLDivElement {
-  const host = document.createElement("div");
-  host.setAttribute("aria-hidden", "true");
-  host.style.cssText =
-    "position:fixed;left:-10000px;top:0;width:0;height:0;overflow:hidden;opacity:0;pointer-events:none";
-  document.body.appendChild(host);
-  return host;
-}
-
-/** Counter behind the per-instance id scoping (see artworkMarkup). */
-let artworkSeq = 0;
-
-/** Parse the artwork fresh for one badge; `null` if it is not usable SVG. */
-function artworkElement(): SVGSVGElement | null {
-  artworkSeq += 1;
-  const markup = artworkMarkup(`pdf${artworkSeq}`);
-  const parsed = new DOMParser().parseFromString(markup, "image/svg+xml");
-  const root = parsed.documentElement;
-
-  if (!root || root.nodeName.toLowerCase() !== "svg" || parsed.querySelector("parsererror")) {
-    console.error("[id-badge] the badge artwork is not valid SVG — using a flat fill.");
-    return null;
-  }
-  return root as unknown as SVGSVGElement;
-}
-
-async function drawBackground(
-  doc: JsPdf,
-  svg2pdf: Svg2Pdf,
-  host: HTMLDivElement,
-  origin: { x: number; y: number },
-) {
-  const node = artworkElement();
-
-  if (node) {
-    host.appendChild(node);
-    try {
-      await svg2pdf(node, doc, {
-        x: origin.x,
-        y: origin.y,
-        width: BLEED_BOX.w,
-        height: BLEED_BOX.h,
-      });
-      return;
-    } catch (error) {
-      // A background that won't convert must not take the export down with it.
-      console.error("[id-badge] background SVG failed to render into the PDF", error);
-    } finally {
-      node.remove();
-    }
-  }
-
-  const [r, g, b] = hexToRgb(BADGE_BACKGROUND_FALLBACK);
-  doc.setFillColor(r, g, b);
-  doc.rect(origin.x, origin.y, BLEED_BOX.w, BLEED_BOX.h, "F");
+  return { JsPDF: jspdf.jsPDF };
 }
 
 /* ── Photo ───────────────────────────────────────────────────────
@@ -129,6 +61,77 @@ function loadImage(dataUrl: string): Promise<HTMLImageElement> {
     img.onerror = () => reject(new Error("Could not decode the uploaded photo."));
     img.src = dataUrl;
   });
+}
+
+let fixedBackgroundPromise: Promise<string> | null = null;
+let logoPromise: Promise<HTMLImageElement> | null = null;
+
+/** Bake the portrait background to the exact bleed-box aspect ratio, using
+    the same centred cover crop as the SVG preview. */
+function fixedBackgroundDataUrl(): Promise<string> {
+  if (fixedBackgroundPromise) return fixedBackgroundPromise;
+
+  fixedBackgroundPromise = loadImage(BADGE.background.src).then((img) => {
+    const pxPerMm = BADGE.background.exportDpi / 25.4;
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.round(BLEED_BOX.w * pxPerMm);
+    canvas.height = Math.round(BLEED_BOX.h * pxPerMm);
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) throw new Error("Could not prepare the badge background.");
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
+
+    const scale = Math.max(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight);
+    const width = img.naturalWidth * scale;
+    const height = img.naturalHeight * scale;
+    ctx.drawImage(img, (canvas.width - width) / 2, (canvas.height - height) / 2, width, height);
+
+    return canvas.toDataURL("image/jpeg", BADGE.background.quality);
+  });
+
+  return fixedBackgroundPromise;
+}
+
+async function drawFixedBackground(doc: JsPdf, origin: { x: number; y: number }) {
+  try {
+    const background = await fixedBackgroundDataUrl();
+    doc.addImage(background, "JPEG", origin.x, origin.y, BLEED_BOX.w, BLEED_BOX.h);
+  } catch (error) {
+    console.error("[id-badge] fixed background failed to render into the PDF", error);
+    const [r, g, b] = hexToRgb(BADGE_BACKGROUND_FALLBACK);
+    doc.setFillColor(r, g, b);
+    doc.rect(origin.x, origin.y, BLEED_BOX.w, BLEED_BOX.h, "F");
+  }
+}
+
+function drawPanel(doc: JsPdf, origin: { x: number; y: number }) {
+  const { panel } = BADGE;
+  const [r, g, b] = hexToRgb(panel.fill);
+  doc.setFillColor(r, g, b);
+  doc.rect(origin.x, origin.y + panel.y, BLEED_BOX.w, BLEED_BOX.h - panel.y, "F");
+
+  const [sr, sg, sb] = hexToRgb(panel.separator);
+  doc.setDrawColor(
+    Math.round(sr * panel.separatorOpacity),
+    Math.round(sg * panel.separatorOpacity),
+    Math.round(sb * panel.separatorOpacity),
+  );
+  doc.setLineWidth(panel.separatorWidth);
+  doc.line(origin.x, origin.y + panel.y, origin.x + BLEED_BOX.w, origin.y + panel.y);
+}
+
+async function drawLogo(doc: JsPdf, origin: { x: number; y: number }) {
+  logoPromise ??= loadImage(BADGE.logo.pdfSrc);
+  const logo = await logoPromise;
+  doc.addImage(
+    logo,
+    "PNG",
+    origin.x + BADGE.logo.x,
+    origin.y + BADGE.logo.y,
+    BADGE.logo.w,
+    BADGE.logo.h,
+  );
 }
 
 type BakedPhoto = { dataUrl: string; format: "PNG" | "JPEG" };
@@ -179,13 +182,11 @@ async function bakePhoto(person: BadgePerson): Promise<BakedPhoto | null> {
 
 async function drawBadge(
   doc: JsPdf,
-  svg2pdf: Svg2Pdf,
-  host: HTMLDivElement,
   person: BadgePerson,
   origin: { x: number; y: number },
   fontName: string,
 ) {
-  await drawBackground(doc, svg2pdf, host, origin);
+  await drawFixedBackground(doc, origin);
 
   const { clip } = BADGE.photo;
   const baked = await bakePhoto(person);
@@ -200,13 +201,23 @@ async function drawBadge(
     );
   }
 
+  // Cover the lower edge of the portrait with the information panel, then
+  // add the subtle separator requested in the Figma revision.
+  drawPanel(doc, origin);
+
   // Real, selectable text in the embedded Manrope — straight from the
   // shared layout resolution, so it lands where the preview put it.
   for (const slot of resolveTextSlots(person)) {
     const [r, g, b] = hexToRgb(slot.color);
     doc.setFont(fontName, slot.weight);
     doc.setFontSize(slot.sizePt);
-    doc.setTextColor(r, g, b);
+    // The panel is pure black, so preblending produces the same result as
+    // SVG fill-opacity while keeping jsPDF's text fully selectable.
+    doc.setTextColor(
+      Math.round(r * slot.opacity),
+      Math.round(g * slot.opacity),
+      Math.round(b * slot.opacity),
+    );
     // jsPDF folds charSpace into its alignment width exactly as SVG folds in
     // letter-spacing, so centred tracked text lands in the same place in both.
     doc.setCharSpace(slot.tracking);
@@ -216,6 +227,7 @@ async function drawBadge(
     });
   }
   doc.setCharSpace(0);
+  await drawLogo(doc, origin);
 }
 
 function drawCropMarks(doc: JsPdf, trim: Rect) {
@@ -244,29 +256,24 @@ function stampMetadata(doc: JsPdf) {
 export async function buildBadgesPdf(people: BadgePerson[]): Promise<Blob> {
   if (people.length === 0) throw new Error("Nothing selected to export.");
 
-  const { JsPDF, svg2pdf } = await loadToolkit();
+  const { JsPDF } = await loadToolkit();
   const page = pageSize();
   const format: [number, number] = [page.w, page.h];
   const doc = new JsPDF({ unit: "mm", format, orientation: "portrait", compress: true });
   stampMetadata(doc);
   const fontName = await resolvePdfFont(doc);
 
-  const host = createSvgHost();
-  try {
-    const origin = pageOrigin();
-    for (let i = 0; i < people.length; i += 1) {
-      if (i > 0) doc.addPage(format, "portrait");
+  const origin = pageOrigin();
+  for (let i = 0; i < people.length; i += 1) {
+    if (i > 0) doc.addPage(format, "portrait");
 
-      await drawBadge(doc, svg2pdf, host, people[i], origin, fontName);
-      drawCropMarks(doc, {
-        x: origin.x + TRIM_BOX.x,
-        y: origin.y + TRIM_BOX.y,
-        w: TRIM_BOX.w,
-        h: TRIM_BOX.h,
-      });
-    }
-  } finally {
-    host.remove();
+    await drawBadge(doc, people[i], origin, fontName);
+    drawCropMarks(doc, {
+      x: origin.x + TRIM_BOX.x,
+      y: origin.y + TRIM_BOX.y,
+      w: TRIM_BOX.w,
+      h: TRIM_BOX.h,
+    });
   }
 
   return doc.output("blob");

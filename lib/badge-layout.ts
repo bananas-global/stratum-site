@@ -8,9 +8,8 @@
    user units *are* millimetres; the PDF is built with jsPDF in
    `unit: "mm"`. Same coordinates, two renderers.
 
-   ▸ To swap the badge artwork: replace the string in
-     badge-artwork.ts (paste the whole <svg> document). The contract
-     it has to meet is documented in that file.
+   ▸ To swap the fixed background or logo assets, edit
+     badge-artwork.ts. Their geometry lives in BADGE below.
    ▸ To move the photo or the text: edit BADGE.photo (band / clip /
      head guide) and BADGE.text. Nothing else needs touching.
    ▸ To change the trim size, bleed, page margin or crop marks: edit
@@ -23,7 +22,7 @@
    runs to the full BLEED_BOX size.
    ──────────────────────────────────────────────────────────────── */
 
-import { BADGE_ARTWORK_SVG } from "./badge-artwork";
+import { BADGE_ARTWORK } from "./badge-artwork";
 import { BADGE_FONT } from "./badge-fonts";
 
 export const MM_PER_PT = 25.4 / 72;
@@ -101,11 +100,18 @@ export type TextSlot = {
   maxWidth: number;
   /** Letter spacing in mm. */
   tracking?: number;
+  /** Visual opacity. PDF output preblends this against the black panel. */
+  opacity?: number;
   uppercase?: boolean;
 };
 
 /** Used if the artwork ever fails to parse, so export still works. */
 export const BADGE_BACKGROUND_FALLBACK = "#0C0C0C";
+
+const BADGE_LOGO_WIDTH = 44;
+const BADGE_LOGO_HEIGHT = BADGE_LOGO_WIDTH / BADGE_ARTWORK.logo.aspectRatio;
+// Bleed (3) + trim height (86) - safe inset (4).
+const BADGE_SAFE_BOTTOM = 85;
 
 /* ── The badge ───────────────────────────────────────────────────── */
 
@@ -125,12 +131,38 @@ export const BADGE = {
     css: `"${BADGE_FONT.cssFamily}", ui-sans-serif, sans-serif`,
   },
 
+  /** Full-bleed photographic surface. The black information panel below
+      covers its lower half, matching the second Figma composition. */
+  background: {
+    ...BADGE_ARTWORK.background,
+    exportDpi: 300,
+    quality: 0.94,
+  },
+
+  /** Information panel and the quiet rule separating it from the portrait. */
+  panel: {
+    y: 46.6,
+    fill: "#000000",
+    separator: "#FFFFFF",
+    separatorOpacity: 0.16,
+    separatorWidth: 0.18,
+  },
+
+  /** Same white + amethyst wordmark used in the site header, aligned to the
+      text column and filling all available width inside the safe area. */
+  logo: {
+    ...BADGE_ARTWORK.logo,
+    x: 9,
+    y: BADGE_SAFE_BOTTOM - BADGE_LOGO_HEIGHT,
+    w: BADGE_LOGO_WIDTH,
+    h: BADGE_LOGO_HEIGHT,
+  },
+
   /* The photo is NOT cover-fitted into a small frame. The artwork asks for a
      cut-out portrait standing in a band, so there are two separate rects:
 
-       band  — the designed photo region, straight off Arte.svg. Its base at
-               y 46.6 is the same line where the artwork's pattern gives way
-               to flat black.
+       band  — the designed photo region. Its base at y 46.6 is the same
+               line where the photographic surface gives way to flat black.
        clip  — what actually crops the photo. The band, widened to the bleed
                on both sides, so broad shoulders run off the card properly
                instead of stopping on the trim line where a drifting
@@ -140,12 +172,15 @@ export const BADGE = {
                this capsule; the body carries on past it. Masking to the
                capsule is exactly what must NOT happen. */
   photo: {
-    /** Designed photo band, from Arte.svg (trim width × the upper band). */
-    band: { x: 3, y: 12.6, w: 54, h: 34 } as Rect,
-    /** The real crop: the band bled off left and right. */
-    clip: { x: 0, y: 12.6, w: 60, h: 34 } as Rect,
-    /** Head target from Arte.svg. radius = w/2, i.e. a true capsule. */
-    head: { x: 12.35, y: 20.55, w: 11.1, h: 15.05 } as Rect,
+    /** Designed photo band, filling the upper portion inside the trim. */
+    band: { x: 3, y: 3, w: 54, h: 43.6 } as Rect,
+    /** The real crop bleeds on every outer edge and stops at the panel. */
+    clip: { x: 0, y: 0, w: 60, h: 46.6 } as Rect,
+    /** Centred head target for the larger, symmetrical portrait treatment. */
+    head: { x: 23, y: 6.5, w: 14, h: 19 } as Rect,
+    /** Visible capsule guide, slightly larger and lower than the placement
+        anchor. Kept separate so changing the guide does not move the photo. */
+    guide: { x: 22.5, y: 8.5, w: 15, h: 20.5 } as Rect,
 
     /** Opening placement for a fresh upload, before the user nudges it.
         A head-and-shoulders portrait is assumed: the head fills roughly this
@@ -174,8 +209,7 @@ export const BADGE = {
 
   /* Left-aligned on one common margin, matching the reference art. All four
      slots sit on the flat black below the divider (y 46.6) and clear the
-     STRATUM wordmark that starts at y 81.75. Note there is no "STRATUM"
-     slot: the wordmark and the "A" mark belong to the artwork.
+     wordmark at the bottom.
 
      Sizes were solved from the reference rather than eyeballed: the set
      width of each line in the reference was measured, then the point size
@@ -189,7 +223,7 @@ export const BADGE = {
       key: "fullName",
       field: "fullName",
       x: 9,
-      y: 55.5,
+      y: 56,
       sizePt: 19.1,
       weight: "bold",
       color: "#FFFFFF",
@@ -200,10 +234,12 @@ export const BADGE = {
       key: "jobTitle",
       field: "jobTitle",
       x: 9,
-      y: 60.5,
+      y: 61.3,
       sizePt: 8.7,
       weight: "normal",
-      color: "#FFFFFF",
+      // `text-brand-light` from the site design system: the accessible
+      // amethyst used for copy on dark surfaces.
+      color: "#B985FF",
       align: "left",
       maxWidth: 44,
     },
@@ -215,6 +251,7 @@ export const BADGE = {
       sizePt: 6.8,
       weight: "normal",
       color: "#FFFFFF",
+      opacity: 0.6,
       align: "left",
       maxWidth: 44,
     },
@@ -222,10 +259,11 @@ export const BADGE = {
       key: "phone",
       field: "phone",
       x: 9,
-      y: 72,
+      y: 74.2,
       sizePt: 6.8,
       weight: "normal",
       color: "#FFFFFF",
+      opacity: 0.6,
       align: "left",
       maxWidth: 44,
     },
@@ -262,48 +300,6 @@ export const SAFE_BOX: Rect = {
   w: BADGE.trim.w - BADGE.safe * 2,
   h: BADGE.trim.h - BADGE.safe * 2,
 };
-
-/* ── Artwork normalisation ───────────────────────────────────────
-   The delivered file declares its own pixel size (1200×1840) and
-   carries Figma's generated ids. Two things have to be fixed up
-   before it can be used, and both are pure string work so the
-   preview and the PDF get byte-identical markup:
-
-   1. width/height are forced to the bleed box in mm, leaving the
-      viewBox alone. That is what lets the same file drop into an
-      SVG whose user units are millimetres, whatever scale the
-      designer exported at.
-   2. ids are suffixed per instance. The roster puts many copies of
-      this artwork in one document, and duplicate ids would make every
-      clip-path reference resolve to whichever copy the browser
-      happened to parse first. */
-
-function escapeForRegex(value: string) {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-/** The artwork markup, sized to the bleed box with ids scoped to `uid`. */
-export function artworkMarkup(uid: string): string {
-  let svg = BADGE_ARTWORK_SVG;
-
-  // Force the outer dimensions; keep the viewBox so the art still scales.
-  svg = svg.replace(/^<svg\b[^>]*>/, (openTag) =>
-    openTag
-      .replace(/\swidth="[^"]*"/, "")
-      .replace(/\sheight="[^"]*"/, "")
-      .replace(/^<svg/, `<svg width="${BLEED_BOX.w}" height="${BLEED_BOX.h}"`),
-  );
-
-  for (const id of new Set(svg.match(/id="([^"]+)"/g)?.map((m) => m.slice(4, -1)) ?? [])) {
-    const escaped = escapeForRegex(id);
-    svg = svg
-      .replace(new RegExp(`id="${escaped}"`, "g"), `id="${id}-${uid}"`)
-      .replace(new RegExp(`url\\(#${escaped}\\)`, "g"), `url(#${id}-${uid})`)
-      .replace(new RegExp(`href="#${escaped}"`, "g"), `href="#${id}-${uid}"`);
-  }
-
-  return svg;
-}
 
 /** The page a badge is printed on: its bleed box plus the mark margin on all
     four sides. Every page in every export is this size. */
@@ -535,6 +531,7 @@ export type ResolvedText = {
   sizeMm: number;
   weight: "normal" | "bold";
   color: string;
+  opacity: number;
   align: "left" | "center" | "right";
   tracking: number;
 };
@@ -568,6 +565,7 @@ export function resolveTextSlots(person: BadgePerson): ResolvedText[] {
       sizeMm: ptToMm(sizePt),
       weight: slot.weight,
       color: slot.color,
+      opacity: slot.opacity ?? 1,
       align: slot.align,
       tracking,
     });
