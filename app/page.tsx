@@ -81,16 +81,23 @@ export default function Home() {
           >
             <div className="flex w-max animate-marquee items-center gap-x-20 pr-20 group-hover:[animation-play-state:paused]">
               {/* per-logo height (px) tuned for optical balance — not raw bounding box.
-                  List rendered twice in order (A…E, A…E) so the -50% loop is seamless. */}
+                  Each animation half contains two full logo sets so it stays wider
+                  than the 1280px container. Both halves are identical, keeping the
+                  -50% loop seamless without exposing an empty stretch. */}
               {(() => {
                 const logos = [
-                  { name: "Microsoft", src: "/logos/microsoft.svg", h: 26 },
-                  { name: "SentinelOne", src: "/logos/sentinelone.svg", h: 22 },
-                  { name: "N-able", src: "/logos/n-able.svg", h: 19 },
-                  { name: "KnowBe4", src: "/logos/knowbe4.svg", h: 22 },
-                  { name: "IT Glue", src: "/logos/it-glue.svg", h: 34 },
+                  { name: "Microsoft", src: "/logos/color/microsoft-color.png", h: 26 },
+                  { name: "SentinelOne", src: "/logos/color/sentinelone-color.png", h: 22 },
+                  { name: "N-able", src: "/logos/color/n-able-color.png", h: 19 },
+                  { name: "KnowBe4", src: "/logos/color/knowbe4-color.png", h: 22 },
+                  { name: "IT Glue", src: "/logos/color/it-glue-color.png", h: 34 },
+                  { name: "Bitwarden", src: "/logos/color/bitwarden-color.png", h: 22 },
                 ];
-                return logos.concat(logos);
+                const half = logos.concat(logos);
+                return half.concat(half).map((logo, i) => ({
+                  ...logo,
+                  ariaHidden: i >= logos.length,
+                }));
               })()
                 .map((logo, i) => (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -98,9 +105,9 @@ export default function Home() {
                     key={`${logo.name}-${i}`}
                     src={logo.src}
                     alt={logo.name}
-                    aria-hidden={i % 2 === 1}
+                    aria-hidden={logo.ariaHidden}
                     style={{ height: logo.h }}
-                    className="logo-mark w-auto shrink-0 object-contain opacity-50 transition-opacity duration-300 hover:opacity-100"
+                    className="logo-mark w-auto shrink-0 object-contain"
                   />
                 ))}
             </div>

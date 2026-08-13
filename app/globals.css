@@ -586,11 +586,6 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: none;
 }
 
-/* Partner logos ship as white monochrome SVGs — invert to dark on light bands */
-.section-light .logo-mark {
-  filter: invert(1);
-}
-
 /* ── Approach — cards ─────────────────────────────────────── */
 .approach-image-slot-img {
   mix-blend-mode: multiply;
