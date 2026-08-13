@@ -148,8 +148,8 @@ export const BADGE = {
     separatorWidth: 0.18,
   },
 
-  /** Same white + amethyst wordmark used in the site header, aligned to the
-      text column and filling all available width inside the safe area. */
+  /** One-colour white wordmark, aligned to the text column and filling all
+      available width inside the safe area. */
   logo: {
     ...BADGE_ARTWORK.logo,
     x: 9,
@@ -237,9 +237,7 @@ export const BADGE = {
       y: 61.3,
       sizePt: 8.7,
       weight: "normal",
-      // `text-brand-light` from the site design system: the accessible
-      // amethyst used for copy on dark surfaces.
-      color: "#B985FF",
+      color: "#FFFFFF",
       align: "left",
       maxWidth: 44,
     },

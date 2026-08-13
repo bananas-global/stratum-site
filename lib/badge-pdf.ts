@@ -33,6 +33,7 @@ import {
   type Rect,
 } from "./badge-layout";
 import { ensureBadgeFonts, resolvePdfFont } from "./badge-fonts";
+import { iconPatternSvgMarkup } from "@/components/IconPattern";
 
 type JsPdf = import("jspdf").jsPDF;
 
@@ -66,12 +67,23 @@ function loadImage(dataUrl: string): Promise<HTMLImageElement> {
 let fixedBackgroundPromise: Promise<string> | null = null;
 let logoPromise: Promise<HTMLImageElement> | null = null;
 
-/** Bake the portrait background to the exact bleed-box aspect ratio, using
-    the same centred cover crop as the SVG preview. */
+/** Bake the canonical pattern to the exact bleed-box aspect ratio. */
 function fixedBackgroundDataUrl(): Promise<string> {
   if (fixedBackgroundPromise) return fixedBackgroundPromise;
 
-  fixedBackgroundPromise = loadImage(BADGE.background.src).then((img) => {
+  const svg = iconPatternSvgMarkup({
+    width: BADGE.background.logicalWidth,
+    height: BADGE.background.logicalHeight,
+    scale: BADGE.background.scale,
+    color: BADGE.background.color,
+    bgFrom: BADGE.background.bgFrom,
+    bgTo: BADGE.background.bgTo,
+  });
+  const svgUrl = URL.createObjectURL(
+    new Blob([svg], { type: "image/svg+xml;charset=utf-8" }),
+  );
+
+  fixedBackgroundPromise = loadImage(svgUrl).then((img) => {
     const pxPerMm = BADGE.background.exportDpi / 25.4;
     const canvas = document.createElement("canvas");
     canvas.width = Math.round(BLEED_BOX.w * pxPerMm);
@@ -82,12 +94,13 @@ function fixedBackgroundDataUrl(): Promise<string> {
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = "high";
 
-    const scale = Math.max(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight);
-    const width = img.naturalWidth * scale;
-    const height = img.naturalHeight * scale;
-    ctx.drawImage(img, (canvas.width - width) / 2, (canvas.height - height) / 2, width, height);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    URL.revokeObjectURL(svgUrl);
 
     return canvas.toDataURL("image/jpeg", BADGE.background.quality);
+  }).catch((error) => {
+    URL.revokeObjectURL(svgUrl);
+    throw error;
   });
 
   return fixedBackgroundPromise;

@@ -83,7 +83,7 @@ export default function ContactPage() {
       />
 
       {/* Form + aside */}
-      <section className="section bg-bg">
+      <section className="section section-light">
         <div className="container grid gap-12 lg:grid-cols-[1.3fr_0.7fr]">
           <div data-reveal className="flex flex-col gap-6">
             <SectionHeader title="Tell us a bit about what you need." lede="The more context you share, the better the first conversation. Plain answers, no pitch deck." />
@@ -109,7 +109,7 @@ export default function ContactPage() {
       {/* FAQ — engineered for search + LLM extraction (FAQPage schema above) */}
       <section className="section-sm bg-surface">
         <div className="container flex flex-col gap-10">
-          <SectionHeader title="Before you reach out — quick answers." />
+          <SectionHeader title="Frequently asked questions" />
           <FAQ items={FAQS} />
         </div>
       </section>

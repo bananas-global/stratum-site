@@ -191,7 +191,7 @@ export default function Home() {
       <IndustriesTabs />
 
       {/* How we work */}
-      <section className="section section-light">
+      <section className="section section-light section-light-muted">
         <div className="container flex flex-col gap-12">
           <SectionHeader
             eyebrow="Our approach"

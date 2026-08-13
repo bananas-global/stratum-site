@@ -21,7 +21,7 @@ const PRESETS: Array<{ label: string; w: number; h: number }> = [
 const DEFAULTS = {
   width: 1920,
   height: 1080,
-  scale: 0.5,
+  scale: 0.445,
   color: "#000000",
   bgFrom: "#1B1B1B",
   bgTo: "#0A0A0A",

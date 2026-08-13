@@ -82,7 +82,11 @@ export default function Nav() {
           <div className="flex flex-1 items-center">
             <Link href="/" aria-label="Stratum — Home" className="block py-1.5">
               <Image
-                src={lightNav ? "/images/logo-on-light.svg" : "/images/logo.svg"}
+                src={
+                  lightNav
+                    ? "/brand/stratum-logo-black-mono.svg"
+                    : "/brand/stratum-logo-white-mono.svg"
+                }
                 alt="Stratum"
                 width={144}
                 height={28}
@@ -99,7 +103,7 @@ export default function Nav() {
                 <div key={item.label} className="group relative">
                   <Link
                     href={item.href}
-                    className={`flex items-center gap-1 whitespace-nowrap px-4 py-1.5 text-base transition-colors ${
+                    className={`flex items-center gap-1 whitespace-nowrap px-4 py-1.5 text-[1.0625rem] font-medium transition-colors ${
                       isActive(item.href) ? "text-ink-bright" : "text-ink-dim hover:text-ink-bright"
                     }`}
                   >
@@ -135,7 +139,7 @@ export default function Nav() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`whitespace-nowrap px-4 py-1.5 text-base transition-colors ${
+                  className={`whitespace-nowrap px-4 py-1.5 text-[1.0625rem] font-medium transition-colors ${
                     isActive(item.href) ? "text-ink-bright" : "text-ink-dim hover:text-ink-bright"
                   }`}
                 >
@@ -189,7 +193,7 @@ export default function Nav() {
               <div key={item.label} className="flex flex-col">
                 <Link
                   href={item.href}
-                  className={`py-2 text-base ${isActive(item.href) ? "text-ink-bright" : "text-ink-dim"}`}
+                  className={`py-2 text-[1.0625rem] font-medium ${isActive(item.href) ? "text-ink-bright" : "text-ink-dim"}`}
                 >
                   {item.label}
                 </Link>

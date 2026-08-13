@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { ensureBadgeFonts } from "@/lib/badge-fonts";
+import { IconPattern } from "@/components/IconPattern";
 import {
   BADGE,
   BLEED_BOX,
@@ -162,17 +163,19 @@ export default function BadgePreview({
         </clipPath>
       </defs>
 
-      {/* Full-bleed Figma background. The fallback keeps the card usable if
-          the local asset ever fails to load. */}
+      {/* Full-bleed canonical pattern. A 600×920 logical canvas maps exactly
+          onto the 60×92 mm bleed box, preserving the generator's geometry. */}
       <rect width={BLEED_BOX.w} height={BLEED_BOX.h} fill="#0C0C0C" />
-      <image
-        href={BADGE.background.src}
-        x={0}
-        y={0}
-        width={BLEED_BOX.w}
-        height={BLEED_BOX.h}
-        preserveAspectRatio="xMidYMid slice"
-      />
+      <g transform={`scale(${BLEED_BOX.w / BADGE.background.logicalWidth})`}>
+        <IconPattern
+          width={BADGE.background.logicalWidth}
+          height={BADGE.background.logicalHeight}
+          scale={BADGE.background.scale}
+          color={BADGE.background.color}
+          bgFrom={BADGE.background.bgFrom}
+          bgTo={BADGE.background.bgTo}
+        />
+      </g>
 
       {draw && photo ? (
         <g clipPath={`url(#${clipId})`}>

@@ -4,33 +4,31 @@ import { forwardRef, useEffect, useId, useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 
 /* ────────────────────────────────────────────────────────────────
-   IconPattern — seamless tiling of the Stratum icon (p2 wallpaper).
+   IconPattern — seamless tiling of the canonical Stratum icon.
 
-   The seed glyph is a convex pentagon that tessellates the plane.
-   A "pair" = the seed + a copy rotated 180° about the midpoint of its
-   right slant; that pair is a centrally-symmetric hexagon (parallelogon)
-   which tiles by pure translation. We stamp the pair at every lattice
-   point  i·u + j·v  to fill the viewport with zero seams.
+   The icon path is the production artwork: it keeps the diagonal break
+   in the lower bar and leaves the triangular counter open. The original
+   p2 lattice is preserved: a rotated pair is repeated along vectors U/V.
 
    Renders one self-contained <svg> (gradient background baked in), so
    it can be dropped in as a section background *or* serialised straight
    to PNG (see /pattern-generator).
    ──────────────────────────────────────────────────────────────── */
 
-// Seed centreline path (from public/pattern/stratum-pattern-seed.svg).
-const SEED =
-  "M236.609 12L239.927 18.6338L394.927 328.634L403.609 346H58.166L54.8486 339.366" +
-  "L16.0986 261.866L13.416 256.5L16.0986 251.134L132.349 18.6338L135.666 12H236.609Z" +
-  "M132.359 244.5H239.915L186.137 136.943L132.359 244.5Z";
+// Canonical artwork supplied by Stratum (viewBox 0 0 543 472).
+export const ICON_PATH =
+  "M242.06 131.111L130.843 354H274.771H314.024L372.904 472H274.771H117.759H58.8795" +
+  "L0 354L176.639 0H307.482L484.12 354L543 472H412.157L353.277 354L242.06 131.111Z";
 
-// 180° rotation about the right-slant midpoint (320.109, 179).
-const ROT180 = "matrix(-1 0 0 -1 640.218 358)";
-
-// Translation lattice (in seed units): band step + row step.
-const U = [491.136, 89.5] as const;
-const V = [77.5, -334] as const;
-
-const SEED_STROKE = 24; // matches the seed's own stroke-width, in seed units
+export const DEFAULT_PATTERN_LAYOUT = {
+  iconScale: 0.808,
+  rotationX: 358.5,
+  rotationY: 189.4,
+  uX: 598,
+  uY: 109.2,
+  vX: 99.7,
+  vY: -415.5,
+} as const;
 
 /** Map the 0–1 `scale` prop to a seed-unit → pixel multiplier. */
 export function scaleToK(scale: number): number {
@@ -39,14 +37,20 @@ export function scaleToK(scale: number): number {
 }
 
 /** Lattice points whose stamped pairs cover the w×h rectangle. */
-function tilePositions(w: number, h: number, k: number): Array<[number, number]> {
-  const Ux = k * U[0];
-  const Uy = k * U[1];
-  const Vx = k * V[0];
-  const Vy = k * V[1];
+export function tilePositions(
+  w: number,
+  h: number,
+  k: number,
+  layout: PatternLayout,
+): Array<[number, number]> {
+  const Ux = k * layout.uX;
+  const Uy = k * layout.uY;
+  const Vx = k * layout.vX;
+  const Vy = k * layout.vY;
   const det = Ux * Vy - Vx * Uy;
 
-  // Invert the lattice at each corner to find the (i, j) span.
+  if (Math.abs(det) < 0.0001) return [];
+
   let iMin = Infinity;
   let iMax = -Infinity;
   let jMin = Infinity;
@@ -57,6 +61,7 @@ function tilePositions(w: number, h: number, k: number): Array<[number, number]>
     [0, h],
     [w, h],
   ];
+
   for (const [x, y] of corners) {
     const i = (Vy * x - Vx * y) / det;
     const j = (-Uy * x + Ux * y) / det;
@@ -66,14 +71,62 @@ function tilePositions(w: number, h: number, k: number): Array<[number, number]>
     if (j > jMax) jMax = j;
   }
 
-  const M = 2; // overscan so a pair straddling the edge is never clipped short
+  const margin = 3;
   const out: Array<[number, number]> = [];
-  for (let j = Math.floor(jMin) - M; j <= Math.ceil(jMax) + M; j++) {
-    for (let i = Math.floor(iMin) - M; i <= Math.ceil(iMax) + M; i++) {
+  for (let j = Math.floor(jMin) - margin; j <= Math.ceil(jMax) + margin; j++) {
+    for (let i = Math.floor(iMin) - margin; i <= Math.ceil(iMax) + margin; i++) {
       out.push([i * Ux + j * Vx, i * Uy + j * Vy]);
     }
   }
+
   return out;
+}
+
+type PatternSvgMarkupOptions = {
+  width: number;
+  height: number;
+  scale?: number;
+  color?: string;
+  bgFrom?: string;
+  bgTo?: string;
+  showBackground?: boolean;
+  layout?: Partial<PatternLayout>;
+};
+
+const escapeSvgAttribute = (value: string) =>
+  value.replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("<", "&lt;");
+
+/** Standalone counterpart to IconPattern, used when a consumer needs pixels
+    rather than React output (the print-ready badge PDF, for example). */
+export function iconPatternSvgMarkup({
+  width,
+  height,
+  scale = 0.5,
+  color = "#000000",
+  bgFrom = "#1B1B1B",
+  bgTo = "#0A0A0A",
+  showBackground = true,
+  layout: layoutOverrides,
+}: PatternSvgMarkupOptions): string {
+  const k = scaleToK(scale);
+  const layout: PatternLayout = { ...DEFAULT_PATTERN_LAYOUT, ...layoutOverrides };
+  const tiles = tilePositions(width, height, k, layout);
+  const pairId = "stratum-pattern-pair";
+  const gradientId = "stratum-pattern-bg";
+  const background = showBackground
+    ? `<linearGradient id="${gradientId}" gradientUnits="userSpaceOnUse" x1="${width}" y1="0" x2="0" y2="${height}"><stop offset="0" stop-color="${escapeSvgAttribute(bgFrom)}"/><stop offset="1" stop-color="${escapeSvgAttribute(bgTo)}"/></linearGradient>`
+    : "";
+  const rect = showBackground
+    ? `<rect width="${width}" height="${height}" fill="url(#${gradientId})"/>`
+    : "";
+  const uses = tiles
+    .map(
+      ([x, y]) =>
+        `<use href="#${pairId}" transform="translate(${x.toFixed(2)} ${y.toFixed(2)}) scale(${k})"/>`,
+    )
+    .join("");
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><defs>${background}<g id="${pairId}" fill="${escapeSvgAttribute(color)}"><path d="${ICON_PATH}" transform="scale(${layout.iconScale})"/><path d="${ICON_PATH}" transform="matrix(${-layout.iconScale} 0 0 ${-layout.iconScale} ${(layout.rotationX * 2).toFixed(3)} ${(layout.rotationY * 2).toFixed(3)})"/></g></defs>${rect}${uses}</svg>`;
 }
 
 export type IconPatternProps = {
@@ -89,8 +142,20 @@ export type IconPatternProps = {
   bgTo?: string;
   /** Draw the gradient background. Set false to overlay glyphs on a transparent fill. */
   showBackground?: boolean;
+  /** Fine-grained tiling geometry. Values are ratios of the icon or row dimensions. */
+  layout?: Partial<PatternLayout>;
   className?: string;
   style?: CSSProperties;
+};
+
+export type PatternLayout = {
+  iconScale: number;
+  rotationX: number;
+  rotationY: number;
+  uX: number;
+  uY: number;
+  vX: number;
+  vY: number;
 };
 
 export const IconPattern = forwardRef<SVGSVGElement, IconPatternProps>(function IconPattern(
@@ -102,6 +167,7 @@ export const IconPattern = forwardRef<SVGSVGElement, IconPatternProps>(function 
     bgFrom = "#1B1B1B",
     bgTo = "#0A0A0A",
     showBackground = true,
+    layout: layoutOverrides,
     className,
     style,
   },
@@ -127,11 +193,18 @@ export const IconPattern = forwardRef<SVGSVGElement, IconPatternProps>(function 
 
   const uid = useId().replace(/[:]/g, "");
   const k = scaleToK(scale);
+  const layout = useMemo<PatternLayout>(
+    () => ({ ...DEFAULT_PATTERN_LAYOUT, ...layoutOverrides }),
+    [layoutOverrides],
+  );
 
   const w = fixed ? (width as number) : measured.w;
   const h = fixed ? (height as number) : measured.h;
 
-  const tiles = useMemo(() => (w > 0 && h > 0 ? tilePositions(w, h, k) : []), [w, h, k]);
+  const tiles = useMemo(
+    () => (w > 0 && h > 0 ? tilePositions(w, h, k, layout) : []),
+    [w, h, k, layout],
+  );
 
   const svg = (
     <svg
@@ -161,25 +234,23 @@ export const IconPattern = forwardRef<SVGSVGElement, IconPatternProps>(function 
             <stop offset="1" stopColor={bgTo} />
           </linearGradient>
         )}
-        <g
-          id={`${uid}-pair`}
-          fill="none"
-          stroke={color}
-          strokeWidth={SEED_STROKE}
-          strokeLinejoin="miter"
-          strokeMiterlimit={10}
-        >
-          <path d={SEED} />
-          <path d={SEED} transform={ROT180} />
+        <g id={`${uid}-pair`} fill={color}>
+          <path d={ICON_PATH} transform={`scale(${layout.iconScale})`} />
+          <path
+            d={ICON_PATH}
+            transform={`matrix(${-layout.iconScale} 0 0 ${-layout.iconScale} ${(
+              layout.rotationX * 2
+            ).toFixed(3)} ${(layout.rotationY * 2).toFixed(3)})`}
+          />
         </g>
       </defs>
       {showBackground && <rect x={0} y={0} width={w} height={h} fill={`url(#${uid}-bg)`} />}
-      {tiles.map(([tx, ty], idx) => (
+      {tiles.map(([x, y], idx) => (
         <use
           key={idx}
           href={`#${uid}-pair`}
           xlinkHref={`#${uid}-pair`}
-          transform={`translate(${tx.toFixed(2)} ${ty.toFixed(2)}) scale(${k})`}
+          transform={`translate(${x.toFixed(2)} ${y.toFixed(2)}) scale(${k})`}
         />
       ))}
     </svg>

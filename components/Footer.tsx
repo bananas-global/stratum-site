@@ -58,7 +58,13 @@ function FooterContactCol() {
             {SITE.phoneDisplay}
           </a>
         </li>
-        <li>HQ in Abbotsford, BC — serving the Lower Mainland</li>
+        <li>
+          <address className="not-italic">
+            #203 – 30720 Simpson Road
+            <br />
+            Abbotsford, BC V2T 6C7
+          </address>
+        </li>
       </ul>
     </div>
   );

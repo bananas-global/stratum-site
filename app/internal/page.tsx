@@ -3,6 +3,7 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { SectionHeader, ArrowNE } from "@/components/ui";
 import { SESSION_COOKIE, verifySessionToken } from "@/lib/internal-auth";
+import { KNOWLEDGE_BASE } from "@/lib/site";
 import { signOut } from "./sign-in/actions";
 
 // Index for the staff-only section. Also the landing spot when someone
@@ -28,6 +29,25 @@ const TOOLS = [
     description:
       "Build staff ID badges and export them print-ready — single cards or an A4 sheet.",
   },
+  {
+    href: "/brand-center/brandbook",
+    title: "Brand Book",
+    description:
+      "Review Stratum's positioning, logo, colour, typography, voice and imagery guidelines.",
+  },
+  {
+    href: "/pattern-generator",
+    title: "Pattern Generator",
+    description:
+      "Create and export seamless Stratum pattern backgrounds for presentations and documents.",
+  },
+  {
+    href: KNOWLEDGE_BASE.href,
+    title: KNOWLEDGE_BASE.label,
+    description:
+      "Open the team's internal reference library, documentation and operating knowledge.",
+    external: true,
+  },
 ];
 
 export default async function InternalIndexPage() {
@@ -48,6 +68,8 @@ export default async function InternalIndexPage() {
             <Link
               key={tool.href}
               href={tool.href}
+              target={"external" in tool && tool.external ? "_blank" : undefined}
+              rel={"external" in tool && tool.external ? "noopener noreferrer" : undefined}
               className="group flex flex-col gap-2 rounded-sm border border-line bg-black/40 p-6 transition-colors hover:border-brand"
             >
               <span className="flex items-center gap-2 text-ink-bright">

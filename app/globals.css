@@ -108,6 +108,26 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
+/* The Pattern Lab is a full-screen calibration surface. The public shell
+   remains mounted by the root layout but is removed while the lab is open. */
+body.pattern-lab-open {
+  overflow: hidden;
+}
+body.pattern-lab-open > header,
+body.pattern-lab-open > footer,
+body.pattern-lab-open > a[href="#main"] {
+  display: none;
+}
+body.pattern-lab-open #main {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+body.pattern-lab-open > div[style*="z-index: 214748364"],
+body.pattern-lab-open nextjs-portal {
+  display: none !important;
+}
+
 ::selection {
   background: #fff;
   color: var(--color-brand);
@@ -537,6 +557,16 @@ h1, h2, h3, h4, h5, h6 {
   color: #fff;
 }
 
+.section-light-muted {
+  --color-bg: #e8e6ee;
+}
+
+.section-light .btn-dark,
+.section-light .btn-dark:hover {
+  background-color: #000;
+  color: #fff;
+}
+
 .section-light .btn-ghost:hover {
   color: var(--color-ink-bright);
 }
@@ -641,7 +671,6 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   margin-top: 3rem;
   user-select: none;
-  cursor: pointer;
 }
 
 @media (min-width: 768px) {
@@ -681,6 +710,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ── Nav — adapts when overlapping .section-light ─────────── */
 .nav-shell {
+  --color-ink-dim: #c6c6c6;
   border: 1px solid var(--color-line-soft);
   background-color: rgba(15, 15, 15, 0.55);
   /* -webkit- must come first: the production CSS minifier drops the
@@ -724,7 +754,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .nav-shell.nav-light {
   --color-ink-bright: #14141a;
-  --color-ink-dim: #5c5c68;
+  --color-ink-dim: #454550;
   --color-ink-faint: rgba(26, 26, 34, 0.48);
   --color-line-soft: rgba(20, 20, 28, 0.08);
   --color-line: rgba(20, 20, 28, 0.1);
@@ -757,6 +787,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .nav-mobile-panel {
+  --color-ink-dim: #c6c6c6;
   border: 1px solid var(--color-line-soft);
   background-color: rgba(15, 15, 15, 0.8);
   -webkit-backdrop-filter: blur(16px);
@@ -768,7 +799,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .nav-mobile-panel.nav-light {
   --color-ink-bright: #14141a;
-  --color-ink-dim: #5c5c68;
+  --color-ink-dim: #454550;
   --color-ink-faint: rgba(26, 26, 34, 0.48);
   --color-line-soft: rgba(20, 20, 28, 0.08);
   --color-line: rgba(20, 20, 28, 0.1);

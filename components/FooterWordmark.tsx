@@ -1,72 +1,17 @@
-"use client";
-
-import Link from "next/link";
-import { useCallback, useId, useRef } from "react";
-
 export default function FooterWordmark() {
-  const reactId = useId().replace(/:/g, "");
-  const filterId = `footer-distortion-${reactId}`;
-  const svgRef = useRef<SVGSVGElement>(null);
-
-  const handleMouseEnter = useCallback(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const svg = svgRef.current;
-    if (!svg) return;
-
-    svg.style.filter = `url(#${filterId})`;
-
-    svg.querySelector<SVGAnimateElement>("feTurbulence animate")?.beginElement();
-    svg.querySelector<SVGAnimateElement>("feDisplacementMap animate")?.beginElement();
-
-    window.setTimeout(() => {
-      if (svgRef.current) svgRef.current.style.filter = "";
-    }, 650);
-  }, [filterId]);
-
   return (
-    <Link
-      href="/"
-      aria-label="Stratum — Home"
+    <div
+      aria-hidden="true"
       className="footer-klarheit-wordmark block"
-      onMouseEnter={handleMouseEnter}
     >
       <div className="footer-klarheit-wordmark-mask">
-      <svg
-        ref={svgRef}
-        viewBox="0 0 378 50"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-auto w-full"
-        aria-hidden="true"
-      >
-        <defs>
-          <filter id={filterId}>
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency="0.015"
-              numOctaves={2}
-              seed={2}
-              result="noise"
-            >
-              <animate
-                attributeName="baseFrequency"
-                dur="2.5s"
-                values="0.015;0.03;0.015"
-                repeatCount={1}
-              />
-            </feTurbulence>
-            <feDisplacementMap
-              in="SourceGraphic"
-              in2="noise"
-              scale={0}
-              xChannelSelector="R"
-              yChannelSelector="G"
-            >
-              <animate attributeName="scale" dur="0.6s" values="0;35;0" repeatCount={1} />
-            </feDisplacementMap>
-          </filter>
-        </defs>
+        <svg
+          viewBox="0 0 378 50"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-auto w-full"
+          aria-hidden="true"
+        >
         <path
           d="M40.9722 12.5H15.2778V12.52C13.7154 12.6928 12.5 14.0165 12.5 15.625C12.5 17.2334 13.7154 18.5576 15.2778 18.7303V18.75H39.5833V18.7544C48.0524 18.9391 54.8611 25.8616 54.8611 34.375C54.8611 42.8884 48.0524 49.8113 39.5833 49.9959V50H13.8889H1.38889V37.5H13.8889H39.5833V37.4803C41.1457 37.3075 42.3611 35.9834 42.3611 34.375C42.3611 32.7666 41.1457 31.4428 39.5833 31.27V31.25H15.2778V31.2459C6.80868 31.0613 0 24.1384 0 15.625C0 7.1116 6.80868 0.189068 15.2778 0.00440809V0H40.9722H53.4722V12.5H40.9722Z"
           fill="white"
@@ -105,8 +50,8 @@ export default function FooterWordmark() {
           d="M158.16 37.5H187.5H191.667L197.917 50H187.5H170.834H164.584L158.16 37.5Z"
           fill="white"
         />
-      </svg>
+        </svg>
       </div>
-    </Link>
+    </div>
   );
 }

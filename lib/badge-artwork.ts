@@ -1,18 +1,21 @@
 /* Fixed brand assets used by both badge renderers.
 
-   The preview uses the same SVG wordmark as the site header. The PDF uses
-   the high-resolution PNG export of that exact white + amethyst lockup so
-   jsPDF can place it reliably without changing its appearance. */
+   The background uses the canonical IconPattern geometry. The preview draws
+   the React component directly; the PDF rasterises its standalone SVG
+   counterpart with the same settings. */
 
 export const BADGE_ARTWORK = {
   background: {
-    src: "/images/id-card-bg.jpg",
-    naturalWidth: 914,
-    naturalHeight: 1378,
+    logicalWidth: 600,
+    logicalHeight: 920,
+    scale: 0.445,
+    color: "#000000",
+    bgFrom: "#1B1B1B",
+    bgTo: "#0A0A0A",
   },
   logo: {
-    previewSrc: "/images/logo.svg",
-    pdfSrc: "/brand/stratum-logo-white.png",
+    previewSrc: "/brand/stratum-logo-white-mono.svg",
+    pdfSrc: "/brand/stratum-logo-white-mono.png",
     aspectRatio: 378 / 50,
   },
 } as const;
