@@ -3,13 +3,14 @@
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { requestLink, type SignInState } from "@/app/internal/sign-in/actions";
+import { Button } from "@/components/ui";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
-    <button type="submit" className="btn btn-primary" disabled={pending}>
-      <span>{pending ? "Sending…" : "Email me a link"}</span>
-    </button>
+    <Button type="submit" icon={false} disabled={pending}>
+      {pending ? "Sending…" : "Email me a link"}
+    </Button>
   );
 }
 

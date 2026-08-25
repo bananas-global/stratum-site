@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import BadgePreview from "@/components/badge/BadgePreview";
+import { Button } from "@/components/ui";
 import {
   BADGE,
   DEFAULT_CROP,
@@ -512,14 +513,14 @@ export default function IdBadgeBuilder() {
             {BADGE.trim.w} × {BADGE.trim.h} mm at trim, {BADGE.bleed} mm bleed. Guides are
             preview-only — they are never printed.
           </p>
-          <button
+          <Button
             type="button"
-            className="btn btn-secondary"
+            icon={false}
             disabled={busy !== ""}
             onClick={() => exportSingle(active)}
           >
             {busy === "single" ? "Generating…" : "Export this badge (PDF)"}
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -546,14 +547,14 @@ export default function IdBadgeBuilder() {
             <button type="button" className={GHOST_BTN} onClick={addPerson}>
               + Add collaborator
             </button>
-            <button
+            <Button
               type="button"
-              className="btn btn-primary"
+              icon={false}
               disabled={busy !== "" || printable.length === 0}
               onClick={exportSheet}
             >
               {busy === "batch" ? "Generating…" : `Export selected (${printable.length})`}
-            </button>
+            </Button>
           </div>
         </div>
 

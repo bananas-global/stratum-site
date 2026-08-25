@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Button } from "@/components/ui";
 import { SITE } from "@/lib/site";
 import type { SignatureCta } from "@/lib/signature-cta";
 
@@ -339,9 +340,9 @@ export default function EmailSignatureBuilder({ ctas = [] }: { ctas?: SignatureC
         )}
 
         <div className="flex flex-wrap items-center gap-3">
-          <button type="button" className="btn btn-primary" onClick={copyRich}>
+          <Button type="button" icon={false} onClick={copyRich}>
             {copied === "rich" ? "Copied ✓" : "Copy signature"}
-          </button>
+          </Button>
         </div>
 
         <p className="text-sm text-ink-dim">

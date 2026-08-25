@@ -30,7 +30,7 @@ export default function CinematicHero() {
                 depends on every day.
               </p>
               <div data-reveal data-reveal-delay="0.18" className="mt-4">
-                <Button href="/contact" className="btn-dark">
+                <Button href="/contact">
                   Get in touch
                 </Button>
               </div>

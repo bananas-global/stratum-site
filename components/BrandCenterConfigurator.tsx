@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { Button } from "@/components/ui";
 
 type LogoColor = "white" | "black";
 type LogoAccent = "amethyst" | "mono";
@@ -107,14 +108,12 @@ export default function BrandCenterConfigurator() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="text-sm text-ink-faint">{variantName}</p>
           <div className="flex gap-3">
-            <a href={svg} download className="btn btn-secondary !gap-2 !px-4 !py-2 text-sm">
-              <DownloadIcon />
-              <span>SVG</span>
-            </a>
-            <a href={png} download className="btn btn-secondary !gap-2 !px-4 !py-2 text-sm">
-              <DownloadIcon />
-              <span>PNG</span>
-            </a>
+            <Button href={svg} download icon={<DownloadIcon />} iconPosition="start">
+              SVG
+            </Button>
+            <Button href={png} download icon={<DownloadIcon />} iconPosition="start">
+              PNG
+            </Button>
           </div>
         </div>
       </div>

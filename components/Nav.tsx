@@ -151,7 +151,7 @@ export default function Nav() {
 
           {/* Right actions */}
           <div className="flex flex-1 items-center justify-end gap-2">
-            <Button href="/contact" variant="secondary" className="hidden sm:inline-flex">
+            <Button href="/contact" className="hidden sm:inline-flex">
               Get in touch
             </Button>
             <button

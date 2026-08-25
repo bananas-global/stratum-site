@@ -1,10 +1,14 @@
 import Link from "next/link";
-import type { ReactNode } from "react";
+import type {
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes,
+  ReactNode,
+} from "react";
 
 /** Small NE arrow used in buttons and arrow-links. */
 export function ArrowNE({ size = 11 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 11 11" fill="none" aria-hidden>
+    <svg data-arrow-ne width={size} height={size} viewBox="0 0 11 11" fill="none" aria-hidden>
       <path
         d="M9.3125 0H10.0625V0.75V8.25V9H8.5625V8.25V2.5625L1.59375 9.53125L1.0625 10.0625L0 9L0.53125 8.46875L7.5 1.5H1.8125H1.0625V0H1.8125H9.3125Z"
         fill="currentColor"
@@ -36,30 +40,78 @@ export function BracketLabel({ children }: { children: ReactNode }) {
   );
 }
 
-type ButtonProps = {
-  href: string;
+type ButtonBaseProps = {
   children: ReactNode;
-  variant?: "primary" | "secondary" | "ghost";
   className?: string;
+  href: string;
+  /** Defaults to the NE arrow. Pass `false` for text-only or a node for a custom icon. */
+  icon?: ReactNode | false;
+  iconPosition?: "start" | "end";
 };
 
-export function Button({ href, children, variant = "primary", className = "" }: ButtonProps) {
-  const cls = `btn btn-${variant} ${className}`.trim();
-  const isExternal = href.startsWith("tel:") || href.startsWith("mailto:") || href.startsWith("http");
+type ButtonLinkProps = Omit<
+  AnchorHTMLAttributes<HTMLAnchorElement>,
+  "children" | "className" | "href"
+> &
+  ButtonBaseProps;
+
+type ButtonActionProps = Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  "children" | "className"
+> &
+  Omit<ButtonBaseProps, "href"> & {
+    href?: never;
+  };
+
+export type ButtonProps = ButtonLinkProps | ButtonActionProps;
+
+/**
+ * The single Stratum action button. It renders the correct native element for
+ * navigation, downloads, form submits, and client-side actions.
+ */
+export function Button(props: ButtonProps) {
+  const {
+    children,
+    className = "",
+    icon,
+    iconPosition = "end",
+    ...elementProps
+  } = props;
+  const cls = `btn ${className}`.trim();
+  const resolvedIcon = icon === false ? null : (icon ?? <ArrowNE />);
   const inner = (
     <>
+      {iconPosition === "start" && resolvedIcon}
       <span>{children}</span>
-      <ArrowNE />
+      {iconPosition === "end" && resolvedIcon}
     </>
   );
-  return isExternal ? (
-    <a href={href} className={cls}>
+
+  if ("href" in elementProps && typeof elementProps.href === "string") {
+    const { href, ...anchorProps } = elementProps;
+    const isExternal =
+      href.startsWith("tel:") ||
+      href.startsWith("mailto:") ||
+      href.startsWith("http") ||
+      anchorProps.download !== undefined;
+
+    return isExternal ? (
+      <a {...anchorProps} href={href} className={cls}>
+        {inner}
+      </a>
+    ) : (
+      <Link {...anchorProps} href={href} className={cls}>
+        {inner}
+      </Link>
+    );
+  }
+
+  const { type = "button", ...buttonProps } = elementProps;
+
+  return (
+    <button {...buttonProps} type={type} className={cls}>
       {inner}
-    </a>
-  ) : (
-    <Link href={href} className={cls}>
-      {inner}
-    </Link>
+    </button>
   );
 }
 

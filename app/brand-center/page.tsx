@@ -50,13 +50,13 @@ export default function BrandCenterPage() {
               </p>
               <div className="mt-2 flex flex-wrap items-center gap-4">
                 <Button href="/brand-center/brandbook">Start presentation</Button>
-                <a
+                <Button
                   href="/brand/Stratum-Brandbook.pdf"
                   download
-                  className="btn btn-secondary"
+                  icon={false}
                 >
-                  <span>Download PDF</span>
-                </a>
+                  Download PDF
+                </Button>
               </div>
             </div>
             <Link

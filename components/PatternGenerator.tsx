@@ -2,7 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import { IconPattern } from "@/components/IconPattern";
-import { ArrowNE } from "@/components/ui";
+import { Button } from "@/components/ui";
 
 /* ────────────────────────────────────────────────────────────────
    Pattern generator (hidden internal tool)
@@ -207,15 +207,14 @@ export default function PatternGenerator() {
         </fieldset>
 
         <div className="flex flex-col gap-3">
-          <button
+          <Button
             type="button"
             onClick={download}
             disabled={busy}
-            className="btn btn-primary justify-center disabled:opacity-60"
+            className="justify-center"
           >
-            <span>{busy ? "Rendering…" : "Download PNG"}</span>
-            <ArrowNE />
-          </button>
+            {busy ? "Rendering…" : "Download PNG"}
+          </Button>
           <button
             type="button"
             onClick={reset}

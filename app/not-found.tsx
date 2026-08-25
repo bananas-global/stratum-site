@@ -20,7 +20,7 @@ export default function NotFound() {
         </p>
         <div className="flex flex-wrap items-center justify-center gap-4">
           <Button href="/">Back to home</Button>
-          <Button href="/contact" variant="ghost">
+          <Button href="/contact">
             Talk With Stratum
           </Button>
         </div>

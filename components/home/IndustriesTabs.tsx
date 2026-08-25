@@ -318,7 +318,7 @@ export default function IndustriesTabs() {
                   Managed IT and cybersecurity for industries where complexity is highest and downtime carries real cost.
                 </p>
               </div>
-              <Button href="/industries" className="btn-dark w-fit">See all industries</Button>
+              <Button href="/industries" className="w-fit">See all industries</Button>
             </div>
 
             {/* Arrows are optional — swipe / drag / scroll works without them. Hidden when nothing overflows. */}

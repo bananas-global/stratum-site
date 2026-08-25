@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowNE } from "./ui";
+import { Button } from "./ui";
 import { SITE } from "@/lib/site";
 
 const FIELD =
@@ -96,20 +96,17 @@ export default function ContactForm() {
           <input type="text" name="website" tabIndex={-1} autoComplete="off" />
         </label>
       </div>
-      <button
+      <Button
         type="submit"
-        className="btn btn-primary w-fit"
+        className="w-fit"
         disabled={status === "sending" || status === "sent"}
       >
-        <span>
-          {status === "sending"
-            ? "Sending…"
-            : status === "sent"
-              ? "Thanks — we'll be in touch"
-              : "Send message"}
-        </span>
-        <ArrowNE />
-      </button>
+        {status === "sending"
+          ? "Sending…"
+          : status === "sent"
+            ? "Thanks — we'll be in touch"
+            : "Send message"}
+      </Button>
       <p aria-live="polite" className="min-h-5 text-sm">
         {status === "sent" && (
           <span className="text-brand-light">
