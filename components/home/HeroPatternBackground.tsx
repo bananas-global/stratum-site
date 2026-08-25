@@ -14,6 +14,7 @@ export default function HeroPatternBackground() {
       <ThreeExtrusionScene
         settings={DEFAULT_PATTERN_SCENE_SETTINGS}
         interactive={false}
+        coverViewport
       />
     </div>
   );

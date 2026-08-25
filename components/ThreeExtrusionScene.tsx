@@ -96,7 +96,28 @@ type SceneRuntime = {
   lastFrameTime: number;
   randomTimer: number | null;
   settings: ThreeSceneSettings;
+  coverViewport: boolean;
 };
+
+function getViewportFov(
+  baseFov: number,
+  viewportAspect: number,
+  coverViewport: boolean,
+) {
+  if (!coverViewport) return baseFov;
+
+  const baseHalfFov = THREE.MathUtils.degToRad(baseFov / 2);
+  const baseVisibleHalfHeight = 11 * Math.tan(baseHalfFov);
+  const patternHalfWidth =
+    (PATTERN_CANVAS.width / 2 + PATTERN_CANVAS.overscan) *
+    PATTERN_CANVAS.worldPerPixel;
+  const coverAspect = patternHalfWidth / baseVisibleHalfHeight;
+  if (viewportAspect <= coverAspect) return baseFov;
+
+  return THREE.MathUtils.radToDeg(
+    2 * Math.atan(Math.tan(baseHalfFov) * (coverAspect / viewportAspect)),
+  );
+}
 
 function reverseTriangleWinding(geometry: THREE.BufferGeometry) {
   const index = geometry.getIndex();
@@ -585,7 +606,11 @@ function applySettings(runtime: SceneRuntime, settings: ThreeSceneSettings) {
   scene.background = new THREE.Color(settings.backgroundColor);
 
   camera.position.set(0, 0, 11);
-  camera.fov = settings.fov;
+  camera.fov = getViewportFov(
+    settings.fov,
+    camera.aspect,
+    runtime.coverViewport,
+  );
   camera.lookAt(0, 0, 0);
   camera.updateProjectionMatrix();
 
@@ -599,7 +624,7 @@ function applySettings(runtime: SceneRuntime, settings: ThreeSceneSettings) {
   keyTarget.updateMatrixWorld();
   keyLight.intensity = FIXED_LIGHTING.intensity;
   keyLight.shadow.radius = FIXED_LIGHTING.shadowSoftness;
-  const visibleHalfHeight = 11 * Math.tan(THREE.MathUtils.degToRad(settings.fov / 2));
+  const visibleHalfHeight = 11 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
   const visibleHalfWidth = visibleHalfHeight * camera.aspect;
   const maxAnimatedHeight =
     RANDOM_MOTION.maxHeight * Math.max(settings.heightMultiplier, 0) +
@@ -620,9 +645,11 @@ function applySettings(runtime: SceneRuntime, settings: ThreeSceneSettings) {
 export default function ThreeExtrusionScene({
   settings,
   interactive = true,
+  coverViewport = false,
 }: {
   settings: ThreeSceneSettings;
   interactive?: boolean;
+  coverViewport?: boolean;
 }) {
   const mountRef = useRef<HTMLDivElement>(null);
   const runtimeRef = useRef<SceneRuntime | null>(null);
@@ -757,6 +784,7 @@ export default function ThreeExtrusionScene({
         lastFrameTime: performance.now(),
         randomTimer: null,
         settings: settingsRef.current,
+        coverViewport,
       };
       runtimeRef.current = runtime;
 
@@ -842,7 +870,7 @@ export default function ThreeExtrusionScene({
       runtime.renderer.dispose();
       runtime.renderer.domElement.remove();
     };
-  }, [interactive]);
+  }, [coverViewport, interactive]);
 
   useEffect(() => {
     const runtime = runtimeRef.current;
