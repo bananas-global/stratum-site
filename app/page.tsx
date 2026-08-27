@@ -21,7 +21,9 @@ export const metadata: Metadata = {
     description:
       "Technology built for what's next — structured service across support, continuity, and business systems.",
     url: "/",
+    images: [{ url: "/og-image.jpg", alt: "Stratum — Managed IT & Cybersecurity" }],
   },
+  twitter: { images: ["/og-image.jpg"] },
 };
 
 const localBusiness = {
@@ -31,7 +33,7 @@ const localBusiness = {
   url: "https://www.stratumtech.ca/",
   telephone: "+1-855-200-0076",
   priceRange: "$$",
-  image: "https://www.stratumtech.ca/og-image.png",
+  image: "https://www.stratumtech.ca/og-image.jpg",
   description: "Structured technology services for growing organizations.",
   address: { "@type": "PostalAddress", addressCountry: "CA" },
   areaServed: { "@type": "Country", name: "Canada" },

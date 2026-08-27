@@ -50,9 +50,9 @@ export const metadata: Metadata = {
     siteName: "Stratum",
     locale: "en_CA",
     url: SITE.domain,
-    images: [{ url: "/og-image.png", alt: "Stratum — Managed IT & Cybersecurity" }],
+    images: [{ url: "/og-image.jpg", alt: "Stratum — Managed IT & Cybersecurity" }],
   },
-  twitter: { card: "summary_large_image", images: ["/og-image.png"] },
+  twitter: { card: "summary_large_image", images: ["/og-image.jpg"] },
   icons: {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
     apple: "/images/webclip.png",

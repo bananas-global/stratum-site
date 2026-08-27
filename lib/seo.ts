@@ -26,10 +26,12 @@ export function pageMeta({
       description: ogDescription ?? description,
       url,
       type: "website",
+      images: [{ url: "/og-image.jpg", alt: "Stratum — Managed IT & Cybersecurity" }],
     },
     twitter: {
       title: ogTitle ?? title,
       description: ogDescription ?? description,
+      images: ["/og-image.jpg"],
     },
   };
 }
