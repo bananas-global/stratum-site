@@ -15,7 +15,7 @@ export default function CTABand({
   return (
     <section className="cta-band section-sm relative overflow-hidden border-t border-line">
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        <IconPattern scale={0.32} />
+        <IconPattern color="#000000" scale={0.34} />
       </div>
       <div className="cta-band-bg" aria-hidden="true" />
 

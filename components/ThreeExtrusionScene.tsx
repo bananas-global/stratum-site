@@ -95,6 +95,7 @@ type SceneRuntime = {
   animationFrame: number | null;
   lastFrameTime: number;
   randomTimer: number | null;
+  active: boolean;
   settings: ThreeSceneSettings;
   coverViewport: boolean;
 };
@@ -432,6 +433,7 @@ function updatePatternInstances(
 }
 
 function requestHoverFrame(runtime: SceneRuntime) {
+  if (!runtime.active || document.hidden) return;
   if (runtime.animationFrame !== null) return;
   runtime.lastFrameTime = performance.now();
   runtime.animationFrame = requestAnimationFrame((timestamp) => {
@@ -441,6 +443,13 @@ function requestHoverFrame(runtime: SceneRuntime) {
 
 function animateHover(runtime: SceneRuntime, timestamp: number) {
   runtime.animationFrame = null;
+  if (!runtime.active || document.hidden) return;
+  if (timestamp - runtime.lastFrameTime < 1000 / 30) {
+    runtime.animationFrame = requestAnimationFrame((nextTimestamp) => {
+      animateHover(runtime, nextTimestamp);
+    });
+    return;
+  }
   const delta = Math.min((timestamp - runtime.lastFrameTime) / 1000, 0.032);
   runtime.lastFrameTime = timestamp;
   let moving = false;
@@ -540,6 +549,8 @@ function activateRandomInstance(runtime: SceneRuntime) {
 
 function scheduleRandomMotion(runtime: SceneRuntime, initial = false) {
   if (runtime.randomTimer !== null) window.clearTimeout(runtime.randomTimer);
+  runtime.randomTimer = null;
+  if (!runtime.active || document.hidden) return;
   const delay = initial
     ? 650
     : randomBetween(RANDOM_MOTION.minIntervalMs, RANDOM_MOTION.maxIntervalMs) /
@@ -663,7 +674,9 @@ export default function ThreeExtrusionScene({
     if (!mount) return;
 
     let resizeObserver: ResizeObserver | null = null;
+    let visibilityObserver: IntersectionObserver | null = null;
     let removePointerListeners: (() => void) | null = null;
+    let removeVisibilityListener: (() => void) | null = null;
 
     try {
       const renderer = new THREE.WebGLRenderer({
@@ -783,6 +796,7 @@ export default function ThreeExtrusionScene({
         animationFrame: null,
         lastFrameTime: performance.now(),
         randomTimer: null,
+        active: false,
         settings: settingsRef.current,
         coverViewport,
       };
@@ -842,7 +856,37 @@ export default function ThreeExtrusionScene({
       resizeObserver = new ResizeObserver(resize);
       resizeObserver.observe(mount);
       resize();
-      scheduleRandomMotion(runtime, true);
+
+      const pause = () => {
+        runtime.active = false;
+        if (runtime.animationFrame !== null) cancelAnimationFrame(runtime.animationFrame);
+        runtime.animationFrame = null;
+        if (runtime.randomTimer !== null) window.clearTimeout(runtime.randomTimer);
+        runtime.randomTimer = null;
+        clearHoldTimers(runtime);
+      };
+      const resume = () => {
+        if (document.hidden || runtime.active) return;
+        runtime.active = true;
+        scheduleRandomMotion(runtime, true);
+      };
+      const syncActivity = (visible: boolean) => {
+        if (visible && !document.hidden) resume();
+        else pause();
+      };
+      let inViewport = false;
+      visibilityObserver = new IntersectionObserver(
+        ([entry]) => {
+          inViewport = Boolean(entry?.isIntersecting);
+          syncActivity(inViewport);
+        },
+        { rootMargin: "120px 0px" },
+      );
+      visibilityObserver.observe(mount);
+      const onVisibilityChange = () => syncActivity(inViewport);
+      document.addEventListener("visibilitychange", onVisibilityChange);
+      removeVisibilityListener = () =>
+        document.removeEventListener("visibilitychange", onVisibilityChange);
       setError(null);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "WebGL não pôde ser iniciado.");
@@ -850,6 +894,8 @@ export default function ThreeExtrusionScene({
 
     return () => {
       resizeObserver?.disconnect();
+      visibilityObserver?.disconnect();
+      removeVisibilityListener?.();
       removePointerListeners?.();
       const runtime = runtimeRef.current;
       runtimeRef.current = null;

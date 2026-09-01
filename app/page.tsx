@@ -88,12 +88,12 @@ export default function Home() {
                   -50% loop seamless without exposing an empty stretch. */}
               {(() => {
                 const logos = [
-                  { name: "Microsoft", src: "/logos/color/microsoft-color.png", h: 26 },
-                  { name: "SentinelOne", src: "/logos/color/sentinelone-color.png", h: 22 },
-                  { name: "N-able", src: "/logos/color/n-able-color.png", h: 19 },
-                  { name: "KnowBe4", src: "/logos/color/knowbe4-color.png", h: 22 },
-                  { name: "IT Glue", src: "/logos/color/it-glue-color.png", h: 34 },
-                  { name: "Bitwarden", src: "/logos/color/bitwarden-color.png", h: 22 },
+                  { name: "Microsoft", src: "/logos/color/microsoft-color.png", w: 122, h: 26 },
+                  { name: "SentinelOne", src: "/logos/color/sentinelone-color.png", w: 115, h: 22 },
+                  { name: "N-able", src: "/logos/color/n-able-color.png", w: 109, h: 19 },
+                  { name: "KnowBe4", src: "/logos/color/knowbe4-color.png", w: 117, h: 22 },
+                  { name: "IT Glue", src: "/logos/color/it-glue-color.png", w: 101, h: 34 },
+                  { name: "Bitwarden", src: "/logos/color/bitwarden-color.png", w: 140, h: 22 },
                 ];
                 const half = logos.concat(logos);
                 return half.concat(half).map((logo, i) => ({
@@ -102,13 +102,14 @@ export default function Home() {
                 }));
               })()
                 .map((logo, i) => (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <Image
                     key={`${logo.name}-${i}`}
                     src={logo.src}
                     alt={logo.name}
                     aria-hidden={logo.ariaHidden}
-                    style={{ height: logo.h }}
+                    width={logo.w}
+                    height={logo.h}
+                    sizes={`${logo.w}px`}
                     className="logo-mark w-auto shrink-0 object-contain"
                   />
                 ))}

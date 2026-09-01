@@ -41,7 +41,7 @@
   /* Text */
   --color-ink: #e0e0e0;
   --color-ink-dim: #adadad;
-  --color-ink-faint: rgba(255, 255, 255, 0.4);
+  --color-ink-faint: #949494;
   --color-ink-bright: #ffffff;
 
   /* Brand — amethyst */
@@ -597,8 +597,10 @@ h1, h2, h3, h4, h5, h6 {
   --color-surface-glass: rgba(255, 255, 255, 0.72);
   --color-ink: #2e2e36;
   --color-ink-dim: #5c5c68;
-  --color-ink-faint: rgba(26, 26, 34, 0.48);
+  --color-ink-faint: #62626d;
   --color-ink-bright: #14141a;
+  --color-brand: #6826d9;
+  --color-brand-light: #6826d9;
   --color-line: rgba(20, 20, 28, 0.1);
   --color-line-soft: rgba(20, 20, 28, 0.06);
   --color-line-strong: rgba(20, 20, 28, 0.14);
@@ -719,7 +721,18 @@ h1, h2, h3, h4, h5, h6 {
   background: radial-gradient(ellipse 85% 75% at 50% 50%, transparent 45%, rgba(5, 5, 5, 0.55));
 }
 
-/* CTA-band texture is now the live <IconPattern> overlay (see CTABand.tsx). */
+.hero-pattern-fallback {
+  background: #c2c2c2;
+}
+
+.hero-pattern-fallback::before {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.72);
+  content: "";
+  -webkit-mask: url("/pattern/stratum-pattern-icon.svg") center / 217px 189px repeat;
+  mask: url("/pattern/stratum-pattern-icon.svg") center / 217px 189px repeat;
+}
 
 /* ── Footer — Klarheit Footer 03 layout ────────────────────────── */
 .footer-klarheit-wordmark {
@@ -810,7 +823,7 @@ h1, h2, h3, h4, h5, h6 {
 .nav-shell.nav-light {
   --color-ink-bright: #14141a;
   --color-ink-dim: #454550;
-  --color-ink-faint: rgba(26, 26, 34, 0.48);
+  --color-ink-faint: #62626d;
   --color-line-soft: rgba(20, 20, 28, 0.08);
   --color-line: rgba(20, 20, 28, 0.1);
   --color-surface-glass: rgba(255, 255, 255, 0.88);
@@ -851,7 +864,7 @@ h1, h2, h3, h4, h5, h6 {
 .nav-mobile-panel.nav-light {
   --color-ink-bright: #14141a;
   --color-ink-dim: #454550;
-  --color-ink-faint: rgba(26, 26, 34, 0.48);
+  --color-ink-faint: #62626d;
   --color-line-soft: rgba(20, 20, 28, 0.08);
   --color-line: rgba(20, 20, 28, 0.1);
   border-color: rgba(20, 20, 28, 0.08);

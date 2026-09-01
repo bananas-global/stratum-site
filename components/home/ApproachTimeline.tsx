@@ -40,7 +40,7 @@ function ApproachImageSlot({ index }: { index: number }) {
         {image.video ? (
           <ScrollScrubVideo
             src={image.video}
-            ariaLabel={image.alt}
+            poster={image.src}
             reverse={image.reverse}
             className="approach-image-slot-img h-full w-full object-contain object-center"
           />

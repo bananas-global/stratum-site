@@ -439,7 +439,7 @@ export default function IndustriesTabs() {
                             key={pi}
                             className="flex items-center gap-3 py-2.5 first:pt-3"
                           >
-                            <span className="shrink-0 font-body text-[11px] font-medium tabular-nums text-brand-light/70">
+                            <span className="shrink-0 font-body text-[11px] font-semibold tabular-nums text-brand">
                               {String(pi + 1).padStart(2, "0")}
                             </span>
                             <span className="text-sm leading-snug text-ink-dim">{pt}</span>

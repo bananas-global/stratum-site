@@ -23,7 +23,9 @@ export default function Nav() {
   const barRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false); // mobile menu
   const [scrolled, setScrolled] = useState(false);
-  const [lightNav, setLightNav] = useState(false);
+  // The homepage starts over a light hero. Deriving the initial state from the
+  // route avoids swapping the priority logo immediately after hydration.
+  const [lightNav, setLightNav] = useState(() => pathname === "/");
 
   useEffect(() => setOpen(false), [pathname]);
 

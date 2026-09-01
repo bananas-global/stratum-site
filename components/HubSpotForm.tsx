@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { HUBSPOT_PORTAL_ID, HUBSPOT_REGION } from "./HubSpotTracking";
+import { HUBSPOT_PORTAL_ID, HUBSPOT_REGION } from "@/lib/hubspot";
 
 /**
  * HubSpot-hosted contact form (forms v2 embed), replacing our own ContactForm.
@@ -78,5 +78,5 @@ export default function HubSpotForm() {
 
   // Styled by #hubspot-contact-form rules in globals.css — the ID, not a class,
   // because HubSpot's own stylesheet loads after ours and outranks class selectors.
-  return <div id="hubspot-contact-form" />;
+  return <div id="hubspot-contact-form" role="region" aria-label="Contact form" />;
 }

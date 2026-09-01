@@ -18,7 +18,10 @@ export default function SmoothScroll() {
 
   // ── Lenis: create once ──
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const shouldEnhanceScroll = window.matchMedia(
+      "(min-width: 1024px) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
+    ).matches;
+    if (!shouldEnhanceScroll) return;
 
     const lenis = new Lenis({
       duration: 1.2,
@@ -34,10 +37,23 @@ export default function SmoothScroll() {
       lenis.raf(time);
       raf = requestAnimationFrame(loop);
     };
-    raf = requestAnimationFrame(loop);
+    const start = () => {
+      if (!raf && !document.hidden) raf = requestAnimationFrame(loop);
+    };
+    const stop = () => {
+      if (raf) cancelAnimationFrame(raf);
+      raf = 0;
+    };
+    const onVisibilityChange = () => {
+      if (document.hidden) stop();
+      else start();
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    start();
 
     return () => {
-      cancelAnimationFrame(raf);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      stop();
       lenis.destroy();
       lenisRef.current = null;
     };

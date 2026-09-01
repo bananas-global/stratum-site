@@ -6,7 +6,6 @@ import SmoothScroll from "@/components/SmoothScroll";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Analytics from "@/components/Analytics";
-import HubSpotTracking from "@/components/HubSpotTracking";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 import FeedbackCollector from "@/components/FeedbackCollector";
 
@@ -104,7 +103,6 @@ setTimeout(function () {
         <main id="main">{children}</main>
         <Footer />
         <Analytics />
-        <HubSpotTracking />
         <VercelAnalytics />
         {process.env.NODE_ENV === "development" && process.env.HIDE_DEV_WIDGETS !== "1" && (
           <FeedbackCollector />
