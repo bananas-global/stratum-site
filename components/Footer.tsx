@@ -92,9 +92,12 @@ export default function Footer() {
 
         <div className="mt-8 flex flex-col gap-4 border-t border-line pt-6 text-sm text-ink-faint sm:flex-row sm:items-center sm:justify-between">
           <span>© 2026 {SITE.legalName}. All rights reserved.</span>
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
             <Link href="/privacy" className="transition-colors hover:text-ink-bright">
               Privacy Policy
+            </Link>
+            <Link href="/terms" className="transition-colors hover:text-ink-bright">
+              Terms &amp; Conditions
             </Link>
             {/* Brand assets for the team, agencies and partners — the page is
                 noindexed, so nofollow keeps the link out of search too. */}
