@@ -9,12 +9,10 @@ import { useEffect, useRef } from "react";
  */
 export default function ScrollScrubVideo({
   src,
-  poster,
   className,
   reverse = false,
 }: {
   src: string;
-  poster: string;
   className?: string;
   /** Play the scrub backwards so the gem spins the other way. */
   reverse?: boolean;
@@ -108,7 +106,6 @@ export default function ScrollScrubVideo({
       muted
       playsInline
       preload="none"
-      poster={poster}
     />
   );
 }

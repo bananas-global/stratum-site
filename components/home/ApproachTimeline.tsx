@@ -37,20 +37,18 @@ function ApproachImageSlot({ index }: { index: number }) {
   return (
     <div className="relative mt-auto h-44 overflow-hidden rounded-sm bg-white md:h-52">
       <div className="absolute inset-0 flex items-center justify-center p-3 md:p-4">
-        {image.video ? (
+        <Image
+          src={image.src}
+          alt={image.alt}
+          fill
+          sizes="(min-width: 768px) 176px, 152px"
+          className="object-contain object-center p-3 md:p-4"
+        />
+        {image.video && (
           <ScrollScrubVideo
             src={image.video}
-            poster={image.src}
             reverse={image.reverse}
-            className="approach-image-slot-img h-full w-full object-contain object-center"
-          />
-        ) : (
-          <Image
-            src={image.src}
-            alt={image.alt}
-            width={480}
-            height={480}
-            className="approach-image-slot-img h-full w-full object-contain object-center"
+            className="approach-image-slot-img relative z-10 h-full w-full object-contain object-center"
           />
         )}
       </div>

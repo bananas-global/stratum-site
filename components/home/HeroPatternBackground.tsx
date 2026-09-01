@@ -42,7 +42,7 @@ export default function HeroPatternBackground() {
 
   return (
     <div className="absolute inset-0" aria-hidden="true">
-      <div className="hero-pattern-fallback absolute inset-0" />
+      <div className="absolute inset-0 bg-[#c2c2c2]" />
       {renderScene ? (
         <ThreeExtrusionScene
           settings={PATTERN_SCENE_SETTINGS}

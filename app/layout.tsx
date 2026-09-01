@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope, Instrument_Serif, Lora } from "next/font/google";
+import { Manrope, Lora } from "next/font/google";
 import "./globals.css";
 import { SITE, orgGraph, websiteGraph, jsonLd } from "@/lib/site";
 import SmoothScroll from "@/components/SmoothScroll";
@@ -13,14 +13,6 @@ const manrope = Manrope({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-manrope",
-  display: "swap",
-});
-
-const instrument = Instrument_Serif({
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
-  variable: "--font-instrument",
   display: "swap",
 });
 
@@ -71,7 +63,7 @@ export default function RootLayout({
   return (
     <html
       lang="en-CA"
-      className={`${manrope.variable} ${instrument.variable} ${lora.variable}`}
+      className={`${manrope.variable} ${lora.variable}`}
       suppressHydrationWarning
     >
       <head>

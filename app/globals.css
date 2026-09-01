@@ -55,7 +55,7 @@
   --color-line-strong: rgba(255, 255, 255, 0.16);
 
   /* Typography */
-  --font-display: var(--font-lora), var(--font-instrument), Georgia, "Times New Roman", serif;
+  --font-display: var(--font-lora), Georgia, "Times New Roman", serif;
   --font-body: var(--font-manrope), ui-sans-serif, system-ui, -apple-system, sans-serif;
 
   /* Radii */
@@ -719,19 +719,6 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   inset: 0;
   background: radial-gradient(ellipse 85% 75% at 50% 50%, transparent 45%, rgba(5, 5, 5, 0.55));
-}
-
-.hero-pattern-fallback {
-  background: #c2c2c2;
-}
-
-.hero-pattern-fallback::before {
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.72);
-  content: "";
-  -webkit-mask: url("/pattern/stratum-pattern-icon.svg") center / 217px 189px repeat;
-  mask: url("/pattern/stratum-pattern-icon.svg") center / 217px 189px repeat;
 }
 
 /* ── Footer — Klarheit Footer 03 layout ────────────────────────── */
