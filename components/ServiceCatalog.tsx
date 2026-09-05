@@ -1,8 +1,9 @@
 "use client";
 
+import { ArrowLink } from "./ui";
 import { useEffect, useMemo, useState } from "react";
 
-type Item = { title: string; category: string; body: string; aliases?: string[]; keywords?: string[] };
+type Item = { href?: string; title: string; category: string; body: string; aliases?: string[]; keywords?: string[] };
 
 const CATEGORIES = ["Managed IT", "Cybersecurity", "Business Systems"] as const;
 
@@ -55,6 +56,14 @@ const ITEMS: Item[] = [
     aliases: ["Endpoint protection", "Identity & access", "Email security", "Compliance support"],
     keywords: ["hacked", "virus", "malware", "ransomware", "phishing", "scam", "scam email", "fake email", "security", "antivirus", "mfa", "two factor", "2fa", "breach", "data breach", "suspicious", "spam", "protect", "protection", "compromised", "fraud", "secure", "cyber", "cyberattack", "attack", "infected", "popup", "threat", "endpoint", "edr", "penetration test", "vulnerability", "encryption", "dark web", "identity theft", "locked files", "wire fraud", "spoofing"],
     body: "A defined security framework — MFA, endpoint protection, email security, patching, monitoring, and incident response — instead of a pile of disconnected tools. Less disruption from compromise and data loss, cyber risk translated into priorities you can act on, and protection for your operations, reputation, and long-term resilience.",
+  },
+  {
+    title: "Vulnerability Scans",
+    category: "Cybersecurity",
+    href: "/services/vulnerability-scans",
+    aliases: ["Tenable", "Nessus", "vulnerability assessment", "security scan"],
+    keywords: ["vulnerabilities", "scan", "scanning", "remediation"],
+    body: "Tenable Nessus vulnerability scans of your agreed environment, with a fixed fee for the scan and report. Understand the findings and recommended next steps, then use your own IT team or engage Stratum for optional remediation billed hourly.",
   },
   {
     title: "Backup & Disaster Recovery",
@@ -224,8 +233,9 @@ export default function ServiceCatalog() {
               <div
                 className={`grid overflow-hidden transition-all duration-300 ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
               >
-                <div className="min-h-0">
+                <div className="min-h-0" inert={!open}>
                   <p className="px-6 pb-6 text-sm leading-relaxed text-ink-dim">{it.body}</p>
+                  {it.href && <div className="px-6 pb-6"><ArrowLink href={it.href}>Explore Vulnerability Scans</ArrowLink></div>}
                 </div>
               </div>
             </div>

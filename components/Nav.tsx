@@ -110,12 +110,12 @@ export default function Nav() {
                     }`}
                   >
                     {item.label}
-                    <span className="text-ink-faint transition-transform duration-300 group-hover:rotate-180">
+                    <span className="text-ink-faint transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180">
                       <ChevronDown />
                     </span>
                   </Link>
                   {/* Dropdown */}
-                  <div className="pointer-events-none absolute left-1/2 top-full -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
+                  <div className="pointer-events-none absolute left-1/2 top-full -translate-x-1/2 pt-3 invisible opacity-0 transition-all duration-200 group-hover:visible group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:visible group-focus-within:pointer-events-auto group-focus-within:opacity-100">
                     <div className="glass min-w-[20rem] rounded-sm p-1">
                       {item.children.map((child) => (
                         <Link

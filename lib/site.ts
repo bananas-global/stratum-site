@@ -22,11 +22,13 @@ export type NavItem = {
 };
 
 /**
- * Phase 1 navigation — flat top-level links only. Per-service and per-industry
- * detail pages are Phase 2 and intentionally not exposed in the nav.
+ * Public navigation. Vulnerability scans is the first launched service detail;
+ * the remaining Phase 2 detail pages stay hidden.
  */
 export const NAV: NavItem[] = [
-  { label: "Services", href: "/services" },
+  { label: "Services", href: "/services", children: [
+    { label: "Vulnerability Scans", href: "/services/vulnerability-scans", desc: "Tenable Nessus scans, reporting, and remediation." },
+  ] },
   { label: "Hardware", href: "/hardware" },
   { label: "Industries", href: "/industries" },
   { label: "About", href: "/about" },

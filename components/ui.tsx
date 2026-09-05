@@ -142,6 +142,7 @@ export function SectionHeader({
   title,
   lede,
   center,
+  reveal = true,
   className = "",
 }: {
   eyebrow?: string;
@@ -149,11 +150,13 @@ export function SectionHeader({
   title: ReactNode;
   lede?: ReactNode;
   center?: boolean;
+  /** Disable entrance fading where content should be immediately readable. */
+  reveal?: boolean;
   className?: string;
 }) {
   return (
     <div
-      data-reveal
+      data-reveal={reveal || undefined}
       className={`flex flex-col gap-5 ${center ? "items-center text-center mx-auto" : ""} ${className}`.trim()}
     >
       {eyebrow && <BracketLabel>{eyebrow}</BracketLabel>}

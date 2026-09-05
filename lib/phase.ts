@@ -10,6 +10,7 @@ export const PHASE_2_ROUTES_ENABLED = false;
 export const PHASE_1_SITEMAP_PATHS = [
   "",
   "/services",
+  "/services/vulnerability-scans",
   "/hardware",
   "/industries",
   "/about",

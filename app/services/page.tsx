@@ -32,6 +32,7 @@ const CARDS = [
   },
   {
     name: "Cybersecurity",
+    href: "/services/vulnerability-scans",
     visual: {
       src: "/images/cybersecurity.webp",
       alt: "Abstract cybersecurity service visual with layered dark geometry and purple accent lighting.",
@@ -196,6 +197,7 @@ export default function ServicesIndex() {
                 <h2 className="font-display text-[1.40625rem] leading-[1.6875rem] text-ink-bright">{c.name}</h2>
                 <p className="text-sm leading-relaxed text-ink-dim">{c.body}</p>
                 <ServiceFilterChips items={c.tags} />
+                {c.href && <ArrowLink href={c.href}>Explore Vulnerability Scans</ArrowLink>}
               </div>
             </div>
           ))}
