@@ -22,12 +22,26 @@ export default function Nav() {
   const pathname = usePathname();
   const barRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false); // mobile menu
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   // The homepage starts over a light hero. Deriving the initial state from the
   // route avoids swapping the priority logo immediately after hydration.
   const [lightNav, setLightNav] = useState(() => pathname === "/");
 
-  useEffect(() => setOpen(false), [pathname]);
+  useEffect(() => {
+    setOpen(false);
+    setActiveDropdown(null);
+  }, [pathname]);
+
+  useEffect(() => {
+    const closeOutside = (event: PointerEvent) => {
+      if (event.target instanceof Element && !event.target.closest("[data-nav-dropdown]")) {
+        setActiveDropdown(null);
+      }
+    };
+    document.addEventListener("pointerdown", closeOutside);
+    return () => document.removeEventListener("pointerdown", closeOutside);
+  }, []);
 
   const updateNav = useCallback(() => {
     setScrolled(window.scrollY > 24);
@@ -102,25 +116,39 @@ export default function Nav() {
           <nav className="hidden items-center lg:flex">
             {NAV.map((item) =>
               item.children ? (
-                <div key={item.label} className="group relative">
-                  <Link
-                    href={item.href}
+                <div key={item.label} className="relative" data-nav-dropdown
+                  onBlur={(event) => {
+                    if (!event.currentTarget.contains(event.relatedTarget)) setActiveDropdown(null);
+                  }}
+                  onKeyDown={(event) => {
+                    if (event.key === "Escape") {
+                      setActiveDropdown(null);
+                      event.currentTarget.querySelector("button")?.focus();
+                    }
+                  }}
+                >
+                  <button
+                    type="button"
+                    aria-expanded={activeDropdown === item.href}
+                    aria-controls={`nav-dropdown-${item.label}`}
+                    onClick={() => setActiveDropdown(activeDropdown === item.href ? null : item.href)}
                     className={`flex items-center gap-1 whitespace-nowrap px-4 py-1.5 text-[1.0625rem] font-medium transition-colors ${
                       isActive(item.href) ? "text-ink-bright" : "text-ink-dim hover:text-ink-bright"
                     }`}
                   >
                     {item.label}
-                    <span className="text-ink-faint transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180">
+                    <span className={`text-ink-faint transition-transform duration-300 ${activeDropdown === item.href ? "rotate-180" : ""}`}>
                       <ChevronDown />
                     </span>
-                  </Link>
+                  </button>
                   {/* Dropdown */}
-                  <div className="pointer-events-none absolute left-1/2 top-full -translate-x-1/2 pt-3 invisible opacity-0 transition-all duration-200 group-hover:visible group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:visible group-focus-within:pointer-events-auto group-focus-within:opacity-100">
+                  <div id={`nav-dropdown-${item.label}`} hidden={activeDropdown !== item.href} className="absolute left-1/2 top-full -translate-x-1/2 pt-3">
                     <div className="glass min-w-[20rem] rounded-sm p-1">
                       {item.children.map((child) => (
                         <Link
                           key={child.href}
                           href={child.href}
+                          onClick={() => setActiveDropdown(null)}
                           className="flex items-start gap-3 rounded-[2px] p-3 transition-colors hover:bg-white/10"
                         >
                           <div>
@@ -192,20 +220,37 @@ export default function Nav() {
         >
           <div className="flex flex-col gap-1 p-4">
             {NAV.map((item) => (
-              <div key={item.label} className="flex flex-col">
-                <Link
-                  href={item.href}
-                  className={`py-2 text-[1.0625rem] font-medium ${isActive(item.href) ? "text-ink-bright" : "text-ink-dim"}`}
-                >
-                  {item.label}
-                </Link>
+              <div key={item.label} className="flex flex-col" data-nav-dropdown>
+                {item.children ? (
+                  <button
+                    type="button"
+                    data-nav-dropdown
+                    aria-expanded={activeDropdown === item.href}
+                    aria-controls={`mobile-dropdown-${item.label}`}
+                    onClick={() => setActiveDropdown(activeDropdown === item.href ? null : item.href)}
+                    className="flex items-center gap-1 py-2 text-left text-[1.0625rem] font-medium text-ink-bright"
+                  >
+                    {item.label}
+                    <ChevronDown />
+                  </button>
+                ) : (
+                  <Link
+                    href={item.href}
+                    onClick={() => setOpen(false)}
+                    className={`py-2 text-[1.0625rem] font-medium ${isActive(item.href) ? "text-ink-bright" : "text-ink-dim"}`}
+                  >
+                    {item.label}
+                  </Link>
+                )}
                 {item.children && (
+                  <div id={`mobile-dropdown-${item.label}`} hidden={activeDropdown !== item.href}>
                   <div className="mb-2 ml-3 flex flex-col gap-1 border-l border-line pl-3">
                     {item.children.map((child) => (
-                      <Link key={child.href} href={child.href} className="py-1.5 text-sm text-ink-faint">
+                      <Link key={child.href} href={child.href} onClick={() => { setActiveDropdown(null); setOpen(false); }} className="py-1.5 text-sm text-ink-faint">
                         {child.label}
                       </Link>
                     ))}
+                  </div>
                   </div>
                 )}
               </div>

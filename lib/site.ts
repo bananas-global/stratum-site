@@ -27,6 +27,7 @@ export type NavItem = {
  */
 export const NAV: NavItem[] = [
   { label: "Services", href: "/services", children: [
+    { label: "All Services", href: "/services", desc: "Explore our full range of technology services." },
     { label: "Vulnerability Scans", href: "/services/vulnerability-scans", desc: "Tenable Nessus scans, reporting, and remediation." },
   ] },
   { label: "Hardware", href: "/hardware" },
